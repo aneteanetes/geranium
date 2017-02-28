@@ -23,12 +23,15 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
-    <TypeScriptCompile Include="backend\concrete\ajax\JQueryPromise.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
     <TypeScriptCompile Include="backend\abstract\Request.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\JQueryPromise.ts" />
     <TypeScriptCompile Include="backend\concrete\ajax\AjaxCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\ajax\AjaxRequest.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\MozWebSocket.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
@@ -36,11 +39,19 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="handler.cs" />
+    <Compile Include="handler.ashx.cs">
+      <DependentUpon>handler.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="handler.ashx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

@@ -5,4 +5,7 @@
 /// <reference path="backend/concrete/ajax/jquerypromise.ts" />
 /// <reference path="backend/concrete/ajax/ajaxcommunicator.ts" />
 /// <reference path="backend/concrete/ajax/ajaxrequest.ts" />
+/// <reference path="backend/concrete/websocket/mozwebsocket.ts" />
+/// <reference path="backend/concrete/websocket/websocketcommunicator.ts" />
+/// <reference path="backend/concrete/websocket/websocketrequest.ts" />
 /// <reference path="geranium.ts" />

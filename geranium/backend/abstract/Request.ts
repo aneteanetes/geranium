@@ -9,11 +9,9 @@
         send<TResponse>(data: any): PromiseLike<TResponse> {
             return new Promise((resolve, reject) => {
                 try {
-                    debugger;
                     resolve(this.communicator.send<any>(data));
                 }
                 catch (ex) {
-                    debugger;
                     reject(new exceptions.Exception('Communication error!'));
                 }
             })

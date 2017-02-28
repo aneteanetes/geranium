@@ -1,6 +1,7 @@
 ﻿module geranium {
     export async function blossom() {
-        var requester = new backend.AjaxRequest(onError);
+        var uri = 'ws://' + window.location.hostname + ':58004/handler.ashx'; 
+        var requester = new backend.WebSocketRequest(uri,onError);
 
         var first: number = 5;
         var opts = {
@@ -17,7 +18,7 @@
         console.log(third);
     }
     function onError(err: exceptions.Exception) {
-        console.error(err.pure);
+        console.error(err);
     }
 }
 geranium.blossom();
