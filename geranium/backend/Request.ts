@@ -11,7 +11,7 @@
                 try {
                     resolve(this.communicator.send<any>(data));
                 }
-                catch (ex) { reject(null); }
+                catch (ex) { reject(new exceptions.Exception('Communication error!')); }
             })
                 .then<TResponse>(x => this.communicator.recive<TResponse>())
                 .catch(this.catchPromise);
