@@ -18,20 +18,30 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\JQueryPromise.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
     <TypeScriptCompile Include="backend\abstract\Request.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\AjaxCommunicator.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\AjaxRequest.ts" />
     <TypeScriptCompile Include="geranium.ts" />
-    <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="handler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -62,6 +72,7 @@
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptTarget>ES6</TypeScriptTarget>
+    <TypeScriptOutFile>gera.js</TypeScriptOutFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
