@@ -21,6 +21,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
     <TypeScriptCompile Include="backend\Request.ts" />
     <TypeScriptCompile Include="geranium.ts" />
