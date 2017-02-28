@@ -23,7 +23,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
-    <TypeScriptCompile Include="backend\Request.ts" />
+    <TypeScriptCompile Include="backend\abstract\Request.ts" />
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="_references.ts" />

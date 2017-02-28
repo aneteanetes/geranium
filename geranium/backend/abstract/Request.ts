@@ -1,4 +1,4 @@
-﻿module geranium.backend {
+﻿module geranium.backend.abstract {
     export abstract class Request {
         protected communicator: interfaces.ICommunicator;
 
