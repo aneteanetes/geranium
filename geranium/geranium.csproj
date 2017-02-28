@@ -22,6 +22,11 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
+    <TypeScriptCompile Include="_references.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
