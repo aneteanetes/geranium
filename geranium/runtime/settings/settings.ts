@@ -8,7 +8,8 @@
         private static initialized: boolean = false;
         static init(settings: {
             request?: any,
-            templating?: any
+            templating?: any,
+            storage?:any
         }) {
             if (AppSettings.initialized)
                 throw new Error('Application settings already initialized!');
@@ -21,6 +22,7 @@
 
         request: any = {};
         templating: any = {};
+        storage: any = {};
     }
 
     class _AppSettings extends AppSettings { }
