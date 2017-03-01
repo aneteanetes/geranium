@@ -7,9 +7,10 @@
 
         private static initialized: boolean = false;
         static init(settings: {
+            logger?: exceptions.logging.ILogger,
             request?: any,
             templating?: any,
-            storage?:any
+            storage?: storage.interfaces.IStorage
         }) {
             if (AppSettings.initialized)
                 throw new Error('Application settings already initialized!');
@@ -20,9 +21,10 @@
             }
         }
 
+        logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
         request: any = {};
         templating: any = {};
-        storage: any = {};
+        storage: storage.interfaces.IStorage = new WindowStorage("geranium-window-storage");
     }
 
     class _AppSettings extends AppSettings { }

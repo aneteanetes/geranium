@@ -1,7 +1,8 @@
 ﻿module geranium.runtime {
-    export class WindowStorage implements storage.interfaces.IStorage {
+    export class WindowStorage extends abstract.LocalStorage {
         private variable: string = "";
         constructor(storageName: string) {
+            super();
             this.variable = storageName;
         }
 
@@ -16,6 +17,7 @@
                 this.collection.push(model);
                 return true;
             } catch (ex) {
+                this.log(ex);
                 return false;
             }
         }
@@ -26,6 +28,7 @@
                     window[this.variable] = this.collection.remove(model);
                 return true;
             } catch (ex) {
+                this.log(ex);
                 return false;
             }
         }
