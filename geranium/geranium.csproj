@@ -34,6 +34,7 @@
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
