@@ -7,7 +7,7 @@
 
         private static initialized: boolean = false;
         static init(settings: {
-            request?: any,
+            request?: backend.abstract.Request,
             templating?: any
         }) {
             if (AppSettings.initialized)
@@ -19,7 +19,7 @@
             }
         }
 
-        request: any = {};
+        request: backend.abstract.Request = new backend.AjaxRequest((ex) => { throw new exceptions.Exception(ex.message); });
         templating: any = {};
     }
 

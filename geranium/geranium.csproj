@@ -23,8 +23,9 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-	<TypeScriptCompile Include="runtime\settings\settings.ts" />
-	<TypeScriptCompile Include="declare\mustachejs.ts" />
+    <TypeScriptCompile Include="models\abstract\Model.ts" />
+    <TypeScriptCompile Include="runtime\settings\settings.ts" />
+    <TypeScriptCompile Include="declare\mustachejs.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
