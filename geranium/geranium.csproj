@@ -21,7 +21,12 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="declare\array.ts" />
+    <TypeScriptCompile Include="exceptions\Exception.ts" />
+    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
+	<TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
@@ -57,6 +62,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES6</TypeScriptTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
