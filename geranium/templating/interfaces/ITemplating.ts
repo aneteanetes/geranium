@@ -1,5 +1,5 @@
 ﻿namespace geranium.templating.interfaces {
     export interface ITemplating {
-        load<TTemplate, TModel>(template: TTemplate, model: TModel): string;
+        parse<TTemplate extends contracts.Template>(template: TTemplate): PromiseLike<string>;
     }
 }

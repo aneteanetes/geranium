@@ -23,6 +23,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="declare\mustachejs.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
@@ -34,6 +35,9 @@
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="templating\concrete\backend\BackendTemplating.ts" />
+    <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
+    <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
