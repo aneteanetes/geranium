@@ -22,10 +22,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="exceptions\Exception.ts" />
+    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
     <TypeScriptCompile Include="geranium.ts" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
