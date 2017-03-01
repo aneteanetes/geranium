@@ -25,6 +25,7 @@
     <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+	<TypeScriptCompile Include="runtime\settings\settings.ts" />
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
 	<TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="geranium.ts" />
