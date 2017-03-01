@@ -23,6 +23,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
   </ItemGroup>
