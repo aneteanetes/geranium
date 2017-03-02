@@ -22,6 +22,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="declare\Object.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
       <SubType>Code</SubType>
