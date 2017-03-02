@@ -7,6 +7,7 @@
         }
 
         send<TResponse>(data: any): PromiseLike<TResponse> {
+            
             return new Promise((resolve, reject) => {
                 try {
                     resolve(this.communicator.send<any>(data));
@@ -15,10 +16,7 @@
                     reject(new exceptions.Exception('Communication error!'));
                 }
             })
-                .then<TResponse>(x => {
-                    runtime.AppSettings.Current.states
-                    return this.communicator.recive<TResponse>();
-                })
+                .then<TResponse>(x => this.communicator.recive<TResponse>())
                 .catch(this.catchPromise);
         }
 

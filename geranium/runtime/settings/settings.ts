@@ -10,7 +10,7 @@
         private static initialized: boolean = false;
         static init(settings: {
             logger?: exceptions.logging.ILogger,
-            request?: any,
+            request?: backend.abstract.Request,
             templating?: any,
             storage?: storage.interfaces.IStorage
         }) {
@@ -24,7 +24,7 @@
         }
 
         logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
-        request: any = {};
+        request: backend.abstract.Request = new backend.AjaxRequest((x) => { console.log(x); });
         templating: any = {};
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
