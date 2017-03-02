@@ -26,7 +26,8 @@
         logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
         request: any = {};
         templating: any = {};
-        storage: storage.interfaces.IStorage = new WindowStorage("geranium-window-storage");
+        storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
+        states: storage.interfaces.IStorage = new WindowStorage("geranium-states-storage");
     }
 
     class _AppSettings extends AppSettings { }

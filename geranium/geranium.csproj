@@ -33,6 +33,7 @@
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
     <TypeScriptCompile Include="states\State.ts" />
