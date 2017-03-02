@@ -1,6 +1,5 @@
 ﻿module geranium {
-    export function blossom() {
-
+    export async function blossom() {
     }
 }
 geranium.blossom();

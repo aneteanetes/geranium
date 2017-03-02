@@ -1,0 +1,1 @@
+﻿declare class MozWebSocket extends WebSocket { } 

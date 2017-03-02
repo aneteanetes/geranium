@@ -27,7 +27,7 @@
         request: any = {};
         templating: any = {};
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
-        states: storage.interfaces.IStorage = new WindowStorage("geranium-states-storage");
+        states: StatesStorage = new StatesStorage("geranium-states-storage");
     }
 
     class _AppSettings extends AppSettings { }
