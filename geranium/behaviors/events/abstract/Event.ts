@@ -1,4 +1,4 @@
-﻿module geranium.behaviors.events.abstract {
+﻿module geranium.behaviors.events {
     export abstract class Event<T> {
 
         trigger(args: T) {
