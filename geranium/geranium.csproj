@@ -23,8 +23,8 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-	<TypeScriptCompile Include="runtime\settings\settings.ts" />
-	<TypeScriptCompile Include="declare\mustachejs.ts" />
+    <TypeScriptCompile Include="runtime\settings\settings.ts" />
+    <TypeScriptCompile Include="declare\mustachejs.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
@@ -40,11 +40,13 @@
     <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="view\abstract\View.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

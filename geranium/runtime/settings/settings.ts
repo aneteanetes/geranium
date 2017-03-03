@@ -20,7 +20,7 @@
         }
 
         request: any = {};
-        templating: any = {};
+        templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
     }
 
     class _AppSettings extends AppSettings { }
