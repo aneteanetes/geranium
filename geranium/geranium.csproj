@@ -41,7 +41,7 @@
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="geranium.ts" />
-	<TypeScriptCompile Include="models\abstract\Model.ts" />
+    <TypeScriptCompile Include="models\abstract\Model.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
