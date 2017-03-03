@@ -2,8 +2,8 @@
     export abstract class AppSettings {
         private settings_storage: storage.interfaces.IStorage;
         constructor() {
-            this.settings_storage = new WindowStorage("geranium-settings");
-            this.settings_storage.add(this);
+            //this.settings_storage = new WindowStorage("geranium-settings");
+            //this.settings_storage.add(this);
             AppSettings._current = this;
         }
 
@@ -31,7 +31,7 @@
         }
 
         logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
-        request: backend.abstract.StatefullRequest = new backend.AjaxRequest((x) => { console.log(x); });
+        request: backend.abstract.EventRequest = new backend.AjaxRequest((x) => { console.log(x); });
         templating: any = {};
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");

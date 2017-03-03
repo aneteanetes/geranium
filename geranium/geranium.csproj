@@ -23,6 +23,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
