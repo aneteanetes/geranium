@@ -1,7 +1,10 @@
 ﻿module geranium.runtime {
     export abstract class AppSettings {
-        private static _current: _AppSettings = new _AppSettings();
+
+        private static _current: _AppSettings;
         static get Current(): AppSettings {
+            if (AppSettings._current == null)
+                AppSettings._current = new _AppSettings();
             return AppSettings._current;
         }
 
