@@ -1,19 +1,18 @@
 ﻿module geranium.behaviors.events.abstract {
     export abstract class Event<T>{
 
-        abstract execute(data: T);
-
-        protected trigger() {
+        trigger(args: T) {
             this._requestEvents.forEach(x => {
-                this.execute(x);
+                x(args);
             });
         }
 
-        private _requestEvents: T[];
-        set bind(callback: T) {
+        private _requestEvents: ((args: T) => void)[];
+
+        set bind(callback: ((args: T) => void)) {
             this._requestEvents.push(callback);
         }
-        set unbind(callback: T) {
+        set unbind(callback: ((args: T) => void)) {
             //this._requestEvents.remove(callback);
         }
     }
