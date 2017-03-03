@@ -9,6 +9,7 @@
         }
         set obtain(data: any) {
             Object.assign(this, JSON.parse(data));
+            this.trigger(this);
         }
 
         protected abstract autoupdate(): boolean | {};
