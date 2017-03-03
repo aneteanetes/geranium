@@ -1,5 +1,5 @@
 ﻿module geranium.behaviors.events.abstract {
-    export abstract class Event<T>{
+    export abstract class Event<T> {
 
         trigger(args: T) {
             this._requestEvents.forEach(x => {
@@ -7,13 +7,13 @@
             });
         }
 
-        private _requestEvents: ((args: T) => void)[];
+        private _requestEvents: ((args: T) => void)[] = new Array<((args: T) => void)>();
 
         set bind(callback: ((args: T) => void)) {
             this._requestEvents.push(callback);
         }
         set unbind(callback: ((args: T) => void)) {
-            //this._requestEvents.remove(callback);
+            this._requestEvents.remove(callback);
         }
     }
 }

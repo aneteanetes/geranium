@@ -19,11 +19,33 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="index.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="exceptions\Exception.ts" />
+    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="runtime\settings\settings.ts" />
+    <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
+    <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
+    <TypeScriptCompile Include="_references.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
@@ -62,6 +84,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+    <TypeScriptOutFile>gera.js</TypeScriptOutFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
