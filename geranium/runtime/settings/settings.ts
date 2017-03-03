@@ -32,6 +32,7 @@
 
         logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
         request: backend.abstract.EventRequest = new backend.AjaxRequest((x) => { console.log(x); });
+        communicator: backend.interfaces.ICommunicator = new backend.ajax.AjaxCommunicator();
         templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");

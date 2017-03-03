@@ -7,7 +7,8 @@
         get params(): {} {
             return this.autoupdate();
         }
-        set obtain(data: any) {
+        obtain(data: any) {
+            debugger;
             Object.assign(this, JSON.parse(data));
             this.trigger(this);
         }

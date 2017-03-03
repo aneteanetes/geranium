@@ -21,7 +21,7 @@ namespace geranium
                 context.Response.Write(_int * 37);
             }
             else
-                context.Response.Write("{\"time\":\"" + DateTime.Now.ToShortTimeString() + "\"}");
+                context.Response.Write("{\"time\":\"" + DateTime.Now.ToString("HH:mm:ss") + "\"}");
 
             context.ApplicationInstance.CompleteRequest();
         }
