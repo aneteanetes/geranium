@@ -21,6 +21,7 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
   </ItemGroup>
   <PropertyGroup>
