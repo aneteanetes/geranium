@@ -1,14 +1,18 @@
 ﻿module geranium.runtime {
     export abstract class AppSettings {
-        private static _current: _AppSettings = new _AppSettings();
+        private static _current: _AppSettings;
         static get Current(): AppSettings {
+            if (AppSettings._current == null)
+                AppSettings._current = new _AppSettings();
             return AppSettings._current;
         }
 
         private static initialized: boolean = false;
         static init(settings: {
+            logger?: exceptions.logging.ILogger,
             request?: backend.abstract.Request,
-            templating?: any
+            templating?: any,
+            storage?: storage.interfaces.IStorage
         }) {
             if (AppSettings.initialized)
                 throw new Error('Application settings already initialized!');
@@ -19,8 +23,11 @@
             }
         }
 
-        request: backend.abstract.Request = new backend.AjaxRequest((ex) => { throw new exceptions.Exception(ex.message); });
+        logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
+        request: backend.abstract.Request = new backend.AjaxRequest((x) => { console.log(x); });
         templating: any = {};
+        storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
+        states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
     }
 
     class _AppSettings extends AppSettings { }

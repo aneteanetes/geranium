@@ -7,6 +7,7 @@
         }
 
         send<TResponse>(data: any): PromiseLike<TResponse> {
+            
             return new Promise((resolve, reject) => {
                 try {
                     resolve(this.communicator.send<any>(data));
