@@ -41,6 +41,7 @@
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
+    <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
