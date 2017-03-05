@@ -47,6 +47,7 @@
     <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="viewmodels\abstract\ViewModel.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
     <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
     <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
@@ -89,7 +90,9 @@
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="viewmodels\interfaces\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
