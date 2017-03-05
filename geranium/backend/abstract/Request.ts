@@ -1,5 +1,5 @@
 ﻿module geranium.backend.abstract {
-    export abstract class Request extends behaviors.events.abstract.Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> {
+    export abstract class Request extends behaviors.events.Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> {
         protected communicator: interfaces.ICommunicator;
 
         constructor(communicator: interfaces.ICommunicator) {
