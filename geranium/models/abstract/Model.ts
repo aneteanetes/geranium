@@ -8,7 +8,7 @@
             return this.autoupdate();
         }
         obtain(data: any) {
-            debugger;
+            
             Object.assign(this, JSON.parse(data));
             this.trigger(this);
         }

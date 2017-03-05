@@ -3,7 +3,7 @@
         constructor(communicator: interfaces.ICommunicator) {
             super(communicator);
             this.bind = (super_send) => {
-                debugger;
+                
                 var states = runtime.AppSettings.Current.states.all();
                 if (states == null || states.length == 0)
                     return;
@@ -11,7 +11,7 @@
                 states.filter(x => x.refreshable)
                     .forEach(state => {
                         super_send(state.params)
-                            .then(x => { debugger; state.obtain(x); });
+                            .then(x => {  state.obtain(x); });
                     });
             };
         }
