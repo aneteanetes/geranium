@@ -43,6 +43,13 @@
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="templating\concrete\backend\BackendTemplating.ts" />
+    <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
+    <TypeScriptCompile Include="templating\contracts\Template.ts" />
+    <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="view\abstract\View.ts" />
+    <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
+    <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
     <TypeScriptCompile Include="models\abstract\Model.ts" />
     <TypeScriptCompile Include="viewstate\abstract\ViewState.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
