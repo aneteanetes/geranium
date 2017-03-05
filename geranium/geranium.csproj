@@ -43,6 +43,13 @@
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="templating\concrete\backend\BackendTemplating.ts" />
+    <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
+    <TypeScriptCompile Include="templating\contracts\Template.ts" />
+    <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="view\abstract\View.ts" />
+    <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
+    <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
     <TypeScriptCompile Include="models\abstract\Model.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
@@ -50,7 +57,7 @@
     <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
-	<TypeScriptCompile Include="states\State.ts" />
+    <TypeScriptCompile Include="states\State.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +89,7 @@
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
