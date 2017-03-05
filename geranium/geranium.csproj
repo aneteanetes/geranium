@@ -23,8 +23,8 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="runtime\settings\settings.ts" />
-    <TypeScriptCompile Include="declare\mustachejs.ts" />
+    <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
+    <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
@@ -35,17 +35,59 @@
     <TypeScriptCompile Include="backend\concrete\websocket\MozWebSocket.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
+    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="runtime\settings\settings.ts" />
+    <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
+    <TypeScriptCompile Include="declare\array.ts" />
+    <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="templating\concrete\backend\BackendTemplating.ts" />
     <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
+    <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
     <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
+    <TypeScriptCompile Include="models\abstract\Model.ts" />
+    <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
+    <TypeScriptCompile Include="states\State.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="handler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="handler.ashx.cs">
+      <DependentUpon>handler.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
@@ -60,7 +102,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58004</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
