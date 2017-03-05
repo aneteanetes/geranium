@@ -1,14 +1,23 @@
 ﻿module geranium.runtime {
     export abstract class AppSettings {
-        private static _current: _AppSettings = new _AppSettings();
+        private settings_storage: storage.interfaces.IStorage;
+        constructor() {
+            //this.settings_storage = new WindowStorage("geranium-settings");
+            //this.settings_storage.add(this);
+            AppSettings._current = this;
+        }
+
+        private static _current: AppSettings;
         static get Current(): AppSettings {
-            return AppSettings._current;
+            if (AppSettings._current == null)
+                new _AppSettings();
+            return AppSettings._current;//.settings_storage.get(_AppSettings);
         }
 
         private static initialized: boolean = false;
         static init(settings: {
             logger?: exceptions.logging.ILogger,
-            request?: any,
+            request?: backend.abstract.Request,
             templating?: any,
             storage?: storage.interfaces.IStorage
         }) {
@@ -22,9 +31,10 @@
         }
 
         logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
-        request: any = {};
+        request: backend.abstract.EventRequest = new backend.AjaxRequest((x) => { console.log(x); });
         templating: any = {};
-        storage: storage.interfaces.IStorage = new WindowStorage("geranium-window-storage");
+        storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
+        states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
     }
 
     class _AppSettings extends AppSettings { }

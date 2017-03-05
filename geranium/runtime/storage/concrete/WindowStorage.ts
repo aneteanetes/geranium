@@ -1,6 +1,6 @@
 ﻿module geranium.runtime {
     export class WindowStorage extends abstract.LocalStorage {
-        private variable: string = "";
+        protected variable: string = "";
         constructor(storageName: string) {
             super();
             this.variable = storageName;

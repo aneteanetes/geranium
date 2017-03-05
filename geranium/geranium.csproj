@@ -23,6 +23,8 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
+    <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
@@ -41,15 +43,14 @@
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
     <TypeScriptCompile Include="geranium.ts" />
-    <TypeScriptCompile Include="_references.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
+    <TypeScriptCompile Include="models\abstract\Model.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
+	<TypeScriptCompile Include="states\State.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
@@ -61,20 +62,25 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
+    <Content Include="handler.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="handler.ashx.cs">
+      <DependentUpon>handler.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -88,7 +94,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58004</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

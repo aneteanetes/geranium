@@ -1,5 +1,5 @@
 ﻿module geranium.backend {
-    export class AjaxRequest extends abstract.Request {
+    export class AjaxRequest extends abstract.StatefullRequest {
         constructor(error: { (err: exceptions.Exception) }) {
             super(new backend.ajax.AjaxCommunicator());
             this.catchPromise = error;
