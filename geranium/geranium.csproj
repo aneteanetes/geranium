@@ -25,7 +25,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
+    <TypeScriptCompile Include="declare\jquery.ts" />
     <TypeScriptCompile Include="declare\mustachejs.ts" />
+    <TypeScriptCompile Include="declare\string.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="exceptions\Exception.ts" />
     <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
@@ -46,10 +48,21 @@
     <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="viewbinding\contracts\ViewBindingFlags.ts" />
+    <TypeScriptCompile Include="viewDOM\abstract\ViewDOM.ts" />
+    <TypeScriptCompile Include="viewDOM\abstract\ViewDOMAttribute.ts" />
+    <TypeScriptCompile Include="viewDOM\interfaces\IViewDOM.ts" />
+    <TypeScriptCompile Include="viewengine\concrete\Html5ViewEngine.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\Field.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\Property.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\Method.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\ViewEngineExecuteContext.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\ViewEngineResult.ts" />
+    <TypeScriptCompile Include="viewengine\interfaces\IViewEngine.ts" />
     <TypeScriptCompile Include="viewmodels\abstract\ViewModel.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
-    <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
-    <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
+    <TypeScriptCompile Include="viewengine\concrete\JQueryView.ts" />
+    <TypeScriptCompile Include="view\interfaces\IViewed.ts" />
     <TypeScriptCompile Include="models\abstract\Model.ts" />
     <TypeScriptCompile Include="viewstate\abstract\ViewState.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
@@ -82,6 +95,7 @@
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿/// <reference path="declare/typings/jquery.d.ts" />
 /// <reference path="declare/array.ts" />
+/// <reference path="declare/string.ts" />
 /// <reference path="declare/mustachejs.ts" />
 
 /// <reference path="behaviors/events/abstract/event.ts" />
@@ -36,11 +37,13 @@
 /// <reference path="templating/concrete/backend/backendtemplating.ts" />
 /// <reference path="templating/concrete/mustache/mustachetemplating.ts" />
 
-/// <reference path="view/interfaces/iviewpublisher.ts" />
-/// <reference path="view/abstract/viewpublisher.ts" />
 /// <reference path="view/abstract/view.ts" />
 
 /// <reference path="viewstate/abstract/viewstate.ts" />
+
+/// <reference path="viewengine/contracts/method.ts" />
+/// <reference path="viewengine/interfaces/iviewengine.ts" />
+/// <reference path="viewengine/concrete/html5viewengine.ts" />
 
 /// <reference path="viewmodels/abstract/viewmodel.ts" />
 

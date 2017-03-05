@@ -1,19 +1,31 @@
 module geranium.view.abstract {
     export abstract class View extends templating.contracts.Template {
-        private target: JQuery;
-        constructor(taget: JQuery) {
+
+        private _selector: string;
+        private _rendered: boolean;
+
+        constructor(selector: string) {
             super();
             this.html = this.declare();
-            this.target = taget;
+            this._selector = selector;
         }
+
+        get selector(): string {
+            return this._selector;
+        }
+
         protected abstract declare(): string;
 
-        async execute() {
+        async render(): Promise<View> {
             var templating = runtime.AppSettings.Current.templating;
             if (this.data == null)
-                throw new exceptions.Exception('view-template data is not assigned!');
-            var rendred = await templating.parse(this);
-            this.target.html(rendred);
+                throw new exceptions.Exception('view data is not assigned!');
+            if (this._rendered)
+                throw new exceptions.Exception('view already rendered!');
+
+            this._rendered = true;
+            this.html = await templating.parse(this);
+            return new Promise<View>(resolve => resolve(this));
         }
     }
 }

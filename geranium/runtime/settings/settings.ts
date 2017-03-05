@@ -16,8 +16,11 @@
         static init(settings: {
             logger?: exceptions.logging.ILogger,
             request?: backend.abstract.Request,
-            templating?: any,
-            storage?: storage.interfaces.IStorage
+            communicator?: backend.interfaces.ICommunicator,
+            templating?: templating.interfaces.ITemplating,
+            storage?: storage.interfaces.IStorage,
+            states?: storage.interfaces.IGenericStorage<states.State>,
+            viewengine?: viewengine.interfaces.IViewEngine,
         }) {
             if (AppSettings.initialized)
                 throw new Error('Application settings already initialized!');
@@ -34,6 +37,7 @@
         templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
+        viewengine: viewengine.interfaces.IViewEngine;// = new viewengine.Html5ViewEngine();
     }
 
     class _AppSettings extends AppSettings { }
