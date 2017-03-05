@@ -1,7 +1,7 @@
-﻿module geranium.view.abstract {
+module geranium.view.abstract {
     export abstract class View extends templating.contracts.Template {
         private target: JQuery;
-        constructor(taget:JQuery) {
+        constructor(taget: JQuery) {
             super();
             this.html = this.declare();
             this.target = taget;

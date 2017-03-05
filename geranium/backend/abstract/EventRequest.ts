@@ -12,8 +12,11 @@
                 .then<TResponse>(x => {
                     return this.communicator.recive<TResponse>();
                 })
-                .then(x => { this.trigger(super.send); return x; })
+                .then(x => { this.trigger(); return x; })
                 .catch(this.catchPromise);
+        }
+        trigger() {
+            super.trigger(super.send);
         }
     }
 }

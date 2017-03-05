@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="view\abstract\ViewPublisher.ts" />
     <TypeScriptCompile Include="view\interfaces\IViewPublisher.ts" />
     <TypeScriptCompile Include="models\abstract\Model.ts" />
+    <TypeScriptCompile Include="viewstate\abstract\ViewState.ts" />
     <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
     <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
