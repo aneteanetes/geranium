@@ -1,5 +1,4 @@
 ﻿module geranium.viewmodels.abstract {
-    export abstract class ViewModel implements view.abstract.ViewPublisher {
-
-    }
+    //export abstract class ViewModel implements view.abstract.ViewPublisher {
+    //}
 }

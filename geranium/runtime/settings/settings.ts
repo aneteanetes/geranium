@@ -2,8 +2,6 @@
     export abstract class AppSettings {
         private settings_storage: storage.interfaces.IStorage;
         constructor() {
-            //this.settings_storage = new WindowStorage("geranium-settings");
-            //this.settings_storage.add(this);
             AppSettings._current = this;
         }
 
@@ -11,7 +9,7 @@
         static get Current(): AppSettings {
             if (AppSettings._current == null)
                 new _AppSettings();
-            return AppSettings._current;//.settings_storage.get(_AppSettings);
+            return AppSettings._current;
         }
 
         private static initialized: boolean = false;

@@ -1,5 +1,5 @@
 ﻿module geranium.runtime {
-    export class LocalStorage extends abstract.LocalStorage {
+    export class LocalStorage extends abstract.LoggedStorage {
         add(model: any): boolean {
             try {
                 localStorage.setItem(model.constructor.name, model.toString());
