@@ -1,6 +1,6 @@
 ﻿module geranium.view.abstract {
     export abstract class ViewPublisher implements interfaces.IViewPublisher {
-        private viewtarget: JQuery;
+        protected viewtarget: JQuery = null;
         constructor(target: JQuery) {
             this.viewtarget = target;
         }
