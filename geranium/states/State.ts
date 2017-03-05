@@ -5,7 +5,7 @@
             runtime.AppSettings.Current.states.add(this);
             runtime.AppSettings.Current.request.trigger();
         }
-        static get<T extends State>(type: { new (...args: any[]): T }): T {
+        static get<T>(type: { new (...args: any[]): T }): T {
             return runtime.AppSettings.Current.states.get(type);
         }
         remove(): boolean {
