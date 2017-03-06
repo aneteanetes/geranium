@@ -1,10 +1,12 @@
 ﻿module geranium.viewengine.contracts {
     export class ExecuteContext {
         view: view.abstract.View;
-        bindingFlags: viewbinding.contracts.ViewBindingFlags[]
+        bindingFlags: { new <T>(...args: any[]): binding.abstract.Binding<T> }[];
 
-        constructor(view: view.abstract.View, bindingFlags: viewbinding.contracts.ViewBindingFlags[]) {
+        constructor(view: view.abstract.View, bindingFlags?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
             this.view = view;
+            if (!bindingFlags)
+                bindingFlags = runtime.AppSettings.Current.bidnings;
             this.bindingFlags = bindingFlags;
         }
     }

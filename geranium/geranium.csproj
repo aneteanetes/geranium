@@ -23,6 +23,14 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="binding\abstract\Binding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryByAttributeBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryClickBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryFieldBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryInputBinding.ts" />
+    <TypeScriptCompile Include="binding\interfaces\IBinding.ts" />
+    <TypeScriptCompile Include="declare\jquery.ts" />
     <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
     <TypeScriptCompile Include="declare\jquery.ts" />
@@ -51,7 +59,6 @@
     <TypeScriptCompile Include="viewbinding\abstract\ViewBinder.ts" />
     <TypeScriptCompile Include="viewbinding\concrete\JQueryViewBinder.ts" />
     <TypeScriptCompile Include="viewbinding\contracts\BindContext.ts" />
-    <TypeScriptCompile Include="viewbinding\contracts\ViewBindingFlags.ts" />
     <TypeScriptCompile Include="viewbinding\interfaces\IViewBinder.ts" />
     <TypeScriptCompile Include="viewDOM\abstract\ViewDOM.ts" />
     <TypeScriptCompile Include="viewDOM\concrete\JQueryViewDOM.ts" />

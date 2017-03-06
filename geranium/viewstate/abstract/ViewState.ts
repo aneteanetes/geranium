@@ -16,9 +16,9 @@
             view.data = state;
             await view.render();
 
-            var viewengine = runtime.AppSettings.Current.viewengine;
-            var viewenginecontext = new geranium.viewengine.contracts.ExecuteContext(view, [viewbinding.contracts.ViewBindingFlags.Fields]);
-            viewengine.execute(viewenginecontext);
+            var vengine = runtime.AppSettings.Current.viewengine;
+            var context = new viewengine.contracts.ExecuteContext(view, [binding.JQueryBindings.JQueryFieldBinding]);
+            vengine.execute(context);
         }
 
         protected abstract state(): { new (...args: any[]): states.State }

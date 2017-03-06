@@ -4,23 +4,16 @@
         bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM {
             debugger;
             this.viewDOM = context.viewDOM;
-            this.bindByFlags(context.bindingFlags);
+            this.exec(this.viewDOM, context.bindingFlags);
             return this.viewDOM;
         }
 
-        private bindByFlags(flags: contracts.ViewBindingFlags[]) {
-
-            if (flags.indexOf(contracts.ViewBindingFlags.Fields) > -1)
-                this.bindFields(this.viewDOM);
-
-            if (flags.indexOf(contracts.ViewBindingFlags.Properties) > -1)
-                this.bindProperties(this.viewDOM);
-
-            if (flags.indexOf(contracts.ViewBindingFlags.Methods) > -1)
-                this.bindMethods(this.viewDOM);
+        private exec(ViewDOM: viewDOM.abstract.ViewDOM, bindings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
+            bindings.forEach(x => {
+                this.binding(ViewDOM, x);
+            });
         }
-        protected abstract bindFields(ViewDOM: viewDOM.abstract.ViewDOM);
-        protected abstract bindProperties(ViewDOM: viewDOM.abstract.ViewDOM);
-        protected abstract bindMethods(ViewDOM: viewDOM.abstract.ViewDOM);
+
+        protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: { new <T>(...args: any[]): binding.abstract.Binding<T> });
     }
 }

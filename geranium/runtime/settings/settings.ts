@@ -22,6 +22,7 @@
             states?: storage.interfaces.IGenericStorage<states.State>,
             viewbinder?: viewbinding.abstract.ViewBinder,
             viewengine?: viewengine.interfaces.IViewEngine,
+            bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
                 throw new Error('Application settings already initialized!');
@@ -38,9 +39,13 @@
         templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
-        viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();
+        viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
         viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
-        
+        bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
+            binding.JQueryBindings.JQueryFieldBinding,
+            binding.JQueryBindings.JQueryInputBinding,
+            binding.JQueryBindings.JQueryClickBinding
+        ];
     }
 
     class _AppSettings extends AppSettings { }

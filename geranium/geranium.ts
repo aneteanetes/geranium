@@ -19,9 +19,9 @@
 
     class v extends view.abstract.View {
         declare(): string {
-            return '<div>Train now at <div data-field="now">{{now}}</div> of <div data-field="max">{{max}}</div> (<button onclick="maxdecrement">-</button><button onclick="maxincrement">+</button>) stations</div><br/>\
+            return '<div>Train now at <span data-field="now">{{now}}</span> of <span data-field="max">{{max}}</span> (<button onclick="maxdecrement">-</button><button onclick="maxincrement">+</button>) stations</div><br/>\
             <div><button onclick="decrement">prev station</button><button onclick="increment">next station</button></div><br/>\
-            <div>road to <input type="number" /> station <button onclick="jump">go</button><br/>';
+            <div>road to <input name="jumpto" type="number" /> station <button onclick="jump">go</button><br/>';
         }
     }
     class vm extends viewmodels.abstract.ViewModel {
@@ -43,6 +43,7 @@
             this.now--;
         }
         jump() {
+            debugger;
             this.now = this.jumpto;
         }
 
@@ -51,13 +52,12 @@
     }
 
     export async function blossom() {
-        //var _vm = new vm($('.viewmodel'));
-        //_vm.publish();
+        var _vm = new vm('.viewmodel');
 
-        var _vs = new vs('.viewstate');
-        setInterval(() => {
-            runtime.AppSettings.Current.request.trigger();
-        }, 1000);
+        //var _vs = new vs('.viewstate');
+        //setInterval(() => {
+        //    runtime.AppSettings.Current.request.trigger();
+        //}, 1000);
     }
 }
 geranium.blossom();

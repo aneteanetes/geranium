@@ -29,6 +29,14 @@
 
 /// <reference path="models/abstract/model.ts" />
 
+/// <reference path="binding/interfaces/ibinding.ts" />
+/// <reference path="binding/abstract/binding.ts" />
+/// <reference path="binding/concrete/jquery/base/jquerybinding.ts" />
+/// <reference path="binding/concrete/jquery/base/jquerybyattributebinding.ts" />
+/// <reference path="binding/concrete/jquery/jqueryclickbinding.ts" />
+/// <reference path="binding/concrete/jquery/jqueryfieldbinding.ts" />
+/// <reference path="binding/concrete/jquery/jqueryinputbinding.ts" />
+
 /// <reference path="states/state.ts" />
 
 /// <reference path="templating/contracts/template.ts" />
@@ -42,7 +50,6 @@
 /// <reference path="viewdom/abstract/viewdom.ts" />
 /// <reference path="viewdom/concrete/jqueryviewdom.ts" />
 
-/// <reference path="viewbinding/contracts/viewbindingflags.ts" />
 /// <reference path="viewbinding/contracts/bindcontext.ts" />
 /// <reference path="viewbinding/interfaces/iviewbinder.ts" />
 /// <reference path="viewbinding/abstract/viewbinder.ts" />
