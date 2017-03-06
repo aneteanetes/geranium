@@ -21,6 +21,14 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="binding\abstract\Binding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryByAttributeBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryClickBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryFieldBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryInputBinding.ts" />
+    <TypeScriptCompile Include="binding\interfaces\IBinding.ts" />
+    <TypeScriptCompile Include="declare\jquery.ts" />
     <TypeScriptCompile Include="geranium.ts" />
     <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
     <TypeScriptCompile Include="_references.ts" />
@@ -57,6 +65,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES6</TypeScriptTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
