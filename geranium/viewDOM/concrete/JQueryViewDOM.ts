@@ -3,7 +3,7 @@
         private _$html: JQuery;
         getViewDOM(): JQuery {
             if (this._$html == null)
-                this._$html = $(this.view.html);
+                this._$html = $('<div/>').html(this.view.html).contents();
             return this._$html;
         }
     }

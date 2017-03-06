@@ -2,7 +2,7 @@
     export abstract class ViewBinder implements interfaces.IViewBinder {
         private viewDOM: geranium.viewDOM.abstract.ViewDOM;
         bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM {
-            debugger;
+            
             this.viewDOM = context.viewDOM;
             this.exec(this.viewDOM, context.bindingFlags);
             return this.viewDOM;
