@@ -132,6 +132,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <TypeScriptOutFile>gera.js</TypeScriptOutFile>
   </PropertyGroup>

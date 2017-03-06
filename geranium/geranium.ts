@@ -1,5 +1,16 @@
 ﻿module geranium {
 
+    function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
+
+    }
+    class fuckidate extends Function {
+        constructor(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
+            super();
+            console.log("yes, you can use class as fucking decorator, because prototypes etc");
+        }
+    }
+
+
     class H1 extends view.abstract.View {
         declare(): string { return '<h1 data-field="time">{{time}}</h1>'; }
     }
@@ -25,8 +36,7 @@
             return html;
         }
     }
-
-    class vm extends viewmodels.abstract.ViewModel {
+    class vm extends viewmodels.abstract.ViewModel {        
         max: number = 10;
         now: number = 0;
         jumpto: number = 0;
@@ -37,7 +47,6 @@
         maxdecrement() {
             this.max--;
         }
-
         increment() {
             this.now++;
         }
@@ -51,7 +60,7 @@
         autoupdate() { return false; }
         view(): any { return v; }
     }
-
+    
     export async function blossom() {
         var modelFromServer = {
             max: 25,
@@ -69,7 +78,7 @@
             if (x.time.substring(7) == "0")
                 _vm.now++;
         };
-        var _vs = new vs('.viewstate');        
+        var _vs = new vs('.viewstate');
         setInterval(() => {
             runtime.AppSettings.Current.request.trigger();
         }, 1100);

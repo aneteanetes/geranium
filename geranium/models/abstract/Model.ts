@@ -8,8 +8,9 @@
             return this.autoupdate();
         }
         obtain(data: any) {
-            
-            Object.assign(this, JSON.parse(data));
+            if (typeof data == 'string')
+                data = JSON.parse(data);
+            Object.assign(this, data);
             this.trigger(this);
         }
 
