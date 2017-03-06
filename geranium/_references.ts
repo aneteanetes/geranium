@@ -12,7 +12,6 @@
 /// <reference path="runtime/storage/concrete/windowstorage.ts" />
 /// <reference path="runtime/storage/concrete/statesstorage.ts" />
 
-
 /// <reference path="backend/interfaces/icommunicator.ts" />
 /// <reference path="backend/abstract/request.ts" />
 /// <reference path="backend/abstract/eventrequest.ts" />
@@ -39,11 +38,22 @@
 
 /// <reference path="view/abstract/view.ts" />
 
-/// <reference path="viewstate/abstract/viewstate.ts" />
+/// <reference path="viewdom/interfaces/iviewdom.ts" />
+/// <reference path="viewdom/abstract/viewdom.ts" />
+/// <reference path="viewdom/concrete/jqueryviewdom.ts" />
 
-/// <reference path="viewengine/contracts/method.ts" />
+/// <reference path="viewbinding/contracts/viewbindingflags.ts" />
+/// <reference path="viewbinding/contracts/bindcontext.ts" />
+/// <reference path="viewbinding/interfaces/iviewbinder.ts" />
+/// <reference path="viewbinding/abstract/viewbinder.ts" />
+/// <reference path="viewbinding/concrete/jqueryviewbinder.ts" />
+
+/// <reference path="viewengine/contracts/executecontext.ts" />
 /// <reference path="viewengine/interfaces/iviewengine.ts" />
-/// <reference path="viewengine/concrete/html5viewengine.ts" />
+/// <reference path="viewengine/abstract/viewengine.ts" />
+/// <reference path="viewengine/concrete/jqueryviewengine.ts" />
+
+/// <reference path="viewstate/abstract/viewstate.ts" />
 
 /// <reference path="viewmodels/abstract/viewmodel.ts" />
 

@@ -1,5 +1,5 @@
 ﻿module geranium.viewengine.contracts {
-    export class ViewEngineExecuteContext {
+    export class ExecuteContext {
         view: view.abstract.View;
         bindingFlags: viewbinding.contracts.ViewBindingFlags[]
 

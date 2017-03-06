@@ -17,8 +17,8 @@
             await view.render();
 
             var viewengine = runtime.AppSettings.Current.viewengine;
-            var bindingFlags = [viewbinding.contracts.ViewBindingFlags.Fields];
-            var processed = viewengine.execute(new geranium.viewengine.contracts.ViewEngineExecuteContext(view, bindingFlags));
+            var viewenginecontext = new geranium.viewengine.contracts.ExecuteContext(view, [viewbinding.contracts.ViewBindingFlags.Fields]);
+            viewengine.execute(viewenginecontext);
         }
 
         protected abstract state(): { new (...args: any[]): states.State }

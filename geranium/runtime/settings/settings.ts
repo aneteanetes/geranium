@@ -20,6 +20,7 @@
             templating?: templating.interfaces.ITemplating,
             storage?: storage.interfaces.IStorage,
             states?: storage.interfaces.IGenericStorage<states.State>,
+            viewbinder?: viewbinding.abstract.ViewBinder,
             viewengine?: viewengine.interfaces.IViewEngine,
         }) {
             if (AppSettings.initialized)
@@ -37,7 +38,9 @@
         templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
-        viewengine: viewengine.interfaces.IViewEngine;// = new viewengine.Html5ViewEngine();
+        viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();
+        viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
+        
     }
 
     class _AppSettings extends AppSettings { }

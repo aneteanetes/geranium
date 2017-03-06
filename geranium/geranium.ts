@@ -1,10 +1,10 @@
 ﻿module geranium {
 
     class H1 extends view.abstract.View {
-        declare(): string { return '<h1>{{time}}</h1>'; }
+        declare(): string { return '<h1 data-field="time">{{time}}</h1>'; }
     }
     class timestate extends states.State {
-        time: string;
+        time: string = "12:15:16";
         autoupdate() {
             return {
                 url: '/server.s',
@@ -55,6 +55,9 @@
         //_vm.publish();
 
         var _vs = new vs('.viewstate');
+        setInterval(() => {
+            runtime.AppSettings.Current.request.trigger();
+        }, 1000);
     }
 }
 geranium.blossom();
