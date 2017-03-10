@@ -12,11 +12,11 @@
                 .then<TResponse>(x => {
                     return this.communicator.recive<TResponse>();
                 })
-                .then(x => { this.trigger(); return x; })
+                .then(x => { this.raise(); return x; })
                 .catch(this.catchPromise);
         }
-        trigger() {
-            super.trigger(super.send);
+        raise() {
+            super.raise(super.send);
         }
     }
 }

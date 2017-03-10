@@ -60,6 +60,13 @@
 /// <reference path="viewengine/abstract/viewengine.ts" />
 /// <reference path="viewengine/concrete/jqueryviewengine.ts" />
 
+/// <reference path="validating/contracts/validationresult.ts" />
+/// <reference path="validating/validator/interfaces/ivalidator.ts" />
+/// <reference path="validating/validator/concrete/notzerovalidator.ts" />
+/// <reference path="validating/reporter/interfaces/ivalidatatingreporter.ts" />
+/// <reference path="validating/reporter/concrete/notifyvalidatingreporter.ts" />
+/// <reference path="validating/reporter/concrete/jqueryviewvalidatingreporter.ts" />
+
 /// <reference path="viewstate/abstract/viewstate.ts" />
 
 /// <reference path="viewmodels/abstract/viewmodel.ts" />

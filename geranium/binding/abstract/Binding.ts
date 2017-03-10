@@ -1,18 +1,15 @@
 ﻿module geranium.binding.abstract {
     export abstract class Binding<T> implements interfaces.IBinding<T> {
-        bind(DOM: T, model: any) {
-            
-            let attribute = this.attribute();
-            var DOMObjects = this.find(DOM, attribute);
+        async bind(DOM: T, model: any) {
+            var DOMObjects = this.detection(DOM);
             DOMObjects.forEach(v => {
-                this.logic(v, model);
+                this.binding(v, model);
                 this.clear(v);
             });
         }
 
-        abstract attribute(): string;
-        abstract find(DOM: T, attribute: string): T[];
+        abstract detection(DOMObject: T): T[];
+        abstract binding(DOMObject: T, model: any);
         abstract clear(DOMObject: T);
-        abstract logic(DOMObject: T, model: any);
     }
 }

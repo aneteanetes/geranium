@@ -1,7 +1,7 @@
 ﻿module geranium.behaviors.events {
     export abstract class Event<T> {
 
-        trigger(args: T) {
+        raise(args: T) {
             this._requestEvents.forEach(x => {
                 x(args);
             });

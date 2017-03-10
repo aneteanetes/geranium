@@ -9,7 +9,7 @@
 
             var vengine = runtime.AppSettings.Current.viewengine;
             var context = new viewengine.contracts.ExecuteContext(view);
-            vengine.execute(context);
+            var viewDOM = await vengine.execute(context);
         }
         abstract view(): { new (selector: string): view.abstract.View };
     }

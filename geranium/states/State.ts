@@ -3,7 +3,7 @@
         constructor() {
             super();
             runtime.AppSettings.Current.states.add(this);
-            runtime.AppSettings.Current.request.trigger();
+            runtime.AppSettings.Current.request.raise();
         }
         static get<T>(type: { new (...args: any[]): T }): T {
             return runtime.AppSettings.Current.states.get(type);

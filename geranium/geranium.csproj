@@ -10,13 +10,14 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
@@ -47,6 +48,7 @@
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="runtime\reflection\Property.ts" />
     <TypeScriptCompile Include="runtime\settings\settings.ts" />
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
     <TypeScriptCompile Include="declare\array.ts" />
@@ -56,6 +58,12 @@
     <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
     <TypeScriptCompile Include="templating\contracts\Template.ts" />
     <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="validating\reporter\concrete\NotifyValidatingReporter.ts" />
+    <TypeScriptCompile Include="validating\reporter\concrete\JQueryViewValidatingReporter.ts" />
+    <TypeScriptCompile Include="validating\validator\concrete\NotZeroValidator.ts" />
+    <TypeScriptCompile Include="validating\contracts\ValidationResult.ts" />
+    <TypeScriptCompile Include="validating\reporter\interfaces\IValidatatingReporter.ts" />
+    <TypeScriptCompile Include="validating\validator\interfaces\IValidator.ts" />
     <TypeScriptCompile Include="viewbinding\abstract\ViewBinder.ts" />
     <TypeScriptCompile Include="viewbinding\concrete\JQueryViewBinder.ts" />
     <TypeScriptCompile Include="viewbinding\contracts\BindContext.ts" />
@@ -130,11 +138,20 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <TypeScriptOutFile>gera.js</TypeScriptOutFile>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>System</TypeScriptModuleKind>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
