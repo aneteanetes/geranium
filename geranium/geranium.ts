@@ -1,15 +1,4 @@
-﻿module geranium {
-
-    function validate(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
-
-    }
-    class fuckidate extends Function {
-        constructor(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<Function>) {
-            super();
-            console.log("yes, you can use class as fucking decorator, because prototypes etc");
-        }
-    }
-
+﻿module geranium {    
 
     class H1 extends view.abstract.View {
         declare(): string { return '<h1 data-field="time">{{time}}</h1>'; }
@@ -60,28 +49,84 @@
         autoupdate() { return false; }
         view(): any { return v; }
     }
+
+    var _history: any[] = [];
+
+    function routed(constructor: { new () }) {
+        _history.push(constructor);
+        var instance = new constructor() as HashPage;
+        //history.pushState(constructor.name, "title 1", "page=" + instance.page);
+    }    
+
+    interface IHashPage {
+        readonly html: string;
+        readonly page: number;
+        show();
+    }
+
+    abstract class HashPage implements IHashPage {
+        abstract readonly html: string;
+        abstract readonly page: number;
+        show() {
+            $('.viewmodel').jhtml($(this.html));
+        }
+    }
+
+    @routed
+    class Page1 extends HashPage {
+        html: string = "<h1>Page1</h1>";
+        page: number = 1;
+    }
+
+    @routed
+    class Page2 extends HashPage {
+        html: string = "<a href='3'>Page2</a>";
+        page: number = 2;
+    }
     
     export async function blossom() {
-        var modelFromServer = {
-            max: 25,
-            now: 1
+        window.onpopstate = function (event) {
+            var ctor = _history.filter(x => x.name == event.state)[0];
+            var instance = new ctor() as HashPage;
+            instance.show();
         };
 
-        var _vm = new vm();
-        _vm.obtain(JSON.stringify(modelFromServer));
-        _vm.validators.push(new validating.validator.NotZeroValidator("now"));
-        _vm.display('.viewmodel');
+        console.log(window.location.pathname);
+
+        //// добавить состояние истории
+        //history.pushState({ page: 1 }, "title 1", "?page=1");
+        //history.pushState({ page: 2 }, "title 2", "?page=2");
+
+        //// заменить текущее состояние
+        //history.replaceState({ page: 3 }, "title 3", "?page=3");
+
+        //history.back(); // location: http://example.com/example.html?page=1, state: {"page":1}
+        //history.back(); // location: http://example.com/example.html, state: null
+        //history.go(2);  // location: http://example.com/example.html?page=3, state: {"page":3}
+
+        //console.log(history.state) // Object {page: 3}
+
+        //var modelFromServer = {
+        //    max: 25,
+        //    now: 1
+        //};
+
+        //var _vm = new vm();
+        //_vm.obtain(JSON.stringify(modelFromServer));
+        //_vm.validators.push(new validating.validator.NotZeroValidator("now"));
+        //_vm.display('.viewmodel');
         
+        //var ts = new timestate();
+        //ts.bind = (x: timestate) => {
+        //    if (x.time.substring(7) == "0")
+        //        _vm.now++;
+        //};
+        //var _vs = new vs('.viewstate');
+        //setInterval(() => {
+        //    runtime.AppSettings.Current.request.raise();
+        //}, 1100);
 
-        var ts = new timestate();
-        ts.bind = (x: timestate) => {            
-            if (x.time.substring(7) == "0")
-                _vm.now++;
-        };
-        var _vs = new vs('.viewstate');
-        setInterval(() => {
-            runtime.AppSettings.Current.request.raise();
-        }, 1100);
+        //evalx = new evalMe();
     }
 }
 geranium.blossom();
