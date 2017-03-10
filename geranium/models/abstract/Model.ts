@@ -11,9 +11,10 @@
             if (typeof data == 'string')
                 data = JSON.parse(data);
             Object.assign(this, data);
-            this.trigger(this);
+            this.raise(this);
         }
 
+        validators: validating.validator.interfaces.IValidator[] = [];
         protected abstract autoupdate(): boolean | {};
     }
 }

@@ -1,15 +1,15 @@
 ﻿module geranium.viewengine {
     export class JQueryViewEngine extends abstract.ViewEngine {
-        protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<boolean> {
+        protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM> {
             
             return new Promise((resolve, reject) => {
                 try {
                     var selector = viewDOM.view.selector;
                     $(selector).jhtml(viewDOM.getViewDOM<JQuery>());
-                    resolve(true);
+                    resolve(viewDOM);
                 } catch (ex) {
                     runtime.AppSettings.Current.logger.log(ex);
-                    reject(false);
+                    reject($(null));
                 }
             });
         }

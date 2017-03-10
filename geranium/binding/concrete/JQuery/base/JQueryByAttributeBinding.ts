@@ -1,10 +1,10 @@
 ﻿module geranium.binding.JQueryBindings.base {
-    export abstract class JQueryByAttributeBinding extends abstract.Binding<JQuery> {
+    export abstract class JQueryByAttributeBinding extends JQueryBinding {
         clear(DOMObject: JQuery) {
-            DOMObject.removeAttr(this.attribute());
+            DOMObject.removeAttr(this.attribute);
         }
-        find(DOM: JQuery, attribute: string): JQuery[] {
-            return DOM.findAndfilter('[' + attribute + ']')
+        detection(DOM: JQuery): JQuery[] {
+            return DOM.findAndfilter('[' + this.attribute + ']')
                 .toArray()
                 .map(x => $(x));
         }

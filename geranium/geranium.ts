@@ -69,18 +69,18 @@
 
         var _vm = new vm();
         _vm.obtain(JSON.stringify(modelFromServer));
+        _vm.validators.push(new validating.validator.NotZeroValidator("now"));
         _vm.display('.viewmodel');
-
+        
 
         var ts = new timestate();
-        ts.bind = (x: timestate) => {
-            debugger;
+        ts.bind = (x: timestate) => {            
             if (x.time.substring(7) == "0")
                 _vm.now++;
         };
         var _vs = new vs('.viewstate');
         setInterval(() => {
-            runtime.AppSettings.Current.request.trigger();
+            runtime.AppSettings.Current.request.raise();
         }, 1100);
     }
 }

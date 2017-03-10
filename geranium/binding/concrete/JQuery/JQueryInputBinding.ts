@@ -1,17 +1,16 @@
 ﻿module geranium.binding.JQueryBindings {
     export class JQueryInputBinding extends base.JQueryBinding {
-        attribute(): string { return 'input'; }
-        logic(DOMObject: JQuery, model: any) {
+        get attribute(): string { return 'input'; }
+        binding(DOMObject: JQuery, model: any) {
             let value = DOMObject.attr('name');
-            var valSymbol = Symbol(value);
-
-            model[valSymbol] = model[value];
-            Object.defineProperty(model, value, {
-                get: () => { return model[valSymbol]; },
-                set: (val) => { DOMObject.val(val); model[valSymbol] = val; }
-            });
+            var indexer= runtime.reflection.Property.define(model, value,
+                (val) => val,
+                (val) => {
+                    DOMObject.html(val);
+                    return val;
+                });
             DOMObject.change(x => {
-                model[valSymbol] = DOMObject.val();
+                model[indexer] = DOMObject.val();
             });
         }
         clear() { }

@@ -4,7 +4,7 @@
         send<TRequest extends JQueryAjaxSettings>(data: TRequest) {
             this.innerPromise = $.ajax(data);
         }
-        async recive<TResponse>(): JQueryPromise<TResponse> {
+        async recive<TResponse>(): Promise<TResponse> {
             return await this.innerPromise;
         }
     }

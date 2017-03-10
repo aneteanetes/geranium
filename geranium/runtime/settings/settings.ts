@@ -21,6 +21,7 @@
             storage?: storage.interfaces.IStorage,
             states?: storage.interfaces.IGenericStorage<states.State>,
             viewbinder?: viewbinding.abstract.ViewBinder,
+            validreport?: validating.reporter.interfaces.IValidatingReporter,
             viewengine?: viewengine.interfaces.IViewEngine,
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
@@ -39,6 +40,7 @@
         templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
         storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
+        validreport: validating.reporter.interfaces.IValidatingReporter = new validating.reporter.JQueryViewValidatingReporter;
         viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
         viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
         bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [

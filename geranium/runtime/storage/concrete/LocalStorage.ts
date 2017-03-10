@@ -18,6 +18,9 @@
                 return false;
             }
         }
-        get<T>(type: { new (...args: any[]): T, name: string }): T { return localStorage.getItem(type.name); }
+        get<T>(type: { new (...args: any[]): T, name: string }): T {
+            var strValue = localStorage.getItem(type.name);
+            return JSON.parse(strValue);
+        }
     }
 }

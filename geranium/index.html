@@ -8,13 +8,19 @@
         .template {
             display:none;
         }
+        div.validating.error.container {
+            border: 1px solid black;
+            background-color:red;
+        }
     </style>
     <div class="viewstate"></div>
     <div class="viewmodel"></div>
     <div class="template">
         Train now at <span data-field="now">{{now}}</span> of <span data-field="max">{{max}}</span> (<button onclick="maxdecrement">-</button><button onclick="maxincrement">+</button>) stations<br />
         <button onclick="decrement">prev station</button><button onclick="increment">next station</button><br />
-        road to <input name="jumpto" type="number" /> station <button onclick="jump">go</button>
+        road to <input name="jumpto" type="number" /> station <button onclick="jump">go</button><br />
+        <div class="errors">
+        </div>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
