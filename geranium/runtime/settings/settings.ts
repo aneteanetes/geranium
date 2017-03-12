@@ -22,7 +22,8 @@
             states?: storage.interfaces.IGenericStorage<states.State>,
             viewbinder?: viewbinding.abstract.ViewBinder,
             validreport?: validating.reporter.interfaces.IValidatingReporter,
-            viewengine?: viewengine.interfaces.IViewEngine,
+			viewengine?: viewengine.interfaces.IViewEngine,
+			router?: routing.abstract.Router,
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
@@ -42,7 +43,8 @@
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
         validreport: validating.reporter.interfaces.IValidatingReporter = new validating.reporter.JQueryViewValidatingReporter;
         viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
-        viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
+		viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
+		router: routing.abstract.Router = new routing.BasicRouter();
         bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
             binding.JQueryBindings.JQueryFieldBinding,
             binding.JQueryBindings.JQueryInputBinding,

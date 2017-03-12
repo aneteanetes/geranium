@@ -1,6 +1,6 @@
 ﻿module geranium {    
 
-    class H1 extends view.abstract.View {
+	class H1 extends view.abstract.View {
         declare(): string { return '<h1 data-field="time">{{time}}</h1>'; }
     }
     class timestate extends states.State {
@@ -50,46 +50,77 @@
         view(): any { return v; }
     }
 
-    var _history: any[] = [];
+	function routePath(obj: any, routes: string[]): string[] {
+		if (routes == null)
+			routes = [];
 
-    function routed(constructor: { new () }) {
-        _history.push(constructor);
-        var instance = new constructor() as HashPage;
-        //history.pushState(constructor.name, "title 1", "page=" + instance.page);
+		if (obj == null)
+			return null;
+
+		var route = obj.constructor.name;
+		if (route == "Object")
+			return null;
+		
+		routes.push(obj.constructor.name);
+		obj = Object.getPrototypeOf(obj);
+		routes.concat(routePath(obj, routes));
+		return routes;
+	}
+
+
+	var _routes: { route: string, ctor: { new (): any } }[] = [];
+
+	function routed1(constructor: any) {
+		var instance = new constructor() as Pages;
+
+		var route = routePath(instance, null)
+			.removeSame()
+			.reverse()
+			.join("/");
+
+		_routes.push({ route: "/" + route, ctor: constructor });
     }    
-
+	
     interface IHashPage {
         readonly html: string;
         readonly page: number;
         show();
-    }
+	}
 
-    abstract class HashPage implements IHashPage {
+	@geranium.routing.abstract.Router.routed
+    abstract class Pages implements IHashPage {
         abstract readonly html: string;
         abstract readonly page: number;
         show() {
             $('.viewmodel').jhtml($(this.html));
         }
-    }
+	}
 
-    @routed
-    class Page1 extends HashPage {
+	class Page1 extends Pages {
         html: string = "<h1>Page1</h1>";
         page: number = 1;
-    }
+	}
 
-    @routed
-    class Page2 extends HashPage {
+	class Page2 extends Pages {
         html: string = "<a href='3'>Page2</a>";
         page: number = 2;
     }
     
-    export async function blossom() {
-        window.onpopstate = function (event) {
-            var ctor = _history.filter(x => x.name == event.state)[0];
-            var instance = new ctor() as HashPage;
-            instance.show();
-        };
+	export async function blossom() {
+
+		//window.onload = x => {
+		//	debugger;
+		//	var routing = _routes.filter(x => x.route == window.location.pathname);
+		//	if (routing.length > 0) {
+		//		var instance = new routing[0].ctor();
+		//		instance.show();
+		//	}
+		//};
+   //     window.onpopstate = function (event) {
+   //         var ctor = _history.filter(x => x.name == event.state)[0];
+			//var instance = new ctor() as Pages;
+   //         instance.show();
+   //     };
 
         console.log(window.location.pathname);
 

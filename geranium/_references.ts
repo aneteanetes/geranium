@@ -71,6 +71,11 @@
 
 /// <reference path="viewmodels/abstract/viewmodel.ts" />
 
+/// <reference path="routing/constracts/route.ts" />
+/// <reference path="routing/constracts/routematch.ts" />
+/// <reference path="routing/abstract/router.ts" />
+/// <reference path="routing/concrete/basicrouter.ts" />
+
 /// <reference path="runtime/settings/settings.ts" />
 
 /// <reference path="geranium.ts" />

@@ -48,6 +48,10 @@
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="routing\abstract\Router.ts" />
+    <TypeScriptCompile Include="routing\concrete\BasicRouter.ts" />
+    <TypeScriptCompile Include="routing\constracts\Route.ts" />
+    <TypeScriptCompile Include="routing\constracts\RouteMatch.ts" />
     <TypeScriptCompile Include="runtime\reflection\Property.ts" />
     <TypeScriptCompile Include="runtime\settings\settings.ts" />
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
@@ -90,6 +94,10 @@
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -109,6 +117,9 @@
     <Compile Include="handler.ashx.cs">
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
@@ -144,7 +155,7 @@
     <TypeScriptTarget>ES6</TypeScriptTarget>
     <TypeScriptOutFile>gera.js</TypeScriptOutFile>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
-    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>System</TypeScriptModuleKind>
     <TypeScriptOutDir />
