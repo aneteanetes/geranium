@@ -1,5 +1,11 @@
 ﻿module geranium.routing.abstract {
 	export abstract class Router {
+		constructor() {
+			var root = new contracts.Route();
+			root.url = "/";
+			this._routes.push(root);
+		}
+
 		_routes: contracts.Route[] = [];
 		get routes(): contracts.Route[] {
 			return this._routes.slice();
@@ -39,7 +45,13 @@
 
 		abstract route(current: contracts.Route);
 	}
-	window.onload = x => {
-		console.log('window loaded');
-	};
+
+	if (window) {
+		window.onload = x => {
+
+		};
+		window.onpopstate = x => {
+
+		}
+	}
 }
