@@ -43,8 +43,8 @@
         states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
         validreport: validating.reporter.interfaces.IValidatingReporter = new validating.reporter.JQueryViewValidatingReporter;
         viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
-		viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
-		router: routing.abstract.Router = new routing.BasicRouter();
+        viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
+        router: routing.abstract.Router = new routing.BasicRouter();
         bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
             binding.JQueryBindings.JQueryFieldBinding,
             binding.JQueryBindings.JQueryInputBinding,

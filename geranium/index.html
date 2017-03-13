@@ -5,7 +5,7 @@
 </head>
 <body>
     <style>
-        .template {
+        .template, .loginForm {
             display:none;
         }
         div.validating.error.container {
@@ -15,6 +15,12 @@
     </style>
     <div class="viewstate"></div>
     <div class="viewmodel"></div>
+    <div class="app"></div>
+    <div class="loginForm">
+        <label for="name">Name:</label> <input type="text" name="name" /><br />
+        <label for="pwd">Password:</label><input type="password" name="pwd" /><br />
+        <button onclick="go">log in</button>
+    </div>
     <div class="template">
         Train now at <span data-field="now">{{now}}</span> of <span data-field="max">{{max}}</span> (<button onclick="maxdecrement">-</button><button onclick="maxincrement">+</button>) stations<br />
         <button onclick="decrement">prev station</button><button onclick="increment">next station</button><br />

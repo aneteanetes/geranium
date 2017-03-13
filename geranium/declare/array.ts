@@ -1,6 +1,6 @@
 ﻿interface Array<T> {
 	remove: (item: T) => Array<T>;
-	removeSame: () => Array<T>;
+    removeSame: () => Array<T>;
 }
 if (!Array.prototype.remove) {
     Array.prototype.remove = function <T>(elem: T): T[] {

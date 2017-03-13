@@ -1,7 +1,13 @@
 ﻿/// <reference path="declare/typings/jquery.d.ts" />
 /// <reference path="declare/array.ts" />
+/// <reference path="declare/typings/reflect-metadata.d.ts" />
 /// <reference path="declare/string.ts" />
 /// <reference path="declare/mustachejs.ts" />
+
+/// <reference path="routing/constracts/route.ts" />
+/// <reference path="routing/constracts/routematch.ts" />
+/// <reference path="routing/abstract/router.ts" />
+/// <reference path="routing/concrete/basicrouter.ts" />
 
 /// <reference path="behaviors/events/abstract/event.ts" />
 
@@ -70,11 +76,6 @@
 /// <reference path="viewstate/abstract/viewstate.ts" />
 
 /// <reference path="viewmodels/abstract/viewmodel.ts" />
-
-/// <reference path="routing/constracts/route.ts" />
-/// <reference path="routing/constracts/routematch.ts" />
-/// <reference path="routing/abstract/router.ts" />
-/// <reference path="routing/concrete/basicrouter.ts" />
 
 /// <reference path="runtime/settings/settings.ts" />
 

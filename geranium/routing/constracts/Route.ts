@@ -1,6 +1,6 @@
 ﻿module geranium.routing.contracts {
 	export class Route {
 		url: string;
-		cotr: { new (): any };
+        ctor: { new (...args:any[]): viewmodels.abstract.ViewModel };
 	}
 }

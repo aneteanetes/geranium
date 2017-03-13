@@ -1,4 +1,5 @@
 ﻿module geranium.viewmodels.abstract {
+    @routing.abstract.Router.routeignore
     export abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
         async display(selector: string) {
             var viewctr = this.view();

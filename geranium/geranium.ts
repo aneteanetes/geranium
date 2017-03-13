@@ -1,6 +1,5 @@
-﻿module geranium {    
-
-	class H1 extends view.abstract.View {
+﻿module geranium {
+    class H1 extends view.abstract.View {
         declare(): string { return '<h1 data-field="time">{{time}}</h1>'; }
     }
     class timestate extends states.State {
@@ -24,8 +23,10 @@
             debugger;
             return html;
         }
-    }
-    class vm extends viewmodels.abstract.ViewModel {        
+    }    
+
+    @routing.abstract.Router.routed
+    class vm extends viewmodels.abstract.ViewModel {
         max: number = 10;
         now: number = 0;
         jumpto: number = 0;
@@ -48,81 +49,74 @@
 
         autoupdate() { return false; }
         view(): any { return v; }
+    }    
+
+
+
+    class loginView extends view.abstract.View {
+        declare(): string {
+            var html = $('.loginForm').html();
+            $('.loginForm').remove();
+            return html;
+        }
     }
 
-	function routePath(obj: any, routes: string[]): string[] {
-		if (routes == null)
-			routes = [];
+    @routing.BasicRouter.routed
+    @routing.BasicRouter.routeroot
+    class app extends viewmodels.abstract.ViewModel {
+        constructor(route: string) {
+            super();
+            if (route) {
+                console.log('train is:' + route[0]);
+                console.log('requested station info is:' + route[2]);
 
-		if (obj == null)
-			return null;
-
-		var route = obj.constructor.name;
-		if (route == "Object")
-			return null;
-		
-		routes.push(obj.constructor.name);
-		obj = Object.getPrototypeOf(obj);
-		routes.concat(routePath(obj, routes));
-		return routes;
-	}
-
-
-	var _routes: { route: string, ctor: { new (): any } }[] = [];
-
-	function routed1(constructor: any) {
-		var instance = new constructor() as Pages;
-
-		var route = routePath(instance, null)
-			.removeSame()
-			.reverse()
-			.join("/");
-
-		_routes.push({ route: "/" + route, ctor: constructor });
-    }    
-	
-    interface IHashPage {
-        readonly html: string;
-        readonly page: number;
-        show();
-	}
-
-	@geranium.routing.abstract.Router.routed
-    abstract class Pages implements IHashPage {
-        abstract readonly html: string;
-        abstract readonly page: number;
-        show() {
-            $('.viewmodel').jhtml($(this.html));
+                console.log(arguments);
+            }
         }
-	}
 
-	class Page1 extends Pages {
-        html: string = "<h1>Page1</h1>";
-        page: number = 1;
-	}
+        name: string;
+        pwd: string;
 
-	class Page2 extends Pages {
-        html: string = "<a href='3'>Page2</a>";
-        page: number = 2;
+        go() {
+            console.log('go');
+        }
+
+        autoupdate() { return false; }
+        view(): any { return loginView; }
+    }
+
+
+    class staticView extends view.abstract.View {
+        declare(): string {
+            return '<h1>This is static route with param: {{param}}</h1>';
+        }
+    }
+    @routing.BasicRouter.routed
+    class state extends viewmodels.abstract.ViewModel {
+        param: string;
+
+        constructor(routes: string[]) {
+            super();
+            debugger;
+            if (routes) {
+                this.param = routes[0];
+            }
+        }
+
+        autoupdate() { return false; }
+        view(): any { return staticView; }
+    }
+    @routing.BasicRouter.routed
+    class red extends state {
+
+    }
+    @routing.BasicRouter.routed
+    class blue extends state {
+
     }
     
-	export async function blossom() {
-
-		//window.onload = x => {
-		//	debugger;
-		//	var routing = _routes.filter(x => x.route == window.location.pathname);
-		//	if (routing.length > 0) {
-		//		var instance = new routing[0].ctor();
-		//		instance.show();
-		//	}
-		//};
-   //     window.onpopstate = function (event) {
-   //         var ctor = _history.filter(x => x.name == event.state)[0];
-			//var instance = new ctor() as Pages;
-   //         instance.show();
-   //     };
-
-        console.log(window.location.pathname);
+    export async function blossom() {
+        
 
         //// добавить состояние истории
         //history.pushState({ page: 1 }, "title 1", "?page=1");
