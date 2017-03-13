@@ -25,7 +25,7 @@
         }
     }    
 
-    @routing.abstract.Router.routed
+    @routing.abstract.Router.routed()
     class vm extends viewmodels.abstract.ViewModel {
         max: number = 10;
         now: number = 0;
@@ -56,15 +56,14 @@
     class loginView extends view.abstract.View {
         declare(): string {
             var html = $('.loginForm').html();
-            $('.loginForm').remove();
             return html;
         }
     }
 
-    @routing.BasicRouter.routed
-    @routing.BasicRouter.routeroot
+    @routing.BasicRouter.routed('Log in')
+    @routing.BasicRouter.routeroot('Log in')
     class app extends viewmodels.abstract.ViewModel {
-        constructor(route: string) {
+        constructor(route?: string) {
             super();
             if (route) {
                 console.log('train is:' + route[0]);
@@ -78,7 +77,8 @@
         pwd: string;
 
         go() {
-            console.log('go');
+            var _red = new red();
+            _red.display('.app');
         }
 
         autoupdate() { return false; }
@@ -88,31 +88,52 @@
 
     class staticView extends view.abstract.View {
         declare(): string {
-            return '<h1>This is static route with param: {{param}}</h1>';
+            return '<h1>This is static route with param: {{param}}</h1><br><button onclick="next">next</button>';
         }
     }
-    @routing.BasicRouter.routed
-    class state extends viewmodels.abstract.ViewModel {
+    @routing.BasicRouter.routed('State')
+    abstract class state extends viewmodels.abstract.ViewModel {
         param: string;
 
-        constructor(routes: string[]) {
+        abstract nextItem(): string;
+
+        constructor(routes?: string[]) {
             super();
-            debugger;
             if (routes) {
                 this.param = routes[0];
+            }
+        }
+
+        next() {
+            var item = this.nextItem();
+
+            if (item == 'blue') {
+                var _blue = new blue();
+                _blue.display('.app');
+            } else {
+                let _app = new app();
+                _app.display('.app');
             }
         }
 
         autoupdate() { return false; }
         view(): any { return staticView; }
     }
-    @routing.BasicRouter.routed
-    class red extends state {
-
-    }
-    @routing.BasicRouter.routed
+    @routing.BasicRouter.routed('Blue State')
     class blue extends state {
-
+        constructor() {
+            super();
+            this.param = 'blue';
+        }
+        nextItem() { return 'login'; }
+    }
+    @routing.BasicRouter.routed('Is it red?')
+    class red extends state {
+        constructor() {
+            super();
+            this.param = 'red';
+        }
+        nextItem() { return 'blue'; }
     }
     
     export async function blossom() {

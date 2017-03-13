@@ -4,13 +4,14 @@
         async display(selector: string) {
             var viewctr = this.view();
             var view = new viewctr(selector);
-            debugger;
             view.data = this;
             await view.render();
 
             var vengine = runtime.AppSettings.Current.viewengine;
             var context = new viewengine.contracts.ExecuteContext(view);
             var viewDOM = await vengine.execute(context);
+
+            runtime.AppSettings.Current.router.routeByCtor(this.constructor);
         }
         abstract view(): { new (selector: string): view.abstract.View };
     }
