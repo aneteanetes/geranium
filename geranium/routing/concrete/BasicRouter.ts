@@ -35,25 +35,8 @@
             var match = new contracts.RouteMatch();
             Object.assign(match, ctorCollection[0]);
             match.params = params;
-            debugger;
 
             return match;
-        }
-
-        resoreUrl(url: string, params?: string[]) {
-            if (!params)
-                params = [];
-            return url + params.join('/');
-        }
-
-        makeid(): string {
-            var text = "";
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-            for (var i = 0; i < 5; i++)
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-            return text;
         }
     }
 }

@@ -25,7 +25,7 @@
         }
     }    
 
-    @routing.abstract.Router.routed()
+    @routing.abstract.Router.routed
     class vm extends viewmodels.abstract.ViewModel {
         max: number = 10;
         now: number = 0;
@@ -60,8 +60,8 @@
         }
     }
 
-    @routing.BasicRouter.routed('Log in')
-    @routing.BasicRouter.routeroot('Log in')
+    @routing.BasicRouter.routed
+    @routing.BasicRouter.routeroot
     class app extends viewmodels.abstract.ViewModel {
         constructor(route?: string) {
             super();
@@ -70,7 +70,11 @@
                 console.log('requested station info is:' + route[2]);
 
                 console.log(arguments);
-            }
+            }            
+        }
+
+        documentTitle() {
+            return 'Application';
         }
 
         name: string;
@@ -91,7 +95,7 @@
             return '<h1>This is static route with param: {{param}}</h1><br><button onclick="next">next</button>';
         }
     }
-    @routing.BasicRouter.routed('State')
+
     abstract class state extends viewmodels.abstract.ViewModel {
         param: string;
 
@@ -119,7 +123,7 @@
         autoupdate() { return false; }
         view(): any { return staticView; }
     }
-    @routing.BasicRouter.routed('Blue State')
+    @routing.BasicRouter.routed
     class blue extends state {
         constructor() {
             super();
@@ -127,7 +131,7 @@
         }
         nextItem() { return 'login'; }
     }
-    @routing.BasicRouter.routed('Is it red?')
+    @routing.BasicRouter.routed
     class red extends state {
         constructor() {
             super();

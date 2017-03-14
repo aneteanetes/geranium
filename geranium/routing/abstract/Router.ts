@@ -6,8 +6,7 @@
             return Router._routes.slice();
         }
 
-        static routed(title?: any) {
-            return (constructor: any) => {
+        static routed(constructor: any) {
                 var instance = new constructor();
 
                 let chain = Router.chainOfCtorNames(instance, null);
@@ -19,20 +18,15 @@
                 var route = new contracts.Route();
                 route.url = '/' + routeUrl.toLowerCase();
                 route.ctor = constructor;
-                route.title = title;
 
                 Router._routes.push(route);
-            };
         }
 
-        static routeroot(title?: string) {
-            return (constructor: any) => {
-                var root = new contracts.Route();
-                root.url = "/";
-                root.ctor = constructor;
-                root.title = title;
-                Router._routes.push(root);
-            }
+        static routeroot(constructor: any) {
+            var root = new contracts.Route();
+            root.url = "/";
+            root.ctor = constructor;
+            Router._routes.push(root);
         }
 
         static _ignoredRoutes: string[] = [];
@@ -64,24 +58,6 @@
             var route = this.match(url);
             this.route(route);
         }
-        routeByCtor(ctor: any) {
-            var routes = runtime.AppSettings.Current.router.routes.filter(x => x.ctor == ctor);
-            if (routes.length > 0) {
-                var route = routes[0];
-                var routeIndex = runtime.AppSettings.Current.router.routes.indexOf(route);
-                //if (!route.pushed) {
-                //    route.pushed = true;
-                    if (route.url == '/')
-                        history.replaceState(routeIndex, route.title, route.url);
-                    else
-                        history.pushState(routeIndex, route.title, route.url);
-                    document.title = route.title;
-                //} else {
-                //    document.title = route.title;
-                //    history.go(routeIndex);
-                //}
-            }
-        }
 
         abstract route(current: contracts.RouteMatch);
         abstract routearea(): string;
@@ -89,13 +65,8 @@
     }
 
     if (window) {
-        window.onload = () => {
+        window.addEventListener('load', () => {
             runtime.AppSettings.Current.router.routeByUrl(window.location.pathname);
-        }
-        window.onpopstate = x => {
-            var route = runtime.AppSettings.Current.router.routes[x.state];
-            document.title = route.title;
-            runtime.AppSettings.Current.router.route(route as contracts.RouteMatch);
-        }
+        });
     }
 }
