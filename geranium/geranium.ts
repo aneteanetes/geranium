@@ -24,8 +24,7 @@
             return html;
         }
     }    
-
-    @routing.abstract.Router.routed
+    
     class vm extends viewmodels.abstract.ViewModel {
         max: number = 10;
         now: number = 0;
@@ -95,7 +94,7 @@
             return '<h1>This is static route with param: {{param}}</h1><br><button onclick="next">next</button>';
         }
     }
-
+    
     abstract class state extends viewmodels.abstract.ViewModel {
         param: string;
 
@@ -115,8 +114,7 @@
                 var _blue = new blue();
                 _blue.display('.app');
             } else {
-                let _app = new app();
-                _app.display('.app');
+                console.log('end');
             }
         }
 
@@ -124,38 +122,27 @@
         view(): any { return staticView; }
     }
     @routing.BasicRouter.routed
+    @history.history
     class blue extends state {
         constructor() {
             super();
             this.param = 'blue';
         }
         nextItem() { return 'login'; }
+        documentTitle() { return 'violets are blue'; }
     }
     @routing.BasicRouter.routed
+    @history.history
     class red extends state {
         constructor() {
             super();
             this.param = 'red';
         }
         nextItem() { return 'blue'; }
+        documentTitle() { return 'roses are red'; }
     }
     
-    export async function blossom() {
-        
-
-        //// добавить состояние истории
-        //history.pushState({ page: 1 }, "title 1", "?page=1");
-        //history.pushState({ page: 2 }, "title 2", "?page=2");
-
-        //// заменить текущее состояние
-        //history.replaceState({ page: 3 }, "title 3", "?page=3");
-
-        //history.back(); // location: http://example.com/example.html?page=1, state: {"page":1}
-        //history.back(); // location: http://example.com/example.html, state: null
-        //history.go(2);  // location: http://example.com/example.html?page=3, state: {"page":3}
-
-        //console.log(history.state) // Object {page: 3}
-
+    export async function blossom() {        
         //var modelFromServer = {
         //    max: 25,
         //    now: 1

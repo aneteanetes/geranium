@@ -23,7 +23,8 @@
             viewbinder?: viewbinding.abstract.ViewBinder,
             validreport?: validating.reporter.interfaces.IValidatingReporter,
 			viewengine?: viewengine.interfaces.IViewEngine,
-			router?: routing.abstract.Router,
+            router?: routing.abstract.Router,
+            history?: history.interfaces.IHistory,
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
@@ -45,6 +46,7 @@
         viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
         viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
         router: routing.abstract.Router = new routing.BasicRouter();
+        history: history.interfaces.IHistory = new history.Html5HistoryAPI();
         bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
             binding.JQueryBindings.JQueryFieldBinding,
             binding.JQueryBindings.JQueryInputBinding,

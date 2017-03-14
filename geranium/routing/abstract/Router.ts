@@ -7,19 +7,12 @@
         }
 
         static routed(constructor: any) {
-                var instance = new constructor();
 
-                let chain = Router.chainOfCtorNames(instance, null);
-                var routeUrl = chain
-                    .removeSame()
-                    .reverse()
-                    .join("/");
+            var route = new contracts.Route();
+            route.url = Router.urlFromCtor(constructor);
+            route.ctor = constructor;
 
-                var route = new contracts.Route();
-                route.url = '/' + routeUrl.toLowerCase();
-                route.ctor = constructor;
-
-                Router._routes.push(route);
+            Router._routes.push(route);
         }
 
         static routeroot(constructor: any) {
@@ -27,12 +20,23 @@
             root.url = "/";
             root.ctor = constructor;
             Router._routes.push(root);
+            history.history(root.ctor);
         }
 
         static _ignoredRoutes: string[] = [];
         static routeignore(constructor: any) {
             var instance = new constructor();
             Router._ignoredRoutes.push(instance.constructor.name);
+        }
+
+        static urlFromCtor(ctor: any) {
+            var instance = new ctor();
+            let chain = Router.chainOfCtorNames(instance, null);
+            var routeUrl = chain
+                .removeSame()
+                .reverse()
+                .join("/");
+            return '/' + routeUrl.toLowerCase();
         }
         
         static chainOfCtorNames(obj: any, names: string[]): string[] {

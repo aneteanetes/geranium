@@ -48,10 +48,14 @@
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
     <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
     <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="history\decorators\history.ts" />
     <TypeScriptCompile Include="routing\abstract\Router.ts" />
     <TypeScriptCompile Include="routing\concrete\BasicRouter.ts" />
     <TypeScriptCompile Include="routing\constracts\Route.ts" />
     <TypeScriptCompile Include="routing\constracts\RouteMatch.ts" />
+    <TypeScriptCompile Include="history\contracts\HistoryItem.ts" />
+    <TypeScriptCompile Include="history\concrete\Html5HistoryAPI.ts" />
+    <TypeScriptCompile Include="history\interfaces\IHistory.ts" />
     <TypeScriptCompile Include="runtime\reflection\Property.ts" />
     <TypeScriptCompile Include="runtime\settings\settings.ts" />
     <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
@@ -81,6 +85,7 @@
     <TypeScriptCompile Include="viewengine\contracts\ExecuteContext.ts" />
     <TypeScriptCompile Include="viewengine\interfaces\IViewEngine.ts" />
     <TypeScriptCompile Include="viewmodels\abstract\ViewModel.ts" />
+    <TypeScriptCompile Include="viewmodels\contracts\ViewModelHistoryState.ts" />
     <TypeScriptCompile Include="view\abstract\View.ts" />
     <TypeScriptCompile Include="view\interfaces\IViewed.ts" />
     <TypeScriptCompile Include="models\abstract\Model.ts" />

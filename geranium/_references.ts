@@ -9,6 +9,11 @@
 /// <reference path="routing/abstract/router.ts" />
 /// <reference path="routing/concrete/basicrouter.ts" />
 
+/// <reference path="history/contracts/historyitem.ts" />
+/// <reference path="history/interfaces/ihistory.ts" />
+/// <reference path="history/concrete/html5historyapi.ts" />
+/// <reference path="history/decorators/history.ts" />
+
 /// <reference path="behaviors/events/abstract/event.ts" />
 
 /// <reference path="runtime/storage/interfaces/istorage.ts" />
