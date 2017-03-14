@@ -24,6 +24,9 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Application\Validators\MaterializeValidationReporter.ts" />
+    <TypeScriptCompile Include="Application\Validators\NotZeroValidator.ts" />
+    <TypeScriptCompile Include="Application\Validators\RangeValidator.ts" />
     <TypeScriptCompile Include="Application\ViewModels\App.ts" />
     <TypeScriptCompile Include="Application\States\ServerTime.ts" />
     <TypeScriptCompile Include="Application\ViewStates\TimeViewState.ts" />

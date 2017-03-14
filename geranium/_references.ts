@@ -84,7 +84,9 @@
 
 /// <reference path="runtime/settings/settings.ts" />
 
-
+/// <reference path="application/validators/rangevalidator.ts" />
+/// <reference path="application/validators/notzerovalidator.ts" />
+/// <reference path="application/validators/materializevalidationreporter.ts" />
 /// <reference path="application/views/train.ts" />
 /// <reference path="application/views/h1time.ts" />
 /// <reference path="application/states/servertime.ts" />
