@@ -1,27 +1,24 @@
 ﻿module geranium.history {
     export class Html5HistoryAPI implements interfaces.IHistory {
-        ctors: viewmodels.contracts.ViewModelHistoryState[] = [];
-        extend(hitem: contracts.HistoryItem<viewmodels.contracts.ViewModelHistoryState>) {
-            debugger;
-            let idx = this.ctors.push(hitem.state) - 1;
-            window.history.pushState(idx, hitem.title, hitem.url);
+        extend(hitem: contracts.HistoryItem) {
+            if (window.history.state == null)
+                window.history.replaceState(hitem.state, hitem.title, hitem.url);
+            else
+                window.history.pushState(hitem.state, hitem.title, hitem.url);
         }
-        replace(hitem: contracts.HistoryItem<viewmodels.contracts.ViewModelHistoryState>) {
-            debugger;
-            let idx = this.ctors.push(hitem.state) - 1;
-            window.history.replaceState(idx, hitem.title, hitem.url);
-        }
-        restore(state: number) {
-            debugger;
-            var viewmodelstate = this.ctors[state];
-            var instance = new viewmodelstate.ctor();
-            instance.display(viewmodelstate.selector, 'restore');
+        restore(state: any) {
+            var router = runtime.AppSettings.Current.router;
+            var viewmodelstate = router.routes.filter(x => {
+                var instance = new x.ctor();
+                return instance.constructor.name == state.ctor;
+            })[0].ctor;
+            var instance = new viewmodelstate() as any;
+            instance.display(state.selector, 'restore');
         }
     }
 
     if (window) {
         window.addEventListener('popstate', (eventState) => {
-            debugger;
             runtime.AppSettings.Current.history.restore(eventState.state);
         });
     }

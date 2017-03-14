@@ -1,9 +1,9 @@
 ﻿module geranium.history {
-    var constructors: any[] = [];
-    export function history(constructor: any) {
-        constructors.push(constructor);
-    }    
     export function is(constructor: any): boolean {
-        return constructors.indexOf(constructor) > -1;
+        var router = runtime.AppSettings.Current.router;
+        return router.routes.filter(x => {
+            var instance = new x.ctor();
+            return instance.constructor.name == constructor.name;
+        }).length > 0;
     }
 }

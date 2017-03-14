@@ -58,8 +58,7 @@
             return html;
         }
     }
-
-    @routing.BasicRouter.routed
+    
     @routing.BasicRouter.routeroot
     class app extends viewmodels.abstract.ViewModel {
         constructor(route?: string) {
@@ -122,7 +121,6 @@
         view(): any { return staticView; }
     }
     @routing.BasicRouter.routed
-    @history.history
     class blue extends state {
         constructor() {
             super();
@@ -132,7 +130,6 @@
         documentTitle() { return 'violets are blue'; }
     }
     @routing.BasicRouter.routed
-    @history.history
     class red extends state {
         constructor() {
             super();

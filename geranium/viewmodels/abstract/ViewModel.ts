@@ -1,28 +1,22 @@
 ﻿module geranium.viewmodels.abstract {
     @routing.abstract.Router.routeignore
     export abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
-        static lastViewModel: contracts.ViewModelHistoryState;
-
         async display(selector: string) {
             var viewctr = this.view();
             var view = new viewctr(selector);
             view.data = this;
             await view.render();
             
-            var lastVM = ViewModel.lastViewModel;
-            if (lastVM && arguments.length == 1) {
-                var _history = new history.contracts.HistoryItem<contracts.ViewModelHistoryState>();
+            if (history.is(this.constructor) && arguments.length == 1) {
+                var _history = new history.contracts.HistoryItem();
                 _history.url = routing.abstract.Router.urlFromCtor(this.constructor);
                 _history.title = document.title;
-                _history.state = lastVM;
+                _history.state = {
+                    ctor: this.constructor.name,
+                    selector: selector
+                };
                 runtime.AppSettings.Current.history.extend(_history);
             }
-
-            if (history.is(this.constructor))
-                ViewModel.lastViewModel = new contracts.ViewModelHistoryState({
-                    ctor: this.constructor,
-                    selector: selector
-                });
 
             var title = this.documentTitle();
             if (title != null)

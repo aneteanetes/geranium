@@ -1,7 +1,7 @@
 ﻿module geranium.routing.abstract {
     export abstract class Router {
 
-        static _routes: contracts.Route[] = [];
+        private static _routes: contracts.Route[] = [];
         get routes(): contracts.Route[] {
             return Router._routes.slice();
         }
@@ -20,10 +20,9 @@
             root.url = "/";
             root.ctor = constructor;
             Router._routes.push(root);
-            history.history(root.ctor);
         }
 
-        static _ignoredRoutes: string[] = [];
+        private static _ignoredRoutes: string[] = [];
         static routeignore(constructor: any) {
             var instance = new constructor();
             Router._ignoredRoutes.push(instance.constructor.name);
@@ -59,8 +58,7 @@
         }
 
         routeByUrl(url: string) {
-            var route = this.match(url);
-            this.route(route);
+            return this.match(url);
         }
 
         abstract route(current: contracts.RouteMatch);
@@ -70,7 +68,17 @@
 
     if (window) {
         window.addEventListener('load', () => {
-            runtime.AppSettings.Current.router.routeByUrl(window.location.pathname);
+            var router = runtime.AppSettings.Current.router;
+            var route = router.routeByUrl(window.location.pathname);
+
+            //var hitem = new viewmodels.contracts.ViewModelHistoryState({
+            //    ctor: route.ctor,
+            //    selector: router.routearea()
+            //});
+            //(runtime.AppSettings.Current.history as history.Html5HistoryAPI).ctors.push(hitem);
+            //window.history.replaceState(0, '', route.url);
+
+            router.route(route);
         });
     }
 }

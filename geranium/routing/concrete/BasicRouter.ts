@@ -8,25 +8,14 @@
                 return;
 
             var vm = new current.ctor(current.params);
-            vm.display(this.routearea());
-            
-            var hitem = {
-                ctor: current.ctor,
-                selector: runtime.AppSettings.Current.router.routearea()
-            };
-            runtime.AppSettings.Current.history.replace({
-                title: '/',
-                url: current.url,
-                state: hitem
-            } as any);
+            vm.display(this.routearea());            
         }
         match(url: string, params?: string[]): contracts.RouteMatch {
             debugger;
             var ctorCollection = this.routes.filter(x => x.url == url);
 
             if (url == '/' && ctorCollection.length == 0) {
-                var shortestRoute = this.routes.reduce((a, b) => a.url.length < b.url.length ? a : b);
-                history.history(shortestRoute.ctor);
+                var shortestRoute = this.routes.reduce((a, b) => a.url.length < b.url.length ? a : b);                
                 return shortestRoute as any;
             }
 

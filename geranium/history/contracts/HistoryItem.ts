@@ -1,7 +1,7 @@
 ﻿module geranium.history.contracts {
-    export class HistoryItem<TState> {
+    export class HistoryItem {
         title: string;
         url: string;
-        state: TState;
+        state: any;
     }
 }
