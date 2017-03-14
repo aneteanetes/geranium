@@ -84,5 +84,11 @@
 
 /// <reference path="runtime/settings/settings.ts" />
 
+
+/// <reference path="application/views/train.ts" />
+/// <reference path="application/views/h1time.ts" />
+/// <reference path="application/states/servertime.ts" />
+/// <reference path="application/viewstates/timeviewstate.ts" />
+/// <reference path="application/viewmodels/app.ts" />
+
 /// <reference path="geranium.ts" />
- 

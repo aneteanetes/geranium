@@ -11,7 +11,9 @@
             vm.display(this.routearea());            
         }
         match(url: string, params?: string[]): contracts.RouteMatch {
-            debugger;
+            if (this.routes.length == 0)
+                return null;
+
             var ctorCollection = this.routes.filter(x => x.url == url);
 
             if (url == '/' && ctorCollection.length == 0) {

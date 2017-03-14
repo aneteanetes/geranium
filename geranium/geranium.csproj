@@ -24,6 +24,11 @@
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Application\ViewModels\App.ts" />
+    <TypeScriptCompile Include="Application\States\ServerTime.ts" />
+    <TypeScriptCompile Include="Application\ViewStates\TimeViewState.ts" />
+    <TypeScriptCompile Include="Application\Views\H1Time.ts" />
+    <TypeScriptCompile Include="Application\Views\Train.ts" />
     <TypeScriptCompile Include="binding\abstract\Binding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryBinding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryByAttributeBinding.ts" />
