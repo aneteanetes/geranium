@@ -9,18 +9,23 @@
         }
 
         private valid(ViewDOM: viewDOM.abstract.ViewDOM) {
-            var vm = (ViewDOM.view.data as viewmodels.abstract.ViewModel);            
-            vm.validators.forEach(validator => {
-                runtime.reflection.Property.define(ViewDOM.view.data, validator.validatedPropertyName,
-                    (val) => { return val; },
-                    (val) => {
-                        var validation = validator.validate(val);
-                        if (!validation.success) {
-                            runtime.AppSettings.Current.validreport.report(ViewDOM, validation);
-                            return;
-                        }
-                        return val;
-                    });
+            var vm = (ViewDOM.view.data as viewmodels.abstract.ViewModel);
+            var validatedProperties = vm.validators.groupBy('validatedPropertyName');
+            validatedProperties.forEach(validators => {
+                var previosSymbol = null;
+                validators.forEach(validator => {
+                    previosSymbol = runtime.reflection.Property.define(ViewDOM.view.data,validator.validatedPropertyName,
+                        (val) => { return val; },
+                        (val) => {
+                            debugger;
+                            var validation = validator.validate(val);
+                            if (!validation.success) {
+                                runtime.AppSettings.Current.validreport.report(ViewDOM, validation);
+                                return;
+                            }
+                            return val;
+                        }, previosSymbol);
+                });
             });
         }
 

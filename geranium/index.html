@@ -8,6 +8,9 @@
         .templates {
             display:none;
         }
+        .controlpanel .btn {
+            background-color: #ee6e73;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <nav>
@@ -15,16 +18,29 @@
             <a class="servertime brand-logo center"></a>
         </div>
     </nav>
+    <div class="controlpanel container">
+
+    </div>
     <div class="app container">
     </div>
 
 
     <!-- templates -->
     <div class="templates">
+        <div class="controls">
+            <div class="row">
+                <div class="col offset-m2 m4 s12">
+                    <button class="waves-effect waves-light btn" style="width:100%" onclick="schedule">{{scheduleBtnName}}</button>
+                </div>
+                <div class="col m4 s12">
+                    <button class="waves-effect waves-light btn" style="width:100%" onclick="about">{{aboutBtnName}}</button>
+                </div>
+            </div>
+        </div>
         <div class="train">
             <div class="row">
                 <h3 class="col s12">
-                    Train now at <span data-field="now">{{now}}</span> of <span data-field="max">{{max}}</span> stations
+                    Train now at <span data-field="now">{{now}}</span> station of <span data-field="max">{{max}}</span>
                 </h3>
             </div>
             <div class="row">

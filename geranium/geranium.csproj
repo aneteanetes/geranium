@@ -21,15 +21,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Application\Validators\MaterializeValidationReporter.ts" />
-    <TypeScriptCompile Include="Application\Validators\NotZeroValidator.ts" />
+    <TypeScriptCompile Include="Application\Validators\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="Application\Validators\RangeValidator.ts" />
     <TypeScriptCompile Include="Application\ViewModels\App.ts" />
     <TypeScriptCompile Include="Application\States\ServerTime.ts" />
+    <TypeScriptCompile Include="Application\ViewModels\Controls.ts" />
     <TypeScriptCompile Include="Application\ViewStates\TimeViewState.ts" />
+    <TypeScriptCompile Include="Application\Views\ControlPanel.ts" />
     <TypeScriptCompile Include="Application\Views\H1Time.ts" />
     <TypeScriptCompile Include="Application\Views\Train.ts" />
     <TypeScriptCompile Include="binding\abstract\Binding.ts" />

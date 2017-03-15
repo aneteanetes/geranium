@@ -4,38 +4,47 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import IValidator = geranium.validating.validator.interfaces.IValidator;
 import Exception = geranium.exceptions.Exception;
 
-@router.routed
+//@router.routed
 class App extends vm {
-	view() { return Train; }
+    view() { return Train; }
 
-	max: number = 10;
-	now: number = 0;
-	jumpto: number = 0;
+    max: number = 10;
 
-	increment() {
-		this.now++;
-		this.progressBar();
-	}
-	decrement() {
-		this.now--;
-		this.progressBar();
-	}
-	jump() {
-		this.now = this.jumpto;
-		this.progressBar();
-	}
+    _now: number = 0;
+    get now(): number {
+        this.progressBar();
+        return this._now;
+    }
+    set now(val: number) {
+        debugger;
+        this._now = val;
+        this.progressBar();
+    }
 
-	progressBar() {
-		let percentage = this.now / this.max * 100;
-		$('.determinate').css('width', percentage.toString() + '%');
-	}
+    jumpto: number = 0;
 
-	documentTitle() { return 'Application'; }
+    increment() {
+        this.now++;
+    }
+    decrement() {
+        this.now--;
+    }
+    jump() {
+        this.now = this.jumpto;
+        this.progressBar();
+    }
 
-	validators: IValidator[] = [
-		new NotZeroValidator("now"),
-		new RangeValidator("now", 0, 10, false)
-	];
+    progressBar() {
+        let percentage = this._now / this.max * 100;
+        $('.determinate').css('width', percentage.toString() + '%');
+    }
 
-	autoupdate() { return false; }
+    documentTitle() { return 'Application'; }
+
+    validators: IValidator[] = [
+        new NotLessThenZeroValidator("now"),
+        //new RangeValidator("now", 0, 10, false)
+    ];
+
+    autoupdate() { return false; }
 }

@@ -9,7 +9,8 @@
 	private min: number;
 	private max: number;
 	validatedPropertyName: string;
-	validate(value: number): ValidationResult {
+    validate(value: number): ValidationResult {
+        debugger;
 		var result = new ValidationResult();
 		result.success = this.strict
 			? (value > this.min && value < this.max)

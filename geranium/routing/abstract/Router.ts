@@ -1,6 +1,8 @@
 ﻿module geranium.routing.abstract {
     export abstract class Router {
 
+        abstract Current<T extends viewmodels.abstract.ViewModel>(): T;
+
         private static _routes: contracts.Route[] = [];
         get routes(): contracts.Route[] {
             return Router._routes.slice();

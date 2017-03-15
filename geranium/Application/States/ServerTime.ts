@@ -1,5 +1,5 @@
-﻿import state = geranium.states.State;
-class ServerTime extends state {
+﻿import State = geranium.states.State;
+class ServerTime extends State {
     time: string = "12:15:16";
     autoupdate() {
         return {

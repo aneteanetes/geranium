@@ -1,5 +1,10 @@
 ﻿module geranium.routing {
     export class BasicRouter extends abstract.Router {
+        Current<T extends viewmodels.abstract.ViewModel>(): T {
+            return this._current;
+        }
+        _current: any;
+
         routearea() {
             return '.app';
         }
@@ -8,7 +13,8 @@
                 return;
 
             var vm = new current.ctor(current.params);
-            vm.display(this.routearea());            
+            vm.display(this.routearea());
+            this._current = vm;
         }
         match(url: string, params?: string[]): contracts.RouteMatch {
             if (this.routes.length == 0)
