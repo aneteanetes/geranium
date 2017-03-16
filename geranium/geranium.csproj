@@ -29,6 +29,7 @@
     <TypeScriptCompile Include="Application\Validators\MaterializeValidationReporter.ts" />
     <TypeScriptCompile Include="Application\Validators\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="Application\Validators\RangeValidator.ts" />
+    <TypeScriptCompile Include="Application\Validators\TypeValidator.ts" />
     <TypeScriptCompile Include="Application\ViewModels\App.ts" />
     <TypeScriptCompile Include="Application\States\ServerTime.ts" />
     <TypeScriptCompile Include="Application\ViewModels\Controls.ts" />

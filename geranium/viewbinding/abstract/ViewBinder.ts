@@ -3,8 +3,8 @@
         private viewDOM: geranium.viewDOM.abstract.ViewDOM;
         bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM {            
             this.viewDOM = context.viewDOM;
-            this.valid(this.viewDOM);
             this.exec(this.viewDOM, context.bindingFlags);
+            this.valid(this.viewDOM);
             return this.viewDOM;
         }
 
@@ -14,17 +14,16 @@
             validatedProperties.forEach(validators => {
                 var previosSymbol = null;
                 validators.forEach(validator => {
-                    previosSymbol = runtime.reflection.Property.define(ViewDOM.view.data,validator.validatedPropertyName,
+                    runtime.reflection.Property.redefine(ViewDOM.view.data, validator.validatedPropertyName,
                         (val) => { return val; },
                         (val) => {
-                            debugger;
                             var validation = validator.validate(val);
                             if (!validation.success) {
                                 runtime.AppSettings.Current.validreport.report(ViewDOM, validation);
                                 return;
                             }
                             return val;
-                        }, previosSymbol);
+                        });
                 });
             });
         }

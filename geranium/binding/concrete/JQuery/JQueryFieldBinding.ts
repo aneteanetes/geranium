@@ -3,7 +3,7 @@
         get attribute(): string { return 'data-field'; }
         binding(DOMObject: JQuery, model: any) {
             let value = DOMObject.attr(this.attribute);
-            runtime.reflection.Property.define(model, value,
+            runtime.reflection.Property.redefine(model, value,
                 (val) => val,
                 (val) => {
                     DOMObject.html(val);

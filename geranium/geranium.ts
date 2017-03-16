@@ -7,7 +7,7 @@ import appSettings = geranium.runtime.AppSettings;
 appSettings.Current.init({
     validreport: new MaterializeValidationRepoter()
 });
-appSettings.Current.bidnings.length = 0;
+//appSettings.Current.bidnings.length = 0;
 
 var apps = new App();
 apps.display('.app');

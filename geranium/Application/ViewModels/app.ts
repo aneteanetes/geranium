@@ -16,7 +16,6 @@ class App extends vm {
         return this._now;
     }
     set now(val: number) {
-        debugger;
         this._now = val;
         this.progressBar();
     }
@@ -30,8 +29,7 @@ class App extends vm {
         this.now--;
     }
     jump() {
-        this.now = this.jumpto;
-        this.progressBar();
+        this.now = parseInt(this.jumpto as any);
     }
 
     progressBar() {
@@ -42,8 +40,9 @@ class App extends vm {
     documentTitle() { return 'Application'; }
 
     validators: IValidator[] = [
+        new TypeValidator("now","number"),
         new NotLessThenZeroValidator("now"),
-        //new RangeValidator("now", 0, 10, false)
+        new RangeValidator("now", 0, 10, false),
     ];
 
     autoupdate() { return false; }

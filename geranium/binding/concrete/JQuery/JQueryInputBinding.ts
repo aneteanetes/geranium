@@ -3,14 +3,14 @@
         get attribute(): string { return 'input'; }
         binding(DOMObject: JQuery, model: any) {
             let value = DOMObject.attr('name');
-            var defined =                runtime.reflection.Property.define(model, value,
+            runtime.reflection.Property.redefine(model, value,
                 (val) => val,
                 (val) => {
                     DOMObject.html(val);
                     return val;
                 });
             DOMObject.change(x => {
-                model[defined.indexer] = DOMObject.val();
+                model[value] = DOMObject.val();
             });
         }
         clear() { }

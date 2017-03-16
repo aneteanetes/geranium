@@ -3,7 +3,7 @@
 		this.validatedPropertyName = prop;
 	}
 	validatedPropertyName: string;
-	validate(value: number): ValidationResult {
+    validate(value: number): ValidationResult {
 		var result = new ValidationResult();
 		result.success = value >= 0;
 		if (!result.success)

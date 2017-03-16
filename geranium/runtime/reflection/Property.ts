@@ -1,84 +1,55 @@
 ﻿module geranium.runtime.reflection {
     export class Property {
         /**
-            * Returns indexer of real value
-        */
-        static define(target, name: string, get: (val: any) => any, set: (val: any) => any, state?: ResultOfDefiningProperty): ResultOfDefiningProperty {
+         * Redefines property with new public accessors, safe
+         * @param target
+         * @param name of property
+         * @param get new public setter
+         * @param set new public getter
+         */
+        static redefine(target, name: string, get: (val: any) => any, set: (val: any) => any) {
+            var protoPropertyDescriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(target), name);
+            var ownPropertyDescriptor = Object.getOwnPropertyDescriptor(target, name);
 
-            var property: any = name;
-            var indexer = Symbol(name);
+            //prototype accessor
+            if (ownPropertyDescriptor == undefined && protoPropertyDescriptor != undefined) {
+                Object.defineProperty(target, name, {
+                    get() { return get(protoPropertyDescriptor.get.call(target)); },
+                    set(val) {
+                        let _val = set(val);
+                        if (_val != undefined)
+                            protoPropertyDescriptor.set.call(target, _val);
+                    },
+                    configurable: true
+                });
+                return;
 
-            var descriptor = Object.getOwnPropertyDescriptor(target, name);
-            var __protodescriptor = Object.getOwnPropertyDescriptor(target.__proto__, name);
+            //own accessor exists
+            } else if (ownPropertyDescriptor.value == undefined) {
+                Object.defineProperty(target, name, {
+                    get() { return get(ownPropertyDescriptor.get.call(target)); },
+                    set(val) {
+                        let _val = set(val);
+                        if (_val != undefined)
+                            ownPropertyDescriptor.set.call(target, _val);
+                    },
+                    configurable: true
+                });
 
-            if (descriptor != undefined && descriptor.value == undefined || __protodescriptor) {
-                if (!state) {
-                    state = Property.restorePropertyChain(descriptor ? target : target.__proto__, name);
-                }
-                property = state.indexer;
-                indexer = Symbol(name + '___' + state.chain.toString());
-                if (__protodescriptor && !property) {
-                    property = name;
-                    target[indexer] = target[name];
-                } else
-                    target[indexer] = target[state.indexer];
-                state.chain++;
-            } else
-                target[indexer] = target[name];            
-
-            //if (!__protodescriptor)
-                Object.defineProperty(target, property, {
+            //accessor doesn't exists
+            } else {
+                var indexer = Symbol(name);
+                target[indexer] = target[name];
+                Object.defineProperty(target, name, {
                     get() { return get(target[indexer]); },
                     set(val) {
-                        var setVal = set(val);
-                        if (setVal != undefined)
-                            target[indexer] = val;
-                    }
+                        let _val = set(val);
+                        if (_val != undefined)
+                            target[indexer] = set(_val);
+                    },
+                    configurable: true
                 });
-            //else
-            //    Object.defineProperty(target, property, {
-            //        get() { return get(target.__proto__[indexer]); },
-            //        set(val) {
-            //            var setVal = set(val);
-            //            if (setVal != undefined)
-            //                target.__proto__[indexer] = val;
-            //        }
-            //    });
-
-            if (!state)
-                state = new ResultOfDefiningProperty();
-            state.indexer = indexer;
-            return state;
-        }
-        /**
-         * Returns last indexer of property chain, usable only after Property.define()
-         * @param target
-         * @param propertyName
-         */
-        private static restorePropertyChain(target, propertyName, state?: ResultOfDefiningProperty): ResultOfDefiningProperty {
-            if (!state) {
-                state = new ResultOfDefiningProperty();
-                state.chain = 0;
-            }
-
-            var postfix = "___" + state.chain.toString();
-
-            var symbol = Object.getOwnPropertySymbols(target)
-                .filter(x => x.toString() == 'Symbol(' + propertyName + postfix + ')')[0];
-
-            if (symbol == null) {
-                return state;
-            }
-            else {
-                state.indexer = symbol;
-                state.chain++;
-                return Property.restorePropertyChain(target, propertyName, state);
             }
         }
-    }
-
-    export class ResultOfDefiningProperty {
-        indexer: any;
-        chain: number = 0;
     }
 }

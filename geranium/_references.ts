@@ -84,6 +84,7 @@
 
 /// <reference path="runtime/settings/settings.ts" />
 
+/// <reference path="application/validators/typevalidator.ts" />
 /// <reference path="application/validators/rangevalidator.ts" />
 /// <reference path="application/validators/notlessthenzerovalidator.ts" />
 /// <reference path="application/validators/materializevalidationreporter.ts" />
