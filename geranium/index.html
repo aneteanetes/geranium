@@ -13,6 +13,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <nav>
         <div class="nav-wrapper">
             <a class="servertime brand-logo center"></a>
@@ -27,6 +28,17 @@
 
     <!-- templates -->
     <div class="templates">
+
+        <div class="schedule">
+            <ul class="collapsible" data-collapsible="accordion">
+                <li collection-binding="trains">
+                    <div class="collapsible-header"><span class="new badge [[stagecolor]]" data-badge-caption="of [[max]]">[[now]]</span><i class="material-icons">place</i>[[name]]</div>
+                    <div class="collapsible-body"><p>[[details]]</p></div>
+                </li>
+            </ul>
+        </div>
+
+
         <div class="controls">
             <div class="row">
                 <div class="col offset-m2 m4 s12">
@@ -37,6 +49,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="train">
             <div class="row">
                 <h3 class="col s12">

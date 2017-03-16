@@ -7,6 +7,7 @@
             this.view = view;
             if (!bindingFlags)
                 bindingFlags = runtime.AppSettings.Current.bidnings;
+            debugger;
             this.bindingFlags = bindingFlags;
         }
     }

@@ -1,12 +1,16 @@
-﻿import vm = geranium.viewmodels.abstract.ViewModel;
+﻿import ViewModel = geranium.viewmodels.abstract.ViewModel;
 import router = geranium.routing.abstract.Router;
 import ValidationResult = geranium.validating.contracts.ValidationResult;
 import IValidator = geranium.validating.validator.interfaces.IValidator;
 import Exception = geranium.exceptions.Exception;
 
-//@router.routed
-class App extends vm {
+@router.routed
+class App extends ViewModel {
     view() { return Train; }
+
+    constructor(routes?: string[]) {
+        super();               
+    }
 
     max: number = 10;
 

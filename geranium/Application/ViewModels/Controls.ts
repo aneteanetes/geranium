@@ -1,14 +1,16 @@
-﻿class Controls extends vm {
+﻿class Controls extends ViewModel {
     view() { return ControlPanel; }
 
     scheduleBtnName: string = 'schedule';
-    aboutBtnName: string = 'about';
+    aboutBtnName: string = 'trip';
 
     schedule() {
-        console.log('schedule viewmodel');
+        var schedule = new Schedule();
+        schedule.display('.app');
     }
     about() {
-        console.log('about');
+        var app = new App();
+        app.display('.app');
     }
 
     autoupdate() {
