@@ -12,8 +12,11 @@
             if (current == null)
                 return;
 
-            var vm = new current.ctor(current.params);
-            vm.display(this.routearea());
+            var vm = new current.ctor(current.params) as any;
+            if (!current.restore)
+                vm.display(this.routearea(), current.params);
+            else
+                vm.display(current.selector, current.params, current.restore);
             this._current = vm;
         }
         match(url: string, params?: string[]): contracts.RouteMatch {

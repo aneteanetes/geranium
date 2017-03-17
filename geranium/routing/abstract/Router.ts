@@ -1,6 +1,6 @@
 ﻿module geranium.routing.abstract {
     export abstract class Router {
-
+        static clearUrl: boolean = false;
         abstract Current<T extends viewmodels.abstract.ViewModel>(): T;
 
         private static _routes: contracts.Route[] = [];
@@ -28,17 +28,22 @@
         static routeignore(constructor: any) {
             var instance = new constructor();
             Router._ignoredRoutes.push(instance.constructor.name);
-        }
+        }        
 
-        static urlFromCtor(ctor: any) {
+        static urlFromCtor(ctor: any): string;
+        static urlFromCtor(ctor: any, params: string[]): string;
+        static urlFromCtor(ctor: any, params?: string[]): string {
             var instance = new ctor();
             let chain = Router.chainOfCtorNames(instance, null);
             var routeUrl = chain
                 .removeSame()
-                .reverse()
-                .join("/");
-            return '/' + routeUrl.toLowerCase();
-        }
+                .reverse();
+
+            if (params && !Router.clearUrl)
+                routeUrl.push.apply(routeUrl, params);
+            
+            return '/' + routeUrl.join("/").toLowerCase();
+        }        
         
         static chainOfCtorNames(obj: any, names: string[]): string[] {
             if (names == null)
@@ -65,21 +70,13 @@
 
         abstract route(current: contracts.RouteMatch);
         abstract routearea(): string;
-        protected abstract match(url: string, params?: string[]): contracts.RouteMatch;
+        abstract match(url: string, params?: string[]): contracts.RouteMatch;
     }
 
     if (window) {
         window.addEventListener('load', () => {
             var router = runtime.AppSettings.Current.router;
             var route = router.routeByUrl(window.location.pathname);
-
-            //var hitem = new viewmodels.contracts.ViewModelHistoryState({
-            //    ctor: route.ctor,
-            //    selector: router.routearea()
-            //});
-            //(runtime.AppSettings.Current.history as history.Html5HistoryAPI).ctors.push(hitem);
-            //window.history.replaceState(0, '', route.url);
-
             router.route(route);
         });
     }

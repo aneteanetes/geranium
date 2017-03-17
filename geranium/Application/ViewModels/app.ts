@@ -9,10 +9,12 @@ class App extends ViewModel {
     view() { return Train; }
 
     constructor(routes?: string[]) {
-        super();               
+        super();
+        var trip = State.get(TrainTrip);
+        this.obtain(trip);
     }
 
-    max: number = 10;
+    max: number = 0;
 
     _now: number = 0;
     get now(): number {

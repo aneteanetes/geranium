@@ -11,7 +11,3 @@ class Schedule extends ViewModel {
 
     autoupdate() { return false; }
 }
-
-
-//<div class="collapsible-header" > <span class="new badge {{stagecolor}}" data- badge - caption="of {{max}}" > {{now }}</span><i class="material-icons">place</i> {{name }}</div>
-//    < div class="collapsible-body" > <p>{{details }}</p></div>

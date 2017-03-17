@@ -9,8 +9,10 @@ appSettings.Current.init({
 });
 appSettings.Current.bidnings.push(CollectionBinding);
 
+
 //my states/viewstates
 new TimeViewState('.servertime');
+new TrainTrip();
 
 //my viewmodels
 var controls = new Controls();
@@ -29,10 +31,10 @@ State.get(ServerTime).bind = (x: ServerTime) => {
             }
         }
     }
-};
+}
 
 setInterval(() => {
-    geranium.runtime.AppSettings.Current.request.raise();    
+    geranium.runtime.AppSettings.Current.request.raise();
 }, 1100);
 
 $(function () {

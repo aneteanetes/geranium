@@ -8,12 +8,14 @@
         }
         restore(state: any) {
             var router = runtime.AppSettings.Current.router;
-            var viewmodelstate = router.routes.filter(x => {
+            var route = router.routes.filter(x => {
                 var instance = new x.ctor();
                 return instance.constructor.name == state.ctor;
-            })[0].ctor;
-            var instance = new viewmodelstate() as any;
-            instance.display(state.selector, 'restore');
+            })[0];
+            route.selector = state.selector;
+            route.restore = true;
+
+            router.route(route as routing.contracts.RouteMatch);
         }
     }
 

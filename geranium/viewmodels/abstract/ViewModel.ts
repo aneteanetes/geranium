@@ -7,9 +7,9 @@
             view.data = this;
             await view.render();
             
-            if (history.is(this.constructor) && arguments.length == 1) {
+            if (history.is(this.constructor) && arguments.length < 3) {
                 var _history = new history.contracts.HistoryItem();
-                _history.url = routing.abstract.Router.urlFromCtor(this.constructor);
+                _history.url = routing.abstract.Router.urlFromCtor(this.constructor, arguments[1]);
                 _history.title = document.title;
                 _history.state = {
                     ctor: this.constructor.name,

@@ -27,12 +27,13 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Application\Bindings\CollectionBinding.ts" />
+    <TypeScriptCompile Include="Application\States\Client\TrainTrip.ts" />
     <TypeScriptCompile Include="Application\Validators\MaterializeValidationReporter.ts" />
     <TypeScriptCompile Include="Application\Validators\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="Application\Validators\RangeValidator.ts" />
     <TypeScriptCompile Include="Application\Validators\TypeValidator.ts" />
     <TypeScriptCompile Include="Application\ViewModels\App.ts" />
-    <TypeScriptCompile Include="Application\States\ServerTime.ts" />
+    <TypeScriptCompile Include="Application\States\Server\ServerTime.ts" />
     <TypeScriptCompile Include="Application\ViewModels\Controls.ts" />
     <TypeScriptCompile Include="Application\ViewModels\Schedule.ts" />
     <TypeScriptCompile Include="Application\ViewStates\TimeViewState.ts" />
