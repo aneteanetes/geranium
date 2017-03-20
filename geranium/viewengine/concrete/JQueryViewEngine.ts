@@ -8,7 +8,7 @@
                     $(selector).jhtml(viewDOM.getViewDOM<JQuery>());
                     resolve(viewDOM);
                 } catch (ex) {
-                    runtime.AppSettings.Current.logger.log(ex);
+                    runtime.appSettings.logger.log(ex);
                     reject($(null));
                 }
             });

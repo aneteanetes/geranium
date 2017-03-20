@@ -17,7 +17,7 @@ module geranium.view.abstract {
         protected abstract declare(): string;
 
         async render(): Promise<View> {
-            var templating = runtime.AppSettings.Current.templating;
+            var templating = runtime.appSettings.templating;
             if (this.data == null)
                 throw new exceptions.Exception('view data is not assigned!');
             if (this._rendered)

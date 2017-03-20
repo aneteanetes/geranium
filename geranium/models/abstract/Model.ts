@@ -1,5 +1,5 @@
 ﻿module geranium.models.abstract {
-    @routing.abstract.Router.routeignore
+    @routing.routeignore
     export abstract class Model extends behaviors.events.Event<any> {
 
         get refreshable() {

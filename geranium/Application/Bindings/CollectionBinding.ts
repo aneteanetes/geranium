@@ -10,7 +10,7 @@ class CollectionBinding extends Binding {
             var template = new geranium.templating.contracts.Template();
             template.html = DOMObject.outerHtml().replaceAll('\\[\\[', '{{').replaceAll('\\]\\]', '}}');
             template.data = collection[i];
-            var templating = appSettings.Current.templating;
+            var templating = appSettings.templating;
             var parsed = await templating.parse(template);
             DOMCollection= DOMCollection.add($(parsed));
         }

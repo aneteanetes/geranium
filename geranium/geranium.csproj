@@ -26,21 +26,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Application\Bindings\CollectionBinding.ts" />
-    <TypeScriptCompile Include="Application\States\Client\TrainTrip.ts" />
-    <TypeScriptCompile Include="Application\Validators\MaterializeValidationReporter.ts" />
-    <TypeScriptCompile Include="Application\Validators\NotLessThenZeroValidator.ts" />
-    <TypeScriptCompile Include="Application\Validators\RangeValidator.ts" />
-    <TypeScriptCompile Include="Application\Validators\TypeValidator.ts" />
-    <TypeScriptCompile Include="Application\ViewModels\App.ts" />
-    <TypeScriptCompile Include="Application\States\Server\ServerTime.ts" />
-    <TypeScriptCompile Include="Application\ViewModels\Controls.ts" />
-    <TypeScriptCompile Include="Application\ViewModels\Schedule.ts" />
-    <TypeScriptCompile Include="Application\ViewStates\TimeViewState.ts" />
-    <TypeScriptCompile Include="Application\Views\ControlPanel.ts" />
-    <TypeScriptCompile Include="Application\Views\H1Time.ts" />
-    <TypeScriptCompile Include="Application\Views\ScheduleView.ts" />
-    <TypeScriptCompile Include="Application\Views\Train.ts" />
     <TypeScriptCompile Include="binding\abstract\Binding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryBinding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryByAttributeBinding.ts" />
@@ -67,6 +52,7 @@
     <TypeScriptCompile Include="history\decorators\history.ts" />
     <TypeScriptCompile Include="routing\abstract\Router.ts" />
     <TypeScriptCompile Include="routing\concrete\BasicRouter.ts" />
+    <TypeScriptCompile Include="routing\concrete\decorators.ts" />
     <TypeScriptCompile Include="routing\constracts\Route.ts" />
     <TypeScriptCompile Include="routing\constracts\RouteMatch.ts" />
     <TypeScriptCompile Include="history\contracts\HistoryItem.ts" />
@@ -143,7 +129,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="package.json" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -182,7 +170,8 @@
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>System</TypeScriptModuleKind>
     <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptDeclaration>True</TypeScriptDeclaration>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />

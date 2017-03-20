@@ -7,7 +7,7 @@
                 window.history.pushState(hitem.state, hitem.title, hitem.url);
         }
         restore(state: any) {
-            var router = runtime.AppSettings.Current.router;
+            var router = runtime.appSettings.router;
             var route = router.routes.filter(x => {
                 var instance = new x.ctor();
                 return instance.constructor.name == state.ctor;
@@ -21,7 +21,7 @@
 
     if (window) {
         window.addEventListener('popstate', (eventState) => {
-            runtime.AppSettings.Current.history.restore(eventState.state);
+            runtime.appSettings.history.restore(eventState.state);
         });
     }
 }

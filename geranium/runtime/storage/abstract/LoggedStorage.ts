@@ -5,7 +5,7 @@
         abstract get<T>(type: { new (...args: any[]): T, name: string }): T;
 
         log(ex: exceptions.Exception) {
-            AppSettings.Current.logger.log(ex);
+            appSettings.logger.log(ex);
         }
     }
 }

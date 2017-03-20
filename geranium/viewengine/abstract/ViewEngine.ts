@@ -4,7 +4,7 @@
             var viewDOM = this.viewDOM(context.view);
             var bindingContext = new viewbinding.contracts.BindContext(viewDOM, context.bindingFlags);
 
-            var viewbinder = runtime.AppSettings.Current.viewbinder;
+            var viewbinder = runtime.appSettings.viewbinder;
             viewDOM = viewbinder.bind(bindingContext);            
 
             return this.publish(viewDOM);

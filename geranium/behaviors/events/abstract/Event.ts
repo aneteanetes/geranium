@@ -1,5 +1,5 @@
 ﻿module geranium.behaviors.events {
-    @routing.abstract.Router.routeignore
+    @routing.routeignore
     export abstract class Event<T> {
 
         raise(args: T) {

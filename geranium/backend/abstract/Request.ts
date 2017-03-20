@@ -13,9 +13,9 @@
             var communicator: interfaces.ICommunicator;
             var catchPromise: (err: any) => void;
             if (this == null) {
-                communicator = runtime.AppSettings.Current.communicator;
+                communicator = runtime.appSettings.communicator;
                 catchPromise = (err) => {
-                    runtime.AppSettings.Current.logger.log(err);
+                    runtime.appSettings.logger.log(err);
                 }
             }
             else {

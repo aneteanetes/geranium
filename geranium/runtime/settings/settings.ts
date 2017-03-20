@@ -1,17 +1,5 @@
 ﻿module geranium.runtime {
     export abstract class AppSettings {
-        private settings_storage: storage.interfaces.IStorage;
-        constructor() {
-            AppSettings._current = this;
-        }
-
-        private static _current: AppSettings;
-        static get Current(): AppSettings {
-            if (AppSettings._current == null)
-                new _AppSettings();
-            return AppSettings._current;
-        }
-
         private static initialized: boolean = false;
         init(settings: {
             logger?: exceptions.logging.ILogger,
@@ -28,7 +16,7 @@
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
-				throw new Error('Application settings already initialized!');
+                throw new exceptions.Exception('Application settings already initialized!');
             if (settings) {
                 Object.assign(this, settings);
                 AppSettings.initialized = true;
@@ -54,4 +42,6 @@
     }
 
     class _AppSettings extends AppSettings { }
+
+    export var appSettings: AppSettings = new _AppSettings();
 }

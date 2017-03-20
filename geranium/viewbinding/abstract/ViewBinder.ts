@@ -19,7 +19,7 @@
                         (val) => {
                             var validation = validator.validate(val);
                             if (!validation.success) {
-                                runtime.AppSettings.Current.validreport.report(ViewDOM, validation);
+                                runtime.appSettings.validreport.report(ViewDOM, validation);
                                 return;
                             }
                             return val;

@@ -4,7 +4,7 @@
             super(communicator);
             this.bind = (super_send) => {
                 
-                var states = runtime.AppSettings.Current.states.all();
+                var states = runtime.appSettings.states.all();
                 if (states == null || states.length == 0)
                     return;
 

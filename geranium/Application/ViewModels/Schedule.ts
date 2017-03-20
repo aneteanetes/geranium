@@ -1,4 +1,4 @@
-﻿@router.routed
+﻿@routed
 class Schedule extends ViewModel {
     view() { return ScheduleView; }
 

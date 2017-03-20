@@ -6,7 +6,7 @@
         constructor(viewDOM: geranium.viewDOM.abstract.ViewDOM, bindingFlags?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
             this.viewDOM = viewDOM;
             if (!bindingFlags)
-                bindingFlags = runtime.AppSettings.Current.bidnings;
+                bindingFlags = runtime.appSettings.bidnings;
             this.bindingFlags = bindingFlags;
         }
     }

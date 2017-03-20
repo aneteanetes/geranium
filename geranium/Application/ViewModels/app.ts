@@ -4,7 +4,7 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import IValidator = geranium.validating.validator.interfaces.IValidator;
 import Exception = geranium.exceptions.Exception;
 
-@router.routed
+@routed
 class App extends ViewModel {
     view() { return Train; }
 

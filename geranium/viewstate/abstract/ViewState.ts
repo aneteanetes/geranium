@@ -16,7 +16,7 @@
             view.data = state;
             await view.render();
 
-            var vengine = runtime.AppSettings.Current.viewengine;
+            var vengine = runtime.appSettings.viewengine;
             var context = new viewengine.contracts.ExecuteContext(view, [binding.JQueryBindings.JQueryFieldBinding]);
             vengine.execute(context);
         }

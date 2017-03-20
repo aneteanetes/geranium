@@ -1,42 +1,68 @@
 ﻿module geranium {
-    export async function blossom() {
+    export enum color {
+        purple = 0,
+        darkgreen = 1,
+        pink = 2
     }
-}
-//application initialization
-import appSettings = geranium.runtime.AppSettings;
-appSettings.Current.init({
-    validreport: new MaterializeValidationRepoter()
-});
-appSettings.Current.bidnings.push(CollectionBinding);
-
-
-//my states/viewstates
-new TimeViewState('.servertime');
-new TrainTrip();
-
-//my viewmodels
-var controls = new Controls();
-controls.display('.controlpanel');
-
-//some application logic
-State.get(ServerTime).bind = (x: ServerTime) => {
-    if (x.time.substring(7) == "0") {
-        var app = appSettings.Current.router.Current<App>();
-
-        if (app != undefined) {
-            if (app != null && app.now != app.max) {
-                app.now++;
-                if (app.now == app.max)
-                    Materialize.toast('Train finished!', 10000, 'green');
-            }
-        }
+    var inBlossom = false;
+    export function blossom(colorull?: color) {
+        let col = colorull || color.purple;
+        console.log('%cgeranium is blossom', 'font-weight:bold;color: ' + color[col]);
     }
+    $(function () {
+        if (!inBlossom)
+            geranium.blossom();
+    });
 }
 
-setInterval(() => {
-    geranium.runtime.AppSettings.Current.request.raise();
-}, 1100);
+import appSettings = geranium.runtime.appSettings;
+import Model = geranium.models.abstract.Model;
+import State = geranium.states.State;
+import View = geranium.view.abstract.View;
+import ViewState = geranium.viewstate.ViewState;
+import ViewModel = geranium.viewmodels.abstract.ViewModel;
+import IValidator = geranium.validating.validator.interfaces.IValidator;
+import Report = geranium.validating.reporter.interfaces.IValidatingReporter;
+import Binding = geranium.binding.abstract.Binding;
 
-$(function () {
-    $('.collapsible').collapsible();
-})
+
+//import routed = geranium.routing.routed;
+
+////application initialization
+//import appSettings = geranium.runtime.AppSettings;
+//appSettings.init({
+//    validreport: new MaterializeValidationRepoter()
+//});
+//appSettings.bidnings.push(CollectionBinding);
+
+
+////my states/viewstates
+//new TimeViewState('.servertime');
+//new TrainTrip();
+
+////my viewmodels
+//var controls = new Controls();
+//controls.display('.controlpanel');
+
+////some application logic
+//State.get(ServerTime).bind = (x: ServerTime) => {
+//    if (x.time.substring(7) == "0") {
+//        var app = appSettings.router.Current<App>();
+
+//        if (app != undefined) {
+//            if (app != null && app.now != app.max) {
+//                app.now++;
+//                if (app.now == app.max)
+//                    Materialize.toast('Train finished!', 10000, 'green');
+//            }
+//        }
+//    }
+//}
+
+//setInterval(() => {
+//    geranium.runtime.appSettings.request.raise();
+//}, 1100);
+
+//$(function () {
+//    $('.collapsible').collapsible();
+//})
