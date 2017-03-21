@@ -1,4 +1,4 @@
-﻿module geranium.backend.abstract {
+﻿namespace geranium.backend.abstract {
     export abstract class EventRequest extends Request {
         send<TResponse>(data: any): PromiseLike<TResponse> {
             return new Promise((resolve, reject) => {

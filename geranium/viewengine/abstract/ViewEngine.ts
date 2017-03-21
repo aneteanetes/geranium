@@ -1,4 +1,4 @@
-﻿module geranium.viewengine.abstract {
+﻿namespace geranium.viewengine.abstract {
     export abstract class ViewEngine implements interfaces.IViewEngine {
         execute(context: contracts.ExecuteContext): Promise<viewDOM.abstract.ViewDOM> {
             var viewDOM = this.viewDOM(context.view);

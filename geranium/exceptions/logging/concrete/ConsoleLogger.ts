@@ -1,4 +1,4 @@
-﻿module geranium.exceptions {
+﻿namespace geranium.exceptions {
     export class ConsoleLogger implements logging.ILogger {
         private logOflog: string = "";
         log(err: Error) {

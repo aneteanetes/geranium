@@ -1,4 +1,4 @@
-﻿module geranium.validating.reporter {
+﻿namespace geranium.validating.reporter {
     export class NotifyValidatingReporter implements reporter.interfaces.IValidatingReporter {
         report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult) {
             validatingResult.errors.forEach(x => {

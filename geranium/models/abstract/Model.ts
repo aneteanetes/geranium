@@ -1,4 +1,4 @@
-﻿module geranium.models.abstract {
+﻿namespace geranium.models.abstract {
     @routing.routeignore
     export abstract class Model extends behaviors.events.Event<any> {
 

@@ -1,4 +1,4 @@
-﻿module geranium.viewmodels.abstract {
+﻿namespace geranium.viewmodels.abstract {
     @routing.routeignore
     export abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
         async display(selector: string) {
@@ -24,7 +24,7 @@
 
             var vengine = runtime.appSettings.viewengine;
             var context = new viewengine.contracts.ExecuteContext(view);
-            var viewDOM = await vengine.execute(context);
+            await vengine.execute(context);
         }
         documentTitle(): string { return null; }
         abstract view(): { new (selector: string): view.abstract.View };

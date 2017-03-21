@@ -1,4 +1,4 @@
-module geranium.view.abstract {
+namespace geranium.view.abstract {
     export abstract class View extends templating.contracts.Template {
 
         private _selector: string;
@@ -22,9 +22,9 @@ module geranium.view.abstract {
                 throw new exceptions.Exception('view data is not assigned!');
             if (this._rendered)
                 throw new exceptions.Exception('view already rendered!');
-
-            this._rendered = true;
+            
             this.html = await templating.parse(this);
+            this._rendered = true;
             return new Promise<View>(resolve => resolve(this));
         }
     }

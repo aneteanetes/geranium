@@ -1,4 +1,4 @@
-﻿module geranium.viewmodels.contracts {
+﻿namespace geranium.viewmodels.contracts {
     export class ViewModelHistoryState {
         ctor: any;
         selector: string;

@@ -1,4 +1,4 @@
-﻿module geranium.history.contracts {
+﻿namespace geranium.history.contracts {
     export class HistoryItem {
         title: string;
         url: string;

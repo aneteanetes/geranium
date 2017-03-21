@@ -1,4 +1,4 @@
-﻿module geranium.history {
+﻿namespace geranium.history {
     export function is(constructor: any): boolean {
         var router = runtime.appSettings.router;
         return router.routes.filter(x => {

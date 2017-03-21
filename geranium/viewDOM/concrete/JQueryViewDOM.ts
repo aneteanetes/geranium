@@ -1,4 +1,4 @@
-﻿module geranium.viewDOM {
+﻿namespace geranium.viewDOM {
     export class JQueryViewDOM extends abstract.ViewDOM {
         private _$html: JQuery;
         getViewDOM(): JQuery {

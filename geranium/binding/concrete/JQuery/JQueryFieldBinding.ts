@@ -1,4 +1,4 @@
-﻿module geranium.binding.JQueryBindings {
+﻿namespace geranium.binding.JQueryBindings {
     export class JQueryFieldBinding extends base.JQueryByAttributeBinding {
         get attribute(): string { return 'data-field'; }
         binding(DOMObject: JQuery, model: any) {

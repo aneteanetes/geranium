@@ -1,4 +1,4 @@
-﻿module geranium.states {
+﻿namespace geranium.states {
     export abstract class State extends models.abstract.Model {
         constructor() {
             super();

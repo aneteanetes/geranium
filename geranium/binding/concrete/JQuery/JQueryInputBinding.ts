@@ -1,4 +1,4 @@
-﻿module geranium.binding.JQueryBindings {
+﻿namespace geranium.binding.JQueryBindings {
     export class JQueryInputBinding extends base.JQueryBinding {
         get attribute(): string { return 'input'; }
         binding(DOMObject: JQuery, model: any) {

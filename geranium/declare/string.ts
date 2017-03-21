@@ -3,9 +3,11 @@
     random(length: number): string;
     randomize(): string;
 }
-String.prototype.replaceAll = function (search, replacement) {
-    return this.replace(new RegExp(search, 'g'), replacement);
-};
+if (!String.prototype.replaceAll) {
+    String.prototype.replaceAll = function (search, replacement) {
+        return this.replace(new RegExp(search, 'g'), replacement);
+    }
+}
 if (!String.prototype.random) {
     String.prototype.random = function (length: number) {
         var chars = 'abcdefghijkl0123456789mnopqrstuvwxyz';

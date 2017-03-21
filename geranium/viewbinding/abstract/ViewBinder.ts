@@ -1,4 +1,4 @@
-﻿module geranium.viewbinding.abstract {
+﻿namespace geranium.viewbinding.abstract {
     export abstract class ViewBinder implements interfaces.IViewBinder {
         private viewDOM: geranium.viewDOM.abstract.ViewDOM;
         bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM {            
@@ -28,12 +28,12 @@
             });
         }
 
-        private exec(ViewDOM: viewDOM.abstract.ViewDOM, bindings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
-            bindings.forEach(x => {
-                this.binding(ViewDOM, x);
-            });
+        private async exec(ViewDOM: viewDOM.abstract.ViewDOM, bindings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
+            for (var i = 0; i < bindings.length; i++) {
+                await this.binding(ViewDOM, bindings[i]);
+            }
         }
 
-        protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: { new <T>(...args: any[]): binding.abstract.Binding<T> });
+        protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: { new <T>(...args: any[]): binding.abstract.Binding<T> }): Promise<void>;
     }
 }

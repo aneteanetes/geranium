@@ -1,4 +1,4 @@
-﻿module geranium.runtime {
+﻿namespace geranium.runtime {
     export abstract class AppSettings {
         private static initialized: boolean = false;
         init(settings: {
@@ -34,10 +34,11 @@
 		readonly viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
 		readonly router: routing.abstract.Router = new routing.BasicRouter();
 		readonly history: history.interfaces.IHistory = new history.Html5HistoryAPI();
-		readonly bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
+        readonly bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
+            binding.JQueryBindings.JQueryCollectionBinding,
             binding.JQueryBindings.JQueryFieldBinding,
             binding.JQueryBindings.JQueryInputBinding,
-            binding.JQueryBindings.JQueryClickBinding
+            binding.JQueryBindings.JQueryClickBinding,
         ];
     }
 

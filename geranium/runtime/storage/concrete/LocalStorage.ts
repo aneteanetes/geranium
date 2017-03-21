@@ -1,4 +1,4 @@
-﻿module geranium.runtime {
+﻿namespace geranium.runtime {
     export class LocalStorage extends abstract.LoggedStorage {
         add(model: any): boolean {
             try {

@@ -25,6 +25,18 @@
     <div class="app container">
     </div>
 
+    <div class="startview" style="display:none;">
+        <div class="row">
+            <ul class="collection with-header col s6">
+                <li class="collection-header"><h4>Действующие</h4></li>
+                <li data-multiple="current" onclick="test([[id]])" class="collection-item">[[Title]] <span class="badge green right white-text">[[conducting]]</span></li>
+            </ul>
+            <ul class="collection with-header col s6">
+                <li class="collection-header"><h4>Архив</h4></li>
+                <li data-multiple="archive" onclick="test([[id]])" class="collection-item">[[Title]]<span class="badge red right white-text">[[conducting]]</span></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- templates -->
     <div class="templates">
@@ -87,6 +99,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="/gera.js"></script>
+    <script src="/src/geranium.js"></script>
 </body>
 </html>

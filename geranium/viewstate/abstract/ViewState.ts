@@ -1,4 +1,4 @@
-﻿module geranium.viewstate {
+﻿namespace geranium.viewstate {
     export abstract class ViewState implements view.interfaces.IViewed {
         constructor(selector: string) {
             this.execute(selector);

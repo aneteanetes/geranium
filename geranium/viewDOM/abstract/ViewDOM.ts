@@ -1,4 +1,4 @@
-﻿module geranium.viewDOM.abstract {
+﻿namespace geranium.viewDOM.abstract {
     export abstract class ViewDOM implements viewDOM.interfaces.IViewDOM {
         private _view: view.abstract.View;
         get view(): view.abstract.View {

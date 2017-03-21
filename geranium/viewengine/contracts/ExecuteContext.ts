@@ -1,4 +1,4 @@
-﻿module geranium.viewengine.contracts {
+﻿namespace geranium.viewengine.contracts {
     export class ExecuteContext {
         view: view.abstract.View;
         bindingFlags: { new <T>(...args: any[]): binding.abstract.Binding<T> }[];
@@ -7,7 +7,6 @@
             this.view = view;
             if (!bindingFlags)
                 bindingFlags = runtime.appSettings.bidnings;
-            debugger;
             this.bindingFlags = bindingFlags;
         }
     }

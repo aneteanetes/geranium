@@ -1,4 +1,4 @@
-﻿module geranium.backend.ajax {
+﻿namespace geranium.backend.ajax {
     export class AjaxCommunicator implements interfaces.ICommunicator {
         private innerPromise: JQueryPromise<any>;
         send<TRequest extends JQueryAjaxSettings>(data: TRequest) {
@@ -9,3 +9,4 @@
         }
     }
 }
+    

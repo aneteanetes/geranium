@@ -1,4 +1,4 @@
-﻿module geranium.routing {
+﻿namespace geranium.routing {
     export var settings: {
         clearUrl: boolean;
     } = {

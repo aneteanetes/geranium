@@ -1,4 +1,4 @@
-﻿module geranium.viewengine {
+﻿namespace geranium.viewengine {
     export class JQueryViewEngine extends abstract.ViewEngine {
         protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM> {
             

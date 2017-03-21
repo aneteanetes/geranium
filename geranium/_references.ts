@@ -1,6 +1,5 @@
-﻿/// <reference path="declare/typings/jquery.d.ts" />
+﻿/// <reference path="declare/jquery.d.ts" />
 /// <reference path="declare/array.ts" />
-/// <reference path="declare/typings/reflect-metadata.d.ts" />
 /// <reference path="declare/string.ts" />
 /// <reference path="declare/mustachejs.ts" />
 
@@ -48,6 +47,7 @@
 /// <reference path="binding/concrete/jquery/jqueryclickbinding.ts" />
 /// <reference path="binding/concrete/jquery/jqueryfieldbinding.ts" />
 /// <reference path="binding/concrete/jquery/jqueryinputbinding.ts" />
+/// <reference path="binding/concrete/jquery/jquerycollectionbinding.ts" />
 
 /// <reference path="states/state.ts" />
 

@@ -1,4 +1,4 @@
-﻿module geranium.validating.reporter {
+﻿namespace geranium.validating.reporter {
     export class JQueryViewValidatingReporter implements reporter.interfaces.IValidatingReporter {
         report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult) {
             var errContainer = viewDOM.getViewDOM<JQuery>().findAndfilter('div.validating.error.container');

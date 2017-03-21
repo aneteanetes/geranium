@@ -1,4 +1,4 @@
-﻿module geranium.routing.contracts {
+﻿namespace geranium.routing.contracts {
     export class RouteMatch extends Route {
         params: any[]
     }

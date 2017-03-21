@@ -1,4 +1,4 @@
-﻿module geranium.viewDOM.interfaces {
+﻿namespace geranium.viewDOM.interfaces {
     export interface IViewDOM {
         getViewDOM<T>(): T;
     }

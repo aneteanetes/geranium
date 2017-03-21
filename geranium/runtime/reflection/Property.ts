@@ -1,4 +1,4 @@
-﻿module geranium.runtime.reflection {
+﻿namespace geranium.runtime.reflection {
     export class Property {
         /**
          * Redefines property with new public accessors, safe

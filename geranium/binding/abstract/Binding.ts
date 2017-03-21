@@ -1,4 +1,4 @@
-﻿module geranium.binding.abstract {
+﻿namespace geranium.binding.abstract {
     export abstract class Binding<T> implements interfaces.IBinding<T> {
         async bind(DOM: T, model: any) {
             var DOMObjects = this.detection(DOM);

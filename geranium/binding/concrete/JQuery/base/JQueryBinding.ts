@@ -1,4 +1,4 @@
-﻿module geranium.binding.JQueryBindings.base {
+﻿namespace geranium.binding.JQueryBindings.base {
     export abstract class JQueryBinding extends abstract.Binding<JQuery> {
         abstract get attribute(): string;
         detection(DOM: JQuery): JQuery[] {

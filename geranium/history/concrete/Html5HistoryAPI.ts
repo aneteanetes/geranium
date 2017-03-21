@@ -1,4 +1,4 @@
-﻿module geranium.history {
+﻿namespace geranium.history {
     export class Html5HistoryAPI implements interfaces.IHistory {
         extend(hitem: contracts.HistoryItem) {
             if (window.history.state == null)

@@ -1,4 +1,4 @@
-﻿module geranium.validating.validator {
+﻿namespace geranium.validating.validator {
     export class NotZeroValidator implements validator.interfaces.IValidator {
         readonly validatedPropertyName: string;
         constructor(propName: string) {

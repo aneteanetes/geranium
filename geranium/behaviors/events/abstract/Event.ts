@@ -1,4 +1,4 @@
-﻿module geranium.behaviors.events {
+﻿namespace geranium.behaviors.events {
     @routing.routeignore
     export abstract class Event<T> {
 

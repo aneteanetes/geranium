@@ -1,4 +1,4 @@
-﻿module geranium.routing {
+﻿namespace geranium.routing {
     export class BasicRouter extends abstract.Router {
         Current<T extends viewmodels.abstract.ViewModel>(): T {
             return this._current;

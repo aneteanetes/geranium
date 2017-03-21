@@ -1,4 +1,4 @@
-﻿module geranium.viewbinding.interfaces {
+﻿namespace geranium.viewbinding.interfaces {
     export interface IViewBinder {
         bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM;
     }
