@@ -283,6 +283,10 @@ declare namespace geranium {
                 readonly refreshable: boolean;
                 readonly params: {};
                 obtain(data: any): void;
+                /**
+                 * synchronize model with server state
+                 */
+                sync(): Promise<void>;
                 validators: validating.validator.interfaces.IValidator[];
                 protected abstract autoupdate(): boolean | {};
             }
