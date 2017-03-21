@@ -556,3 +556,6 @@ import ViewModel = geranium.viewmodels.abstract.ViewModel;
 import IValidator = geranium.validating.validator.interfaces.IValidator;
 import Report = geranium.validating.reporter.interfaces.IValidatingReporter;
 import Binding = geranium.binding.abstract.Binding;
+import Routed = geranium.routing.routed;
+import Routeignore = geranium.routing.routeignore;
+import Routeroot = geranium.routing.routeroot;
