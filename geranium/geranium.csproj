@@ -75,6 +75,7 @@
     <TypeScriptCompile Include="binding\concrete\JQuery\JQueryClickBinding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\JQueryFieldBinding.ts" />
     <TypeScriptCompile Include="binding\concrete\JQuery\JQueryInputBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryConditionsBinding.ts" />
     <TypeScriptCompile Include="binding\interfaces\IBinding.ts" />
     <TypeScriptCompile Include="declare\array.ts" />
     <TypeScriptCompile Include="declare\jquery.d.ts" />

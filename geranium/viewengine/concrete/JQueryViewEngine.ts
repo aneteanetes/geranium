@@ -1,7 +1,6 @@
 ﻿namespace geranium.viewengine {
     export class JQueryViewEngine extends abstract.ViewEngine {
-        protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM> {
-            
+        protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM> {            
             return new Promise((resolve, reject) => {
                 try {
                     var selector = viewDOM.view.selector;

@@ -15,6 +15,9 @@
     });
 }
 
+//как и сам паттерн MVVM - герань это инструмент который заставляет тебя писать MVVM
+//а вот angular и react это инструменты которые реализуют MVVM, а тебе уже предлагают интерфейс для взаимодействия
+
 import appSettings = geranium.runtime.appSettings;
 import Model = geranium.models.abstract.Model;
 import State = geranium.states.State;
@@ -26,39 +29,8 @@ import Report = geranium.validating.reporter.interfaces.IValidatingReporter;
 import Binding = geranium.binding.abstract.Binding;
 import Routed = geranium.routing.routed;
 
-//abstract class lk extends ViewModel {
-//}
-//abstract class personal extends lk {
-//}
 
-//@Routed
-//class Contests extends personal {
-//    constructor() {
-//        super();
-//        this.archive = [];
-//    }
-//    view() { return StartView; }
 
-//    current: Array<any> = [
-//        { Title: 'hi', conducting: '01.01.17-02.01.17', id: 1 },
-//        { Title: 'Мокрые майки', conducting: '01.01.17-02.01.17', id: 2 }
-//    ];
-//    archive: Array<any>;
-
-//    test(id: number) {
-//        debugger;
-//        id += 1;
-//        console.log(id);
-//    }
-
-//    autoupdate() { return false; }
-//}
-
-//class StartView extends View {
-//    declare() {
-//        return $('.startview').html();
-//    }
-//}
 
 //import routed = geranium.routing.routed;
 
