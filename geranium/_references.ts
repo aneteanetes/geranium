@@ -44,10 +44,10 @@
 /// <reference path="binding/abstract/binding.ts" />
 /// <reference path="binding/concrete/jquery/base/jquerybinding.ts" />
 /// <reference path="binding/concrete/jquery/base/jquerybyattributebinding.ts" />
+/// <reference path="binding/concrete/jquery/jquerycollectionbinding.ts" />
 /// <reference path="binding/concrete/jquery/jqueryclickbinding.ts" />
 /// <reference path="binding/concrete/jquery/jqueryfieldbinding.ts" />
 /// <reference path="binding/concrete/jquery/jqueryinputbinding.ts" />
-/// <reference path="binding/concrete/jquery/jquerycollectionbinding.ts" />
 
 /// <reference path="states/state.ts" />
 

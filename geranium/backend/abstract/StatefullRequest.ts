@@ -8,9 +8,9 @@
                 if (states == null || states.length == 0)
                     return;
 
-                states.filter(x => x.refreshable)
+                states.filter(x => { if (x.synchronizer) return true; else return false; })
                     .forEach(state => {
-                        super_send(state.params)
+                        super_send(state.synchronizer)
                             .then(x => { state.obtain(x); });
                     });
             };

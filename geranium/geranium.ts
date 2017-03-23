@@ -28,8 +28,17 @@ import IValidator = geranium.validating.validator.interfaces.IValidator;
 import Report = geranium.validating.reporter.interfaces.IValidatingReporter;
 import Binding = geranium.binding.abstract.Binding;
 import Routed = geranium.routing.routed;
+import Routeroot = geranium.routing.routeroot;
+import Routeignore = geranium.routing.routeignore;
 
+@Routeroot
+class application extends ViewModel {
+    view() { return '<h1 data-field="Name">{{Name}}</h1>'; }
 
+    name: string = "karl";
+    get Name(): string { return 'Hello, ' + this.name[0].toUpperCase() + this.name.substring(1) + '!'; }
+    set Name(val) { this.name = val; }
+}
 
 
 //import routed = geranium.routing.routed;

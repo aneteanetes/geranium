@@ -6,7 +6,7 @@ namespace geranium.view.abstract {
 
         constructor(selector: string) {
             super();
-            this.html = this.declare();
+            this.protectRender(arguments[1]);
             this._selector = selector;
         }
 
@@ -15,6 +15,13 @@ namespace geranium.view.abstract {
         }
 
         protected abstract declare(): string;
+        protectRender(html: string) {
+            this.html = this.declare();
+            if (!this.html)
+                this.html = html;
+            if (!this.html)
+                throw new exceptions.Exception('view template is empty!');
+        }
 
         async render(): Promise<View> {
             var templating = runtime.appSettings.templating;

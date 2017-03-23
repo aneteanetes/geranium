@@ -6,9 +6,12 @@
             runtime.reflection.Property.redefine(model, value,
                 (val) => val,
                 (val) => {
-                    DOMObject.html(val);
                     return val;
                 });
+            var event = "#event:set[" + value + "]";
+            model[event].bind = () => {
+                DOMObject.html(model[value]);
+            };
         }
     }
 }

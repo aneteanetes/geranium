@@ -1,4 +1,3 @@
-/// <reference path="declare/jquery.d.ts" />
 interface Array<T> {
     remove(item: T): Array<T>;
     removeSame(): Array<T>;
@@ -193,7 +192,23 @@ declare namespace geranium {
 
         namespace reflection {
             class Property {
+                /**
+                 * Redefines property with new public accessors, safe
+                 * Also creates property Event for detection end of chain:
+                 * setter obj[#event:set[name]]
+                 * getter obj[#event:get[name]]
+                 * @param target
+                 * @param name of property
+                 * @param get new public setter
+                 * @param set new public getter
+                 */
                 static redefine(target: any, name: string, get: (val: any) => any, set: (val: any) => any): void;
+            }
+            class PropertyEvent extends behaviors.events.Event<PropertyAccessor>  {
+            }
+            class PropertyAccessor {
+                val: any;
+                _val: any;
             }
         }
     }
@@ -280,15 +295,16 @@ declare namespace geranium {
     namespace models {
         namespace abstract {
             abstract class Model extends behaviors.events.Event<any> {
-                readonly refreshable: boolean;
-                readonly params: {};
                 obtain(data: any): void;
                 /**
                  * synchronize model with server state
                  */
                 sync(): Promise<void>;
+                /**
+                 * object used as synchronizator
+                 */
+                readonly synchronizer: {};
                 validators: validating.validator.interfaces.IValidator[];
-                protected abstract autoupdate(): boolean | {};
             }
         }
     }
@@ -521,11 +537,19 @@ declare namespace geranium {
     namespace viewmodels {
         namespace abstract {
             abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
+                private publishedViewDom: viewDOM.abstract.ViewDOM;
+                protected readonly markup: viewDOM.abstract.ViewDOM;
+
                 display(selector: string): Promise<void>;
                 documentTitle(): string;
                 abstract view(): {
                     new (selector: string): view.abstract.View;
                 };
+                /**
+                 * return complete rendered view
+                 * @param selector
+                 */
+                private completeview(selector: string): Promise<view.abstract.View>;
             }
         }
         namespace contracts {
