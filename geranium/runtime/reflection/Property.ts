@@ -17,6 +17,10 @@
             var setterEvent = new PropertyEvent();
             var getterEvent = new PropertyEvent();
 
+            //accessors doesn't exists
+            if (ownPropertyDescriptor === undefined && protoPropertyDescriptor === undefined)
+                return;
+
             //prototype accessor
             if (ownPropertyDescriptor == undefined && protoPropertyDescriptor != undefined) {
                 
@@ -35,7 +39,6 @@
                     },
                     configurable: true
                 });
-                debugger;
                 target["#event:set[" + name + "]"] = setterEvent;
                 target["#event:get[" + name + "]"] = getterEvent;
                 return;

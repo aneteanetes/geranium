@@ -391,8 +391,8 @@ declare namespace geranium {
         namespace interfaces {
             interface IViewed {
                 view(): {
-                    new (selector: string): view.abstract.View | string;
-                };
+                    new (selector: string): view.abstract.View;
+                } | string;
             }
         }
         namespace abstract {
@@ -543,7 +543,7 @@ declare namespace geranium {
                 display(selector: string): Promise<void>;
                 documentTitle(): string;
                 abstract view(): {
-                    new (selector: string): view.abstract.View;
+                    new (selector: string): view.abstract.View
                 } | string;
                 /**
                  * return complete rendered view
