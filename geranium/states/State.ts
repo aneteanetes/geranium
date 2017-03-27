@@ -3,7 +3,7 @@
         constructor() {
             super();
             runtime.appSettings.states.add(this);
-            runtime.appSettings.request.raise();
+            this.sync();
         }
         static get<T>(type: { new (...args: any[]): T }): T {
             return runtime.appSettings.states.get(type);
