@@ -124,6 +124,7 @@
     <TypeScriptCompile Include="viewengine\abstract\ViewEngine.ts" />
     <TypeScriptCompile Include="viewengine\concrete\JQueryViewEngine.ts" />
     <TypeScriptCompile Include="viewengine\contracts\ExecuteContext.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\ViewExecutingContext.ts" />
     <TypeScriptCompile Include="viewengine\interfaces\IViewEngine.ts" />
     <TypeScriptCompile Include="viewmodels\abstract\ViewModel.ts" />
     <TypeScriptCompile Include="viewmodels\contracts\ViewModelHistoryState.ts" />
