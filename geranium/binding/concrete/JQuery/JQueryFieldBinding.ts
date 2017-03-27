@@ -12,10 +12,7 @@
             if (model[event]) {
                 model[event].bind = () => {
                     DOMObject.html(model[value]);
-                };
-                model.bind = () => {
-                    model[event].raise();
-                };
+                };                
             }
         }
     }
