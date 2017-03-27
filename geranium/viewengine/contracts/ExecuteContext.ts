@@ -1,0 +1,13 @@
+﻿namespace geranium.viewengine.contracts {
+    export class ExecuteContext {
+        view: view.abstract.View;
+        bindingFlags: { new <T>(...args: any[]): binding.abstract.Binding<T> }[];
+
+        constructor(view: view.abstract.View, bindingFlags?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
+            this.view = view;
+            if (!bindingFlags)
+                bindingFlags = runtime.appSettings.bidnings;
+            this.bindingFlags = bindingFlags;
+        }
+    }
+}
