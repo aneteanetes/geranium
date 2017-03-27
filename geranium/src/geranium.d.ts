@@ -236,7 +236,7 @@ declare namespace geranium.exceptions {
     }
 }
 declare namespace geranium.models.abstract {
-    abstract class Model extends behaviors.events.Event<any> {
+    abstract class Model extends behaviors.events.Event<Model> {
         obtain(data: any): void;
         sync(): Promise<void>;
         readonly synchronizer: {};
@@ -390,26 +390,34 @@ declare namespace geranium.viewbinding {
     }
 }
 declare namespace geranium.viewengine.contracts {
+    class ViewExecutingContext {
+        iViewed: view.interfaces.IViewed;
+        selector: string;
+    }
+}
+declare namespace geranium.viewengine.contracts {
     class ExecuteContext {
-        view: view.abstract.View;
+        view: view.interfaces.IViewed;
+        selector: string;
         bindingFlags: {
             new <T>(...args: any[]): binding.abstract.Binding<T>;
         }[];
-        constructor(view: view.abstract.View, bindingFlags?: {
+        constructor(viewCtx: ViewExecutingContext, bindingFlags?: {
             new <T>(...args: any[]): binding.abstract.Binding<T>;
         }[]);
     }
 }
 declare namespace geranium.viewengine.interfaces {
     interface IViewEngine {
-        execute(context: contracts.ExecuteContext): Promise<viewDOM.abstract.ViewDOM>;
+        execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
     }
 }
 declare namespace geranium.viewengine.abstract {
     abstract class ViewEngine implements interfaces.IViewEngine {
-        execute(context: contracts.ExecuteContext): Promise<viewDOM.abstract.ViewDOM>;
+        execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
         protected abstract publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
         protected abstract viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
+        private completeview(iviewed, selector);
     }
 }
 declare namespace geranium.viewengine {
@@ -453,15 +461,11 @@ declare namespace geranium.validating.reporter {
     }
 }
 declare namespace geranium.viewstate {
-    abstract class ViewState implements view.interfaces.IViewed {
+    abstract class ViewState extends states.State implements view.interfaces.IViewed {
         constructor(selector: string);
-        private execute(selector);
-        protected abstract state(): {
-            new (...args: any[]): states.State;
-        };
         abstract view(): {
             new (selector: string): view.abstract.View;
-        };
+        } | string;
     }
 }
 declare namespace geranium.viewmodels.abstract {
@@ -473,7 +477,6 @@ declare namespace geranium.viewmodels.abstract {
         abstract view(): {
             new (selector: string): view.abstract.View;
         } | string;
-        private completeview(selector);
     }
 }
 declare namespace geranium.runtime {

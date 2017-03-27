@@ -15,7 +15,7 @@ namespace geranium.view.abstract {
         }
 
         protected abstract declare(): string;
-        protectRender(html: string) {
+        private protectRender(html: string) {
             this.html = this.declare();
             if (!this.html)
                 this.html = html;

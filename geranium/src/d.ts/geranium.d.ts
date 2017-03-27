@@ -402,6 +402,7 @@ declare namespace geranium {
                 constructor(selector: string);
                 readonly selector: string;
                 protected abstract declare(): string;
+                private protectRender(html: string): void;
                 render(): Promise<View>;
             }
         }
@@ -466,9 +467,10 @@ declare namespace geranium {
         }
         namespace abstract {
             abstract class ViewEngine implements interfaces.IViewEngine {
-                execute(context: contracts.ExecuteContext): Promise<viewDOM.abstract.ViewDOM>;
+                execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
                 protected abstract publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
                 protected abstract viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
+                private completeview(iviewed, selector);
             }
         }
         namespace interfaces {
@@ -477,12 +479,17 @@ declare namespace geranium {
             }
         }
         namespace contracts {
+            class ViewExecutingContext {
+                iViewed: view.interfaces.IViewed;
+                selector: string;
+            }
             class ExecuteContext {
-                view: view.abstract.View;
+                view: view.interfaces.IViewed;
+                selector: string;
                 bindingFlags: {
                     new <T>(...args: any[]): binding.abstract.Binding<T>;
                 }[];
-                constructor(view: view.abstract.View, bindingFlags?: {
+                constructor(viewCtx: ViewExecutingContext, bindingFlags?: {
                     new <T>(...args: any[]): binding.abstract.Binding<T>;
                 }[]);
             }
@@ -523,33 +530,23 @@ declare namespace geranium {
         }
     }
     namespace viewstate {
-        abstract class ViewState implements view.interfaces.IViewed {
+        abstract class ViewState extends states.State implements view.interfaces.IViewed {
             constructor(selector: string);
-            private execute(selector);
-            protected abstract state(): {
-                new (...args: any[]): states.State;
-            };
             abstract view(): {
                 new (selector: string): view.abstract.View;
-            };
+            } | string;
         }
     }
     namespace viewmodels {
         namespace abstract {
             abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
-                private publishedViewDom: viewDOM.abstract.ViewDOM;
+                private publishedViewDom;
                 protected readonly markup: viewDOM.abstract.ViewDOM;
-
                 display(selector: string): Promise<void>;
                 documentTitle(): string;
                 abstract view(): {
-                    new (selector: string): view.abstract.View
+                    new (selector: string): view.abstract.View;
                 } | string;
-                /**
-                 * return complete rendered view
-                 * @param selector
-                 */
-                private completeview(selector: string): Promise<view.abstract.View>;
             }
         }
         namespace contracts {
