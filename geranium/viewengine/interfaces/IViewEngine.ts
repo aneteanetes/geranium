@@ -1,5 +1,5 @@
 ﻿namespace geranium.viewengine.interfaces {
     export interface IViewEngine {
-        execute(context: contracts.ExecuteContext): Promise<viewDOM.abstract.ViewDOM>;
+        execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
     }
 }

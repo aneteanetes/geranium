@@ -67,6 +67,7 @@
 /// <reference path="viewbinding/abstract/viewbinder.ts" />
 /// <reference path="viewbinding/concrete/jqueryviewbinder.ts" />
 
+/// <reference path="viewengine/contracts/viewexecutingcontext.ts" />
 /// <reference path="viewengine/contracts/executecontext.ts" />
 /// <reference path="viewengine/interfaces/iviewengine.ts" />
 /// <reference path="viewengine/abstract/viewengine.ts" />
