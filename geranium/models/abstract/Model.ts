@@ -1,6 +1,6 @@
 ﻿namespace geranium.models.abstract {
     @routing.routeignore
-    export abstract class Model extends behaviors.events.Event<any> {        
+    export abstract class Model extends behaviors.events.Event<Model> {        
         obtain(data: any) {
             if (typeof data == 'string')
                 data = JSON.parse(data);
