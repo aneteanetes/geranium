@@ -9,6 +9,12 @@
                     DOMObject.html(val);
                     return val;
                 });
+            var event = "#event:set[" + value + "]";
+            if (model[event]) {
+                model[event].bind = () => {
+                    DOMObject.val(model[value]);
+                };
+            }
             DOMObject.change(x => {
                 model[value] = DOMObject.val();
             });
