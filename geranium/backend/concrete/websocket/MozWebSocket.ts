@@ -1,1 +1,4 @@
-﻿declare class MozWebSocket extends WebSocket { } 
+﻿namespace geranium.backend.websocket {
+    export declare class MozWebSocket extends WebSocket { }
+}
+    

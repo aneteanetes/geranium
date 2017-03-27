@@ -1,14 +1,15 @@
-﻿module geranium.states {
+﻿namespace geranium.states {
     export abstract class State extends models.abstract.Model {
         constructor() {
             super();
-            runtime.AppSettings.Current.states.add(this);
+            runtime.appSettings.states.add(this);
+            runtime.appSettings.request.raise();
         }
-        static get<T extends State>(type: { new (...args: any[]): T }): T {
-            return runtime.AppSettings.Current.states.get(type);
+        static get<T>(type: { new (...args: any[]): T }): T {
+            return runtime.appSettings.states.get(type);
         }
         remove(): boolean {
-            return runtime.AppSettings.Current.states.remove((<any>this).constructor);
+            return runtime.appSettings.states.remove((<any>this).constructor);
         }
     }
 }

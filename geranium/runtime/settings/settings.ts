@@ -1,41 +1,48 @@
-﻿module geranium.runtime {
+﻿namespace geranium.runtime {
     export abstract class AppSettings {
-        private settings_storage: storage.interfaces.IStorage;
-        constructor() {
-            //this.settings_storage = new WindowStorage("geranium-settings");
-            //this.settings_storage.add(this);
-            AppSettings._current = this;
-        }
-
-        private static _current: AppSettings;
-        static get Current(): AppSettings {
-            if (AppSettings._current == null)
-                new _AppSettings();
-            return AppSettings._current;//.settings_storage.get(_AppSettings);
-        }
-
         private static initialized: boolean = false;
-        static init(settings: {
+        init(settings: {
             logger?: exceptions.logging.ILogger,
             request?: backend.abstract.Request,
-            templating?: any,
-            storage?: storage.interfaces.IStorage
+            communicator?: backend.interfaces.ICommunicator,
+            templating?: templating.interfaces.ITemplating,
+            storage?: storage.interfaces.IStorage,
+            states?: storage.interfaces.IGenericStorage<states.State>,
+            viewbinder?: viewbinding.abstract.ViewBinder,
+            validreport?: validating.reporter.interfaces.IValidatingReporter,
+			viewengine?: viewengine.interfaces.IViewEngine,
+            router?: routing.abstract.Router,
+            history?: history.interfaces.IHistory,
+            bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
-                throw new Error('Application settings already initialized!');
-
+                throw new exceptions.Exception('Application settings already initialized!');
             if (settings) {
                 Object.assign(this, settings);
                 AppSettings.initialized = true;
             }
         }
 
-        logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
-        request: backend.abstract.EventRequest = new backend.AjaxRequest((x) => { console.log(x); });
-        templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
-        storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
-        states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
+		readonly logger: exceptions.logging.ILogger = new exceptions.ConsoleLogger();
+		readonly request: backend.abstract.EventRequest = new backend.AjaxRequest((x) => { console.log(x); });
+		readonly communicator: backend.interfaces.ICommunicator = new backend.ajax.AjaxCommunicator();
+		readonly templating: templating.interfaces.ITemplating = new templating.MustacheTemplating();
+		readonly storage: storage.interfaces.IStorage = new WindowStorage("geranium-data-storage");
+		readonly states: storage.interfaces.IGenericStorage<states.State> = new StatesStorage("geranium-states-storage");
+		readonly validreport: validating.reporter.interfaces.IValidatingReporter = new validating.reporter.JQueryViewValidatingReporter;
+		readonly viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
+		readonly viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
+		readonly router: routing.abstract.Router = new routing.BasicRouter();
+		readonly history: history.interfaces.IHistory = new history.Html5HistoryAPI();
+        readonly bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
+            binding.JQueryBindings.JQueryCollectionBinding,
+            binding.JQueryBindings.JQueryFieldBinding,
+            binding.JQueryBindings.JQueryInputBinding,
+            binding.JQueryBindings.JQueryClickBinding,
+        ];
     }
 
     class _AppSettings extends AppSettings { }
+
+    export var appSettings: AppSettings = new _AppSettings();
 }

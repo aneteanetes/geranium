@@ -10,52 +10,26 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
     <Content Include="index.html" />
-    <Content Include="web.config" />
+    <Content Include="web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
-    <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
-    <TypeScriptCompile Include="declare\typings\jquery.d.ts" />
-    <TypeScriptCompile Include="exceptions\Exception.ts" />
-    <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
-    <TypeScriptCompile Include="backend\abstract\Request.ts" />
-    <TypeScriptCompile Include="backend\concrete\ajax\JQueryPromise.ts" />
-    <TypeScriptCompile Include="backend\concrete\ajax\AjaxCommunicator.ts" />
-    <TypeScriptCompile Include="backend\concrete\ajax\AjaxRequest.ts" />
-    <TypeScriptCompile Include="backend\concrete\websocket\MozWebSocket.ts" />
-    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
-    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
-    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="runtime\settings\settings.ts" />
-    <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
-    <TypeScriptCompile Include="declare\array.ts" />
-    <TypeScriptCompile Include="geranium.ts" />
-    <TypeScriptCompile Include="models\abstract\Model.ts" />
-    <TypeScriptCompile Include="viewstate\abstract\ViewState.ts" />
-    <TypeScriptCompile Include="viewstate\interfaces\IViewState.ts" />
-    <TypeScriptCompile Include="view\abstract\View.ts" />
-    <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
-    <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
-    <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
-    <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
-    <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
-    <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
-    <TypeScriptCompile Include="states\State.ts" />
-    <TypeScriptCompile Include="_references.ts" />
-  </ItemGroup>
-  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,7 +50,91 @@
       <DependentUpon>handler.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
+    <TypeScriptCompile Include="backend\abstract\Request.ts" />
+    <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\AjaxCommunicator.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\AjaxRequest.ts" />
+    <TypeScriptCompile Include="backend\concrete\ajax\JQueryPromise.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\MozWebSocket.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketCommunicator.ts" />
+    <TypeScriptCompile Include="backend\concrete\websocket\WebSocketRequest.ts" />
+    <TypeScriptCompile Include="backend\interfaces\ICommunicator.ts" />
+    <TypeScriptCompile Include="behaviors\events\abstract\Event.ts" />
+    <TypeScriptCompile Include="binding\abstract\Binding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\base\JQueryByAttributeBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryClickBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryCollectionBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryFieldBinding.ts" />
+    <TypeScriptCompile Include="binding\concrete\JQuery\JQueryInputBinding.ts" />
+    <TypeScriptCompile Include="binding\interfaces\IBinding.ts" />
+    <TypeScriptCompile Include="declare\array.ts" />
+    <TypeScriptCompile Include="declare\jquery.d.ts" />
+    <TypeScriptCompile Include="declare\jquery.ts" />
+    <TypeScriptCompile Include="declare\mustachejs.ts" />
+    <TypeScriptCompile Include="declare\string.ts" />
+    <TypeScriptCompile Include="exceptions\Exception.ts" />
+    <TypeScriptCompile Include="exceptions\logging\concrete\ConsoleLogger.ts" />
+    <TypeScriptCompile Include="exceptions\logging\interfaces\ILogger.ts" />
+    <TypeScriptCompile Include="geranium.ts" />
+    <TypeScriptCompile Include="history\concrete\Html5HistoryAPI.ts" />
+    <TypeScriptCompile Include="history\contracts\HistoryItem.ts" />
+    <TypeScriptCompile Include="history\decorators\history.ts" />
+    <TypeScriptCompile Include="history\interfaces\IHistory.ts" />
+    <TypeScriptCompile Include="models\abstract\Model.ts" />
+    <TypeScriptCompile Include="routing\abstract\Router.ts" />
+    <TypeScriptCompile Include="routing\concrete\BasicRouter.ts" />
+    <TypeScriptCompile Include="routing\concrete\decorators.ts" />
+    <TypeScriptCompile Include="routing\constracts\Route.ts" />
+    <TypeScriptCompile Include="routing\constracts\RouteMatch.ts" />
+    <TypeScriptCompile Include="runtime\reflection\Property.ts" />
+    <TypeScriptCompile Include="runtime\settings\settings.ts" />
+    <TypeScriptCompile Include="runtime\storage\abstract\LoggedStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\LocalStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\StatesStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\concrete\WindowStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IGenericStorage.ts" />
+    <TypeScriptCompile Include="runtime\storage\interfaces\IStorage.ts" />
+    <TypeScriptCompile Include="states\State.ts" />
+    <TypeScriptCompile Include="templating\concrete\backend\BackendTemplating.ts" />
+    <TypeScriptCompile Include="templating\concrete\mustache\MustacheTemplating.ts" />
+    <TypeScriptCompile Include="templating\contracts\Template.ts" />
+    <TypeScriptCompile Include="templating\interfaces\ITemplating.ts" />
+    <TypeScriptCompile Include="validating\contracts\ValidationResult.ts" />
+    <TypeScriptCompile Include="validating\reporter\concrete\JQueryViewValidatingReporter.ts" />
+    <TypeScriptCompile Include="validating\reporter\concrete\NotifyValidatingReporter.ts" />
+    <TypeScriptCompile Include="validating\reporter\interfaces\IValidatatingReporter.ts" />
+    <TypeScriptCompile Include="validating\validator\concrete\NotZeroValidator.ts" />
+    <TypeScriptCompile Include="validating\validator\interfaces\IValidator.ts" />
+    <TypeScriptCompile Include="viewbinding\abstract\ViewBinder.ts" />
+    <TypeScriptCompile Include="viewbinding\concrete\JQueryViewBinder.ts" />
+    <TypeScriptCompile Include="viewbinding\contracts\BindContext.ts" />
+    <TypeScriptCompile Include="viewbinding\interfaces\IViewBinder.ts" />
+    <TypeScriptCompile Include="viewDOM\abstract\ViewDOM.ts" />
+    <TypeScriptCompile Include="viewDOM\concrete\JQueryViewDOM.ts" />
+    <TypeScriptCompile Include="viewDOM\interfaces\IViewDOM.ts" />
+    <TypeScriptCompile Include="viewengine\abstract\ViewEngine.ts" />
+    <TypeScriptCompile Include="viewengine\concrete\JQueryViewEngine.ts" />
+    <TypeScriptCompile Include="viewengine\contracts\ExecuteContext.ts" />
+    <TypeScriptCompile Include="viewengine\interfaces\IViewEngine.ts" />
+    <TypeScriptCompile Include="viewmodels\abstract\ViewModel.ts" />
+    <TypeScriptCompile Include="viewmodels\contracts\ViewModelHistoryState.ts" />
+    <TypeScriptCompile Include="viewstate\abstract\ViewState.ts" />
+    <TypeScriptCompile Include="view\abstract\View.ts" />
+    <TypeScriptCompile Include="view\interfaces\IViewed.ts" />
+    <TypeScriptCompile Include="_references.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
@@ -104,10 +162,22 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
+    <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
     <TypeScriptTarget>ES6</TypeScriptTarget>
-    <TypeScriptOutFile>gera.js</TypeScriptOutFile>
+    <TypeScriptOutFile>src/geranium.js</TypeScriptOutFile>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>System</TypeScriptModuleKind>
+    <TypeScriptOutDir />
+    <TypeScriptDeclaration>True</TypeScriptDeclaration>
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

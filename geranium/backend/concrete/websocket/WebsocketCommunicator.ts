@@ -1,4 +1,4 @@
-﻿module geranium.backend.websocket {
+﻿namespace geranium.backend.websocket {
     export class WebSocketCommunicator implements interfaces.ICommunicator {
 
         protected socket: WebSocket;
