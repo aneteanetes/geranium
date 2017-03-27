@@ -27,3 +27,6 @@ import Binding = geranium.binding.abstract.Binding;
 import Routed = geranium.routing.routed;
 import Routeroot = geranium.routing.routeroot;
 import Routeignore = geranium.routing.routeignore;
+import IValidatingReporter = geranium.validating.reporter.interfaces.IValidatingReporter;
+import ValidationResult = geranium.validating.contracts.ValidationResult;
+import Exception = geranium.exceptions.Exception;

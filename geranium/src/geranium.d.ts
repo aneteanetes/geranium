@@ -332,7 +332,7 @@ declare namespace geranium.view.abstract {
         constructor(selector: string);
         readonly selector: string;
         protected abstract declare(): string;
-        protectRender(html: string): void;
+        private protectRender(html);
         render(): Promise<View>;
     }
 }
@@ -535,6 +535,80 @@ import Binding = geranium.binding.abstract.Binding;
 import Routed = geranium.routing.routed;
 import Routeroot = geranium.routing.routeroot;
 import Routeignore = geranium.routing.routeignore;
+import IValidatingReporter = geranium.validating.reporter.interfaces.IValidatingReporter;
+import ValidationResult = geranium.validating.contracts.ValidationResult;
+import Exception = geranium.exceptions.Exception;
+declare var Materialize: any;
+declare class MaterializeValidationRepoter implements IValidatingReporter {
+    report(viewDOM: geranium.viewDOM.abstract.ViewDOM, validatingResult: geranium.validating.contracts.ValidationResult): void;
+}
+declare class RangeValidator implements IValidator {
+    constructor(prop: string, min: number, max: number, strict: boolean);
+    private strict;
+    private min;
+    private max;
+    validatedPropertyName: string;
+    validate(value: number): ValidationResult;
+}
+declare class TypeValidator implements IValidator {
+    _type: string;
+    constructor(prop: string, type: string);
+    validatedPropertyName: string;
+    validate(value: any): ValidationResult;
+}
+declare class NotLessThenZeroValidator implements IValidator {
+    constructor(prop: string);
+    validatedPropertyName: string;
+    validate(value: number): ValidationResult;
+}
+declare class trains extends State {
+    readonly synchronizer: {
+        url: string;
+        method: string;
+        data: {
+            command: string;
+        };
+    };
+    data: train[];
+}
+declare class train {
+    name: string;
+    stations: number;
+    now: number;
+}
+declare class time extends ViewState {
+    view(): string;
+    readonly synchronizer: {
+        url: string;
+        method: string;
+    };
+    time: string;
+}
+declare class app extends ViewModel {
+    constructor(routes?: any[]);
+    view(): string;
+    btn_trip: string;
+    btn_schedule: string;
+    show_trip(): void;
+    show_schedule(): void;
+    documentTitle(): string;
+}
+declare class trip extends ViewModel {
+    constructor(routes?: any[]);
+    private init(routes?);
+    view(): string;
+    name: string;
+    stations: number;
+    _now: number;
+    now: number;
+    jumpto: number;
+    increment(): void;
+    decrement(): void;
+    jump(): void;
+    progressBar(): void;
+    documentTitle(): string;
+    validators: IValidator[];
+}
 interface JQuery {
     findAndfilter(query: string): JQuery;
     jhtml(element: JQuery): JQuery;

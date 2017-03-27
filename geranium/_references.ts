@@ -86,20 +86,14 @@
 
 /// <reference path="runtime/settings/settings.ts" />
 
-///// <reference path="application/bindings/collectionbinding.ts" />
-///// <reference path="application/validators/typevalidator.ts" />
-///// <reference path="application/validators/rangevalidator.ts" />
-///// <reference path="application/validators/notlessthenzerovalidator.ts" />
-///// <reference path="application/validators/materializevalidationreporter.ts" />
-///// <reference path="application/views/train.ts" />
-///// <reference path="application/views/h1time.ts" />
-///// <reference path="application/states/server/servertime.ts" />
-///// <reference path="application/states/client/traintrip.ts" />
-///// <reference path="application/views/scheduleview.ts" />
-///// <reference path="application/views/controlpanel.ts" />
-///// <reference path="application/viewstates/timeviewstate.ts" />
-///// <reference path="application/viewmodels/app.ts" />
-///// <reference path="application/viewmodels/schedule.ts" />
-///// <reference path="application/viewmodels/controls.ts" />
-
 /// <reference path="geranium.ts" />
+
+/// <reference path="app/validators/materializevalidationreporter.ts" />
+/// <reference path="app/validators/rangevalidator.ts" />
+/// <reference path="app/validators/typevalidator.ts" />
+/// <reference path="app/validators/notlessthenzerovalidator.ts" />
+/// <reference path="app/states/trains.ts" />
+/// <reference path="app/states/time.ts" />
+/// <reference path="app/viewmodels/application.ts" />
+/// <reference path="app/viewmodels/trip.ts" />
+/// <reference path="app/app.ts" />

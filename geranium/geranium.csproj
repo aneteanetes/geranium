@@ -30,6 +30,9 @@
       <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,11 +46,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="handler.ashx" />
+    <Content Include="backend.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="handler.ashx.cs">
-      <DependentUpon>handler.ashx</DependentUpon>
+    <Compile Include="backend.ashx.cs">
+      <DependentUpon>backend.ashx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +60,15 @@
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\app.ts" />
+    <TypeScriptCompile Include="app\states\time.ts" />
+    <TypeScriptCompile Include="app\states\trains.ts" />
+    <TypeScriptCompile Include="app\validators\MaterializeValidationReporter.ts" />
+    <TypeScriptCompile Include="app\validators\NotLessThenZeroValidator.ts" />
+    <TypeScriptCompile Include="app\validators\RangeValidator.ts" />
+    <TypeScriptCompile Include="app\validators\TypeValidator.ts" />
+    <TypeScriptCompile Include="app\viewmodels\application.ts" />
+    <TypeScriptCompile Include="app\viewmodels\trip.ts" />
     <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\Request.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
@@ -134,6 +146,7 @@
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app\models\" />
     <Folder Include="src\d.ts\" />
   </ItemGroup>
   <PropertyGroup>
