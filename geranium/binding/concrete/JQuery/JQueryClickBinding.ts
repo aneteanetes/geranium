@@ -7,9 +7,10 @@
             var method = model[processed.method];
             if (method != null)
                 if (typeof method == 'function')
-                    DOMObject.click(x => { method.apply(model, processed.params); });
+                    DOMObject.click(x => method.apply(model, processed.params));
         }
         private splitMethodAndParams(value: string): { method: string, params: any[] } {
+            value = value.replaceAll(';', '');
             var indexOfBracket = value.indexOf('(');
             if (indexOfBracket == -1)
                 return {

@@ -148,6 +148,35 @@ declare namespace geranium.runtime {
         all(): states.State[];
     }
 }
+declare namespace geranium.runtime.reflection {
+    class Property {
+        static redefine(target: any, name: string, get: (val: any) => any, set: (val: any) => any): void;
+    }
+    class PropertyEvent extends behaviors.events.Event<PropertyAccessor> {
+    }
+    class PropertyAccessor {
+        val: any;
+        _val: any;
+    }
+}
+declare namespace geranium.runtime.reflection.cloning.interfaces {
+    interface ICloner {
+        clone<T>(sample: T): T;
+    }
+}
+declare namespace geranium.runtime.reflection.cloning {
+    class ClonerAssign<T> implements interfaces.ICloner {
+        clone<T>(sample: T): T;
+    }
+}
+declare namespace geranium.runtime.reflection.cloning {
+    class ExtendCloner<T> implements interfaces.ICloner {
+        clone<T>(sample: T): T;
+    }
+}
+declare namespace geranium.runtime.reflection.cloning.decorators {
+    function ICloneable(constructor: any): void;
+}
 declare namespace geranium.backend.interfaces {
     interface ICommunicator {
         send<TRequest>(data: TRequest): any;
@@ -298,9 +327,9 @@ declare namespace geranium.binding.JQueryBindings {
 declare namespace geranium.states {
     abstract class State extends models.abstract.Model {
         constructor();
-        static get<T>(type: {
+        static get<T extends State>(type: {
             new (...args: any[]): T;
-        }): T;
+        }): Promise<T>;
         remove(): boolean;
     }
 }
@@ -368,13 +397,13 @@ declare namespace geranium.viewbinding.contracts {
 }
 declare namespace geranium.viewbinding.interfaces {
     interface IViewBinder {
-        bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM;
+        bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
     }
 }
 declare namespace geranium.viewbinding.abstract {
     abstract class ViewBinder implements interfaces.IViewBinder {
         private viewDOM;
-        bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM;
+        bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
         private valid(ViewDOM);
         private exec(ViewDOM, bindings);
         protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: {
@@ -417,7 +446,7 @@ declare namespace geranium.viewengine.abstract {
         execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
         protected abstract publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
         protected abstract viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
-        private completeview(iviewed, selector);
+        static ViewEngineView(iviewed: view.interfaces.IViewed, selector: string): Promise<view.abstract.View>;
     }
 }
 declare namespace geranium.viewengine {
@@ -438,12 +467,26 @@ declare namespace geranium.validating.validator.interfaces {
         validate<T>(value: T): contracts.ValidationResult;
     }
 }
-declare namespace geranium.validating.validator {
-    class NotZeroValidator implements validator.interfaces.IValidator {
-        readonly validatedPropertyName: string;
-        constructor(propName: string);
-        validate(value: number): contracts.ValidationResult;
-    }
+declare class TypeValidator implements IValidator {
+    _type: string;
+    constructor(prop: string, type: string);
+    validatedPropertyName: string;
+    validate(value: any): ValidationResult;
+}
+declare class RangeValidator implements IValidator {
+    constructor(prop: string, min: number | string, max: number | string, strict: boolean);
+    private strict;
+    private min;
+    private minField;
+    private max;
+    private maxField;
+    validatedPropertyName: string;
+    validate(value: number): ValidationResult;
+}
+declare class NotLessThenZeroValidator implements IValidator {
+    constructor(prop: string);
+    validatedPropertyName: string;
+    validate(value: number): ValidationResult;
 }
 declare namespace geranium.validating.reporter.interfaces {
     interface IValidatingReporter {
@@ -462,7 +505,7 @@ declare namespace geranium.validating.reporter {
 }
 declare namespace geranium.viewstate {
     abstract class ViewState extends states.State implements view.interfaces.IViewed {
-        constructor(selector: string);
+        show(selector: string): Promise<void>;
         abstract view(): {
             new (selector: string): view.abstract.View;
         } | string;
@@ -494,6 +537,7 @@ declare namespace geranium.runtime {
             viewengine?: viewengine.interfaces.IViewEngine;
             router?: routing.abstract.Router;
             history?: history.interfaces.IHistory;
+            cloner?: reflection.cloning.interfaces.ICloner;
             bidnings?: {
                 new <T>(...args: any[]): binding.abstract.Binding<T>;
             }[];
@@ -509,6 +553,7 @@ declare namespace geranium.runtime {
         readonly viewengine: viewengine.abstract.ViewEngine;
         readonly router: routing.abstract.Router;
         readonly history: history.interfaces.IHistory;
+        readonly cloner: runtime.reflection.cloning.interfaces.ICloner;
         readonly bidnings: {
             new <T>(...args: any[]): binding.abstract.Binding<T>;
         }[];
@@ -538,28 +583,17 @@ import Routeignore = geranium.routing.routeignore;
 import IValidatingReporter = geranium.validating.reporter.interfaces.IValidatingReporter;
 import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
+import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
+import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
+declare class clonableObject {
+    x: number;
+    y: string;
+    sayXY(): void;
+}
+declare var clonableObj: clonableObject;
 declare var Materialize: any;
 declare class MaterializeValidationRepoter implements IValidatingReporter {
     report(viewDOM: geranium.viewDOM.abstract.ViewDOM, validatingResult: geranium.validating.contracts.ValidationResult): void;
-}
-declare class RangeValidator implements IValidator {
-    constructor(prop: string, min: number, max: number, strict: boolean);
-    private strict;
-    private min;
-    private max;
-    validatedPropertyName: string;
-    validate(value: number): ValidationResult;
-}
-declare class TypeValidator implements IValidator {
-    _type: string;
-    constructor(prop: string, type: string);
-    validatedPropertyName: string;
-    validate(value: any): ValidationResult;
-}
-declare class NotLessThenZeroValidator implements IValidator {
-    constructor(prop: string);
-    validatedPropertyName: string;
-    validate(value: number): ValidationResult;
 }
 declare class trains extends State {
     readonly synchronizer: {
@@ -583,24 +617,25 @@ declare class time extends ViewState {
         method: string;
     };
     time: string;
+    static incrementTripState(): Promise<void>;
 }
 declare class app extends ViewModel {
-    constructor(routes?: any[]);
+    constructor();
     view(): string;
     btn_trip: string;
     btn_schedule: string;
-    show_trip(): void;
+    show_trip(): Promise<void>;
     show_schedule(): void;
     documentTitle(): string;
 }
-declare class trip extends ViewModel {
-    constructor(routes?: any[]);
-    private init(routes?);
+declare class trip extends ViewState {
     view(): string;
     name: string;
     stations: number;
-    _now: number;
+    private _now;
     now: number;
+    availableForChanges(): boolean;
+    obtain(data: any): void;
     jumpto: number;
     increment(): void;
     decrement(): void;
@@ -609,22 +644,18 @@ declare class trip extends ViewModel {
     documentTitle(): string;
     validators: IValidator[];
 }
+declare class trainschedule extends ViewModel {
+    view(): string;
+    display(selector: string): Promise<void>;
+    change_train(name: string): Promise<void>;
+    trains: Array<train>;
+}
+declare function entry(): Promise<void>;
 interface JQuery {
     findAndfilter(query: string): JQuery;
     jhtml(element: JQuery): JQuery;
     outerHtml(): string;
     collapsible(): any;
-}
-declare namespace geranium.runtime.reflection {
-    class Property {
-        static redefine(target: any, name: string, get: (val: any) => any, set: (val: any) => any): void;
-    }
-    class PropertyEvent extends behaviors.events.Event<PropertyAccessor> {
-    }
-    class PropertyAccessor {
-        val: any;
-        _val: any;
-    }
 }
 declare namespace geranium.viewmodels.contracts {
     class ViewModelHistoryState {

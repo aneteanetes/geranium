@@ -1,14 +1,14 @@
 ﻿namespace geranium.viewengine.abstract {
     export abstract class ViewEngine implements interfaces.IViewEngine {
         async execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM> {
-            var view = await this.completeview(context.iViewed, context.selector);
+            var view = await ViewEngine.ViewEngineView(context.iViewed, context.selector);
             var viewDOM = this.viewDOM(view);
 
             var execCtx = new viewengine.contracts.ExecuteContext(context);
             var bindingContext = new viewbinding.contracts.BindContext(viewDOM, execCtx.bindingFlags);
 
             var viewbinder = runtime.appSettings.viewbinder;
-            viewDOM = viewbinder.bind(bindingContext);            
+            await viewbinder.bind(bindingContext);            
 
             return this.publish(viewDOM);
         }
@@ -19,7 +19,7 @@
          * return complete rendered view
          * @param selector
          */
-        private completeview(iviewed: view.interfaces.IViewed, selector: string): Promise<view.abstract.View> {
+        static ViewEngineView(iviewed: view.interfaces.IViewed, selector: string): Promise<view.abstract.View> {
             var view: view.abstract.View;
 
             var viewctr = iviewed.view();

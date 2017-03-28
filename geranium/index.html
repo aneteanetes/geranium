@@ -45,6 +45,11 @@
                 <h1 class="col s12"><span data-field="name">{{name}}</span> at <span data-field="now">{{now}}</span> station of <span data-field="stations">{{stations}}</span></h1>
             </div>
             <div class="row">
+                <div class="progress col s12">
+                    <div class="determinate" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col s6">
                     <button onclick="decrement" class="btn waves-effect waves-light">previous</button>
                 </div>
@@ -59,6 +64,16 @@
                 <div class="col s2">
                     <button onclick="jump" class="red btn waves-effect waves-light">go!</button>
                 </div>
+            </div>
+        </div>
+        <div class="_trainschedule">
+            <div class="row">
+                <ul class="collapsible popout col s12" data-collapsible="accordion">
+                    <li data-multiple="trains">
+                        <div class="collapsible-header"><i class="material-icons">location_on</i>[[name]]<span onclick="change_train([[name]]);" class="badge blue white-text">change</span></div>
+                        <div class="collapsible-body"><span>Total stations is [[stations]] now at [[now]]</span></div>
+                    </li>                   
+                </ul>
             </div>
         </div>
     </div>

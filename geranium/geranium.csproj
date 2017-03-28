@@ -61,14 +61,20 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app.ts" />
-    <TypeScriptCompile Include="app\states\time.ts" />
+    <TypeScriptCompile Include="app\viewstates\time.ts" />
     <TypeScriptCompile Include="app\states\trains.ts" />
     <TypeScriptCompile Include="app\validators\MaterializeValidationReporter.ts" />
-    <TypeScriptCompile Include="app\validators\NotLessThenZeroValidator.ts" />
-    <TypeScriptCompile Include="app\validators\RangeValidator.ts" />
-    <TypeScriptCompile Include="app\validators\TypeValidator.ts" />
+    <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ClonerAssign.ts" />
+    <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ExtendCloner.ts" />
+    <TypeScriptCompile Include="runtime\reflection\cloning\decorators\ICloneable.ts" />
+    <TypeScriptCompile Include="runtime\reflection\cloning\interfaces\ICloner.ts" />
+    <TypeScriptCompile Include="validating\validator\abstract\Validator.ts" />
+    <TypeScriptCompile Include="validating\validator\concrete\NotLessThenZeroValidator.ts" />
+    <TypeScriptCompile Include="validating\validator\concrete\RangeValidator.ts" />
+    <TypeScriptCompile Include="validating\validator\concrete\TypeValidator.ts" />
     <TypeScriptCompile Include="app\viewmodels\application.ts" />
-    <TypeScriptCompile Include="app\viewmodels\trip.ts" />
+    <TypeScriptCompile Include="app\viewmodels\trainschedule.ts" />
+    <TypeScriptCompile Include="app\viewstates\trip.ts" />
     <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\Request.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
@@ -124,7 +130,6 @@
     <TypeScriptCompile Include="validating\reporter\concrete\JQueryViewValidatingReporter.ts" />
     <TypeScriptCompile Include="validating\reporter\concrete\NotifyValidatingReporter.ts" />
     <TypeScriptCompile Include="validating\reporter\interfaces\IValidatatingReporter.ts" />
-    <TypeScriptCompile Include="validating\validator\concrete\NotZeroValidator.ts" />
     <TypeScriptCompile Include="validating\validator\interfaces\IValidator.ts" />
     <TypeScriptCompile Include="viewbinding\abstract\ViewBinder.ts" />
     <TypeScriptCompile Include="viewbinding\concrete\JQueryViewBinder.ts" />

@@ -23,6 +23,12 @@
 /// <reference path="runtime/storage/concrete/windowstorage.ts" />
 /// <reference path="runtime/storage/concrete/statesstorage.ts" />
 
+/// <reference path="runtime/reflection/property.ts" />
+/// <reference path="runtime/reflection/cloning/interfaces/icloner.ts" />
+/// <reference path="runtime/reflection/cloning/concrete/clonerassign.ts" />
+/// <reference path="runtime/reflection/cloning/concrete/extendcloner.ts" />
+/// <reference path="runtime/reflection/cloning/decorators/icloneable.ts" />
+
 /// <reference path="backend/interfaces/icommunicator.ts" />
 /// <reference path="backend/abstract/request.ts" />
 /// <reference path="backend/abstract/eventrequest.ts" />
@@ -75,7 +81,9 @@
 
 /// <reference path="validating/contracts/validationresult.ts" />
 /// <reference path="validating/validator/interfaces/ivalidator.ts" />
-/// <reference path="validating/validator/concrete/notzerovalidator.ts" />
+/// <reference path="validating/validator/concrete/typevalidator.ts" />
+/// <reference path="validating/validator/concrete/rangevalidator.ts" />
+/// <reference path="validating/validator/concrete/notlessthenzerovalidator.ts" />
 /// <reference path="validating/reporter/interfaces/ivalidatatingreporter.ts" />
 /// <reference path="validating/reporter/concrete/notifyvalidatingreporter.ts" />
 /// <reference path="validating/reporter/concrete/jqueryviewvalidatingreporter.ts" />
@@ -89,11 +97,9 @@
 /// <reference path="geranium.ts" />
 
 /// <reference path="app/validators/materializevalidationreporter.ts" />
-/// <reference path="app/validators/rangevalidator.ts" />
-/// <reference path="app/validators/typevalidator.ts" />
-/// <reference path="app/validators/notlessthenzerovalidator.ts" />
 /// <reference path="app/states/trains.ts" />
-/// <reference path="app/states/time.ts" />
+/// <reference path="app/viewstates/time.ts" />
 /// <reference path="app/viewmodels/application.ts" />
-/// <reference path="app/viewmodels/trip.ts" />
+/// <reference path="app/viewstates/trip.ts" />
+/// <reference path="app/viewmodels/trainschedule.ts" />
 /// <reference path="app/app.ts" />

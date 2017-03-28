@@ -2,11 +2,15 @@
     validreport: new MaterializeValidationRepoter()
 });
 
-$(document).ready(x => {
-    new time('.time');
-    setInterval(() => {
-        State.get(time).sync();
-    }, 1100);
+async function entry() {
+    var timest = await State.get(time);
+    await timest.show('.time');
+
+    setInterval(time.incrementTripState, 1100);
 
     new app().display('.controls');
+}
+
+$(document).ready(x => {
+    entry();
 });

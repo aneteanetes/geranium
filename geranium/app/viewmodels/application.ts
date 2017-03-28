@@ -1,6 +1,6 @@
 ﻿
 class app extends ViewModel {
-    constructor(routes?: any[]) {
+    constructor() {
         super();
         this.show_trip();
     }
@@ -12,12 +12,19 @@ class app extends ViewModel {
     btn_trip: string = "trip";
     btn_schedule: string = "schedule";
 
-    show_trip() {
-        new trip().display('.app');
+    async show_trip() {
+        var tripstate = await State.get(trip);
+        
+        if (!tripstate.name) {
+            var _trains = await State.get(trains);
+            tripstate.obtain(_trains.data[0]);
+        }
+        tripstate.show('.app');
     }
 
     show_schedule() {
-        console.log('schedule vm');
+        new trainschedule()
+            .display('.app');
     }
 
     documentTitle() { return 'Application'; }

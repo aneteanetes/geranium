@@ -6,11 +6,10 @@
         }
         static async get<T extends State>(type: { new (...args: any[]): T }): Promise<T> {
             var state = runtime.appSettings.states.get(type);
-            if (!state) {
+            if (!state)
                 state = new type();
-                await state.sync()
-            }
-            return runtime.appSettings.states.get(type);
+            await state.sync();
+            return state;
         }
         remove(): boolean {
             return runtime.appSettings.states.remove((<any>this).constructor);

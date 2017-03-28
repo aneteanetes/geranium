@@ -1,15 +1,32 @@
 ﻿class RangeValidator implements IValidator {
-    constructor(prop: string, min: number, max: number, strict: boolean) {
+    constructor(prop: string, min: number | string, max: number | string, strict: boolean) {
         this.validatedPropertyName = prop;
-        this.min = min;
-        this.max = max;
+
+        if (typeof min === "number")
+            this.min = min;
+        else
+            this.minField = min;
+
+        if (typeof max === "number")
+            this.max = max;
+        else
+            this.maxField = max;
+        
         this.strict = strict;
     }
     private strict: boolean;
     private min: number;
+    private minField: string;
     private max: number;
+    private maxField: string;
     validatedPropertyName: string;
+
     validate(value: number): ValidationResult {
+        if (this.minField) {
+            //this.min=
+        }
+
+
         var result = new ValidationResult();
         result.success = this.strict
             ? (value > this.min && value < this.max)

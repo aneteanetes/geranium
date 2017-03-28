@@ -1,5 +1,5 @@
 ﻿namespace geranium.viewbinding.interfaces {
     export interface IViewBinder {
-        bind(context: viewbinding.contracts.BindContext): viewDOM.abstract.ViewDOM;
+        bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
     }
 }

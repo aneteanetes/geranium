@@ -13,6 +13,7 @@
 			viewengine?: viewengine.interfaces.IViewEngine,
             router?: routing.abstract.Router,
             history?: history.interfaces.IHistory,
+            cloner?: reflection.cloning.interfaces.ICloner,
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
@@ -33,7 +34,8 @@
 		readonly viewbinder: viewbinding.abstract.ViewBinder = new viewbinding.JQueryViewBinder();        
 		readonly viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
 		readonly router: routing.abstract.Router = new routing.BasicRouter();
-		readonly history: history.interfaces.IHistory = new history.Html5HistoryAPI();
+        readonly history: history.interfaces.IHistory = new history.Html5HistoryAPI();
+        readonly cloner: runtime.reflection.cloning.interfaces.ICloner = new runtime.reflection.cloning.ClonerAssign();
         readonly bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
             binding.JQueryBindings.JQueryCollectionBinding,
             binding.JQueryBindings.JQueryFieldBinding,
