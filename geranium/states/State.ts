@@ -3,9 +3,13 @@
         constructor() {
             super();
             runtime.appSettings.states.add(this);
-            this.sync();
         }
-        static get<T>(type: { new (...args: any[]): T }): T {
+        static async get<T extends State>(type: { new (...args: any[]): T }): Promise<T> {
+            var state = runtime.appSettings.states.get(type);
+            if (!state) {
+                state = new type();
+                await state.sync()
+            }
             return runtime.appSettings.states.get(type);
         }
         remove(): boolean {

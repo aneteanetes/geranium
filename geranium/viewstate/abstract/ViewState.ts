@@ -6,7 +6,7 @@
 
         private async execute(selector: string) {
             var statectr = this.state();
-            var state = states.State.get(statectr);
+            var state = await states.State.get(statectr);
             if (state == null) {
                 state = new statectr();
             }
