@@ -1,5 +1,6 @@
 ﻿namespace geranium.models.abstract {
     @routing.routeignore
+    @runtime.reflection.cloning.decorators.ICloneable
     export abstract class Model extends behaviors.events.Event<Model> {        
         obtain(data: any) {
             if (typeof data == 'string')

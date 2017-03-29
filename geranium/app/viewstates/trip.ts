@@ -19,16 +19,7 @@
     availableForChanges(): boolean{
         return this._now == this.stations;
     }
-
-    obtain(data: any) {
-        debugger;
-        super.obtain(data);
-        this.validators = this.validators.filter(x => x.constructor.name != 'RangeValidator');
-        this.validators.push(
-            new RangeValidator("now", 0, this.stations, false),
-        );
-    }
-
+    
     jumpto: number = 0;
 
     increment() {
@@ -49,7 +40,8 @@
     documentTitle() { return 'Train trip'; }
 
     validators: IValidator[] = [
-        new TypeValidator("now", "number"),
-        new NotLessThenZeroValidator("now")
+        new geranium.validating.validator.RangeValidator("now", 0, "stations", false),
+        new geranium.validating.validator.TypeValidator("now", "number"),
+        new geranium.validating.validator.NotLessThenZeroValidator("now")
     ];
 }

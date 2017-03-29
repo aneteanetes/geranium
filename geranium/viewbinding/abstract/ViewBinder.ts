@@ -13,19 +13,23 @@
             if (vm.validators) {
                 var validatedProperties = vm.validators.groupBy('validatedPropertyName');
                 validatedProperties.forEach(validators => {
-                    var previosSymbol = null;
-                    validators.forEach(validator => {
-                        runtime.reflection.Property.redefine(ViewDOM.view.data, validator.validatedPropertyName,
-                            (val) => { return val; },
-                            (val) => {
-                                var validation = validator.validate(val);
+
+                    var validProp = validators[0].validatedPropertyName;
+                    runtime.reflection.Property.redefine(ViewDOM.view.data, validProp,
+                        (val) => { return val; },
+                        function (val) {
+
+                            let validationFault: boolean = false;
+                            (this as models.abstract.Model).validators.filter(x => x.validatedPropertyName === validProp).forEach(validator => {
+                                var validation = validator.validate(val, this.clone());
                                 if (!validation.success) {
+                                    validationFault = true;
                                     runtime.appSettings.validreport.report(ViewDOM, validation);
-                                    return;
                                 }
-                                return val;
                             });
-                    });
+
+                            return validationFault ? undefined : val;
+                        });
                 });
             }
         }

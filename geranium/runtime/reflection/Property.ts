@@ -32,7 +32,7 @@
                         return _val;
                     },
                     set(val) {
-                        let _val = set(val);
+                        let _val = set.call(this,val);
                         if (_val != undefined)
                             protoPropertyDescriptor.set.call(target, _val);
                         setterEvent.raise({ val, _val });
@@ -48,7 +48,7 @@
                 Object.defineProperty(target, name, {
                     get() { return get(ownPropertyDescriptor.get.call(target)); },
                     set(val) {
-                        let _val = set(val);
+                        let _val = set.call(this,val);
                         if (_val != undefined)
                             ownPropertyDescriptor.set.call(target, _val);
                     },
@@ -67,7 +67,7 @@
                         return _val;
                     },
                     set(val) {
-                        let _val = set(val);
+                        let _val = set.call(this,val);
                         if (_val != undefined)
                             target[indexer] = set(_val);
                         setterEvent.raise({ val, _val });

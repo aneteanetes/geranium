@@ -68,7 +68,6 @@
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ExtendCloner.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\decorators\ICloneable.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\interfaces\ICloner.ts" />
-    <TypeScriptCompile Include="validating\validator\abstract\Validator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\RangeValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\TypeValidator.ts" />

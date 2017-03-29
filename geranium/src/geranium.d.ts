@@ -464,29 +464,35 @@ declare namespace geranium.validating.contracts {
 declare namespace geranium.validating.validator.interfaces {
     interface IValidator {
         readonly validatedPropertyName: string;
-        validate<T>(value: T): contracts.ValidationResult;
+        validate<T>(value: T, shallowcopy: any): contracts.ValidationResult;
     }
 }
-declare class TypeValidator implements IValidator {
-    _type: string;
-    constructor(prop: string, type: string);
-    validatedPropertyName: string;
-    validate(value: any): ValidationResult;
+declare namespace geranium.validating.validator {
+    class TypeValidator implements interfaces.IValidator {
+        _type: string;
+        constructor(prop: string, type: string);
+        validatedPropertyName: string;
+        validate(value: any): ValidationResult;
+    }
 }
-declare class RangeValidator implements IValidator {
-    constructor(prop: string, min: number | string, max: number | string, strict: boolean);
-    private strict;
-    private min;
-    private minField;
-    private max;
-    private maxField;
-    validatedPropertyName: string;
-    validate(value: number): ValidationResult;
+declare namespace geranium.validating.validator {
+    class RangeValidator implements interfaces.IValidator {
+        constructor(prop: string, min: number | string, max: number | string, strict: boolean);
+        private strict;
+        private min;
+        private minField;
+        private max;
+        private maxField;
+        validatedPropertyName: string;
+        validate(value: number, shallowopy: any): ValidationResult;
+    }
 }
-declare class NotLessThenZeroValidator implements IValidator {
-    constructor(prop: string);
-    validatedPropertyName: string;
-    validate(value: number): ValidationResult;
+declare namespace geranium.validating.validator {
+    class NotLessThenZeroValidator implements interfaces.IValidator {
+        constructor(prop: string);
+        validatedPropertyName: string;
+        validate(value: number): ValidationResult;
+    }
 }
 declare namespace geranium.validating.reporter.interfaces {
     interface IValidatingReporter {
@@ -585,16 +591,6 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
 import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
 import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
-declare var suck: {
-    x: string;
-};
-declare class clonableObject {
-    x: number;
-    y: string;
-    sayXY(): void;
-    sucker: any;
-}
-declare var clonableObj: clonableObject;
 declare var Materialize: any;
 declare class MaterializeValidationRepoter implements IValidatingReporter {
     report(viewDOM: geranium.viewDOM.abstract.ViewDOM, validatingResult: geranium.validating.contracts.ValidationResult): void;
@@ -639,7 +635,6 @@ declare class trip extends ViewState {
     private _now;
     now: number;
     availableForChanges(): boolean;
-    obtain(data: any): void;
     jumpto: number;
     increment(): void;
     decrement(): void;
@@ -655,6 +650,11 @@ declare class trainschedule extends ViewModel {
     trains: Array<train>;
 }
 declare function entry(): Promise<void>;
+declare namespace geranium.runtime.reflection.cloning.interfaces {
+    interface ICloneable {
+        clone<T>(): T;
+    }
+}
 interface JQuery {
     findAndfilter(query: string): JQuery;
     jhtml(element: JQuery): JQuery;
