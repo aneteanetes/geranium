@@ -1,7 +1,8 @@
 ﻿namespace geranium.runtime.reflection.cloning {
     export class ExtendCloner<T> implements interfaces.ICloner {
         clone<T>(sample: T): T {
-            return $.extend(true, {}, sample);
+            var proto = Object.getPrototypeOf(sample);
+            return $.extend(true, {}, proto, Object.getPrototypeOf(proto));
         }
     }
 }

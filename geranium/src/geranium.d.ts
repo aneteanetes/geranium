@@ -585,10 +585,14 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
 import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
 import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
+declare var suck: {
+    x: string;
+};
 declare class clonableObject {
     x: number;
     y: string;
     sayXY(): void;
+    sucker: any;
 }
 declare var clonableObj: clonableObject;
 declare var Materialize: any;

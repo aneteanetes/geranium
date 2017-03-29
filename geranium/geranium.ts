@@ -32,14 +32,3 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
 import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
 import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
-
-@ICloneable
-class clonableObject {
-    x: number = 0;
-    y: string = "hi";
-    sayXY() {
-        alert(this.x + " ~ " + this.y);
-    }
-}
-
-var clonableObj = new clonableObject();
