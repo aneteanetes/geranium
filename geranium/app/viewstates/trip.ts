@@ -1,6 +1,16 @@
-﻿class trip extends ViewState {
+﻿@Routeroot({ executable: "show" })
+class trip extends ViewState {
     view() {
         return $('._trip').html();
+    }
+
+    async show(selector: string) {
+        debugger;
+        if (!this.name) {
+            var _trains = await State.get(trains);
+            this.obtain(_trains.data[0]);                
+        }
+        super.show(selector);
     }
 
     name: string = "";

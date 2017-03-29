@@ -25,24 +25,37 @@
 
         return '/' + routeUrl.join("/").toLowerCase();
     }
-    
-    export function routed(constructor: any) {
+    /**
+     * route your application
+     * @param context
+     */
+    export function routed(context: contracts.RouteContext) {
+        return (constructor: any) => {
+            var route = new contracts.Route();
+            route.url = urlFromCtor(constructor);
+            route.ctor = constructor;
+            route.executable = context.executable;
+            if (context.prepath)
+                route.url = context.prepath + route.url;
 
-        var route = new contracts.Route();
-        route.url = urlFromCtor(constructor);
-        route.ctor = constructor;
-
-        _routes.push(route);
+            _routes.push(route);
+        }
     }
     export function routeignore(constructor: any) {
         var instance = new constructor();
         _ignoredRoutes.push(instance.constructor.name);
     }
-    export function routeroot(constructor: any) {
-        var root = new contracts.Route();
-        root.url = "/";
-        root.ctor = constructor;
-        _routes.push(root);
+    export function routeroot(context: contracts.RouteContext) {
+        return (constructor: any) => {
+            var root = new contracts.Route();            
+            if (context.prepath)
+                root.url = context.prepath;
+            else
+                root.url = "/";
+            root.ctor = constructor;
+            root.executable = context.executable;
+            _routes.push(root);
+        }
     }
     
     function chainOfCtorNames(obj: any, names: string[]): string[] {

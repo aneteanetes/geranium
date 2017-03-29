@@ -1,4 +1,5 @@
-﻿class trainschedule extends ViewModel {
+﻿@Routed({ executable: "display" })
+class trainschedule extends ViewModel {
     view() { return $('._trainschedule').html(); }
 
     async display(selector: string) {

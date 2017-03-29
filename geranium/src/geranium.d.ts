@@ -14,8 +14,9 @@ declare namespace geranium.routing.contracts {
     class Route {
         url: string;
         ctor: {
-            new (...args: any[]): viewmodels.abstract.ViewModel;
+            new (...args: any[]): any;
         };
+        executable: string;
         selector: string;
         restore: boolean;
     }
@@ -32,27 +33,26 @@ declare namespace geranium.routing {
     function routes(): contracts.Route[];
     function urlFromCtor(ctor: any): string;
     function urlFromCtor(ctor: any, params: string[]): string;
-    function routed(constructor: any): void;
+    function routed(context: contracts.RouteContext): (constructor: any) => void;
     function routeignore(constructor: any): void;
-    function routeroot(constructor: any): void;
+    function routeroot(context: contracts.RouteContext): (constructor: any) => void;
 }
 declare namespace geranium.routing.abstract {
     abstract class Router {
-        abstract Current<T extends viewmodels.abstract.ViewModel>(): T;
+        abstract Current<T>(): T;
         readonly routes: contracts.Route[];
         routeByUrl(url: string): contracts.RouteMatch;
+        protected match(url: string, params?: string[]): contracts.RouteMatch;
         abstract route(current: contracts.RouteMatch): any;
         abstract routearea(): string;
-        abstract match(url: string, params?: string[]): contracts.RouteMatch;
     }
 }
 declare namespace geranium.routing {
     class BasicRouter extends abstract.Router {
-        Current<T extends viewmodels.abstract.ViewModel>(): T;
+        Current<T>(): T;
         _current: any;
         routearea(): string;
         route(current: contracts.RouteMatch): void;
-        match(url: string, params?: string[]): contracts.RouteMatch;
     }
 }
 declare namespace geranium.history.contracts {
@@ -331,6 +331,7 @@ declare namespace geranium.states {
             new (...args: any[]): T;
         }): Promise<T>;
         remove(): boolean;
+        private statefill();
     }
 }
 declare namespace geranium.templating.contracts {
@@ -620,7 +621,6 @@ declare class time extends ViewState {
     static incrementTripState(): Promise<void>;
 }
 declare class app extends ViewModel {
-    constructor();
     view(): string;
     btn_trip: string;
     btn_schedule: string;
@@ -630,6 +630,7 @@ declare class app extends ViewModel {
 }
 declare class trip extends ViewState {
     view(): string;
+    show(selector: string): Promise<void>;
     name: string;
     stations: number;
     private _now;
@@ -650,9 +651,10 @@ declare class trainschedule extends ViewModel {
     trains: Array<train>;
 }
 declare function entry(): Promise<void>;
-declare namespace geranium.runtime.reflection.cloning.interfaces {
-    interface ICloneable {
-        clone<T>(): T;
+declare namespace geranium.routing.contracts {
+    class RouteContext {
+        prepath?: string;
+        executable: string;
     }
 }
 interface JQuery {

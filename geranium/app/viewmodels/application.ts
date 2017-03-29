@@ -1,10 +1,4 @@
-﻿
-class app extends ViewModel {
-    constructor() {
-        super();
-        this.show_trip();
-    }
-
+﻿class app extends ViewModel {
     view() {
         return $('._controls').html();
     }

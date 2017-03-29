@@ -5,22 +5,20 @@
         protected get markup(): viewDOM.abstract.ViewDOM { return this.publishedViewDom; }
 
         async display(selector: string) {
-
-            if (history.is(this.constructor) && arguments.length < 3) {
-                var _history = new history.contracts.HistoryItem();
-                _history.url = routing.urlFromCtor(this.constructor, arguments[1]);
-                _history.title = document.title;
-                _history.state = {
-                    ctor: this.constructor.name,
-                    selector: selector
-                };
-                runtime.appSettings.history.extend(_history);
-            }
+            if (history.is(this.constructor) && arguments.length == 1)
+                runtime.appSettings.router.route({
+                    params: arguments[1],
+                    url: routing.urlFromCtor(this.constructor, arguments[1]),
+                    ctor: this.constructor as any,
+                    selector: selector,
+                    restore: arguments.length < 3,
+                    executable: 'display'
+                });
 
             var title = this.documentTitle();
             if (title != null)
                 document.title = title;
-            
+
             this.publishedViewDom = await runtime.appSettings.viewengine.execute({
                 iViewed: this,
                 selector: selector

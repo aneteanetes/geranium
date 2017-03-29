@@ -23,7 +23,6 @@
         validatedPropertyName: string;
 
         validate(value: number, shallowopy: any): ValidationResult {
-            debugger;
             if (this.minField)
                 this.min = shallowopy[this.minField];
             if (this.maxField)

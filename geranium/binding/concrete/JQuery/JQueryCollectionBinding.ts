@@ -26,7 +26,7 @@
                 let viewDom = new viewDOM.JQueryViewDOM(_view);
                 let ctx = new viewbinding.contracts.BindContext(viewDom, bindings);
                 await runtime.appSettings.viewbinder.bind(ctx);
-                debugger;
+
                 DOMCollection = DOMCollection.add(viewDom.getViewDOM());
             }
 

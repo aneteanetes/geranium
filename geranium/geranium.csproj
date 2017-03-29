@@ -64,6 +64,7 @@
     <TypeScriptCompile Include="app\viewstates\time.ts" />
     <TypeScriptCompile Include="app\states\trains.ts" />
     <TypeScriptCompile Include="app\validators\MaterializeValidationReporter.ts" />
+    <TypeScriptCompile Include="routing\constracts\RouteContext.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ClonerAssign.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ExtendCloner.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\decorators\ICloneable.ts" />
@@ -150,7 +151,6 @@
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\models\" />
     <Folder Include="src\d.ts\" />
   </ItemGroup>
   <PropertyGroup>

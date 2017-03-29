@@ -1,7 +1,17 @@
 ﻿namespace geranium.routing.contracts {
 	export class Route {
-		url: string;
-        ctor: { new (...args: any[]): viewmodels.abstract.ViewModel };
+        url: string;
+        /**
+         * constructor of this object
+         */
+        ctor: { new (...args: any[]): any };
+        /**
+         * Executable function of this routes
+         */
+        executable: string;
+        /**
+         * selector for executable function
+         */
         selector: string;
         restore: boolean;
 	}
