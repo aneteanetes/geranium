@@ -8,7 +8,8 @@ async function entry() {
 
     //setInterval(time.incrementTripState, 1100);
 
-    new app().display('.controls');
+    new app()
+        .display('.controls');
 }
 
 $(document).ready(x => {

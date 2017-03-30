@@ -15,7 +15,7 @@
             let selector = current.restore ? current.selector : this.routearea();
 
             var routed = new current.ctor(current.params) as any;
-            var executing = routed[current.executable] as Function;
+            var executing: string = current.executable ? current.executable : 'toString';
 
             if (!current.restore) {
                 var _history = new history.contracts.HistoryItem();
@@ -27,9 +27,13 @@
                 };
                 runtime.appSettings.history.extend(_history);
             }
-            debugger;
-            executing.apply(routed, [selector, current.params, current.restore]);
-        }
 
+            routed["#routed"] = {
+                params: current.params,
+                restore: current.restore
+            };
+
+            routed[executing](selector);
+        }
     }
 }

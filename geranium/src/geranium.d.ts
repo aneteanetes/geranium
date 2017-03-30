@@ -33,9 +33,9 @@ declare namespace geranium.routing {
     function routes(): contracts.Route[];
     function urlFromCtor(ctor: any): string;
     function urlFromCtor(ctor: any, params: string[]): string;
-    function routed(context: contracts.RouteContext): (constructor: any) => void;
+    function routed(context?: contracts.RouteContext): (constructor: any) => void;
     function routeignore(constructor: any): void;
-    function routeroot(context: contracts.RouteContext): (constructor: any) => void;
+    function routeroot(context?: contracts.RouteContext): (constructor: any) => void;
 }
 declare namespace geranium.routing.abstract {
     abstract class Router {
@@ -513,6 +513,7 @@ declare namespace geranium.validating.reporter {
 declare namespace geranium.viewstate {
     abstract class ViewState extends states.State implements view.interfaces.IViewed {
         show(selector: string): Promise<void>;
+        toString(selector: string): Promise<void>;
         abstract view(): {
             new (selector: string): view.abstract.View;
         } | string;
@@ -527,6 +528,7 @@ declare namespace geranium.viewmodels.abstract {
         abstract view(): {
             new (selector: string): view.abstract.View;
         } | string;
+        toString(selector: any): Promise<void>;
     }
 }
 declare namespace geranium.runtime {
@@ -654,7 +656,7 @@ declare function entry(): Promise<void>;
 declare namespace geranium.routing.contracts {
     class RouteContext {
         prepath?: string;
-        executable: string;
+        executable?: string;
     }
 }
 interface JQuery {

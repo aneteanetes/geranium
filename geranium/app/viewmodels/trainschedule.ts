@@ -1,4 +1,4 @@
-﻿@Routed({ executable: "display" })
+﻿@Routed({ prepath: "fuckyou" })
 class trainschedule extends ViewModel {
     view() { return $('._trainschedule').html(); }
 

@@ -5,15 +5,14 @@
         protected get markup(): viewDOM.abstract.ViewDOM { return this.publishedViewDom; }
 
         async display(selector: string) {
-            if (history.is(this.constructor) && arguments.length == 1)
-                runtime.appSettings.router.route({
-                    params: arguments[1],
-                    url: routing.urlFromCtor(this.constructor, arguments[1]),
-                    ctor: this.constructor as any,
-                    selector: selector,
-                    restore: arguments.length < 3,
-                    executable: 'display'
-                });
+
+            if (history.is(this.constructor) && !this['#routed']) {
+                var _routed = this["@routed"] as routing.contracts.RouteMatch;
+                _routed.selector = selector;
+                runtime.appSettings.router.route(_routed);
+            }
+            else
+                delete this['#routed'];
 
             var title = this.documentTitle();
             if (title != null)
@@ -27,5 +26,9 @@
 
         documentTitle(): string { return null; }
         abstract view(): { new (selector: string): view.abstract.View } | string;
+
+        async toString(selector) {
+            this.display(selector);
+        }
     }
 }

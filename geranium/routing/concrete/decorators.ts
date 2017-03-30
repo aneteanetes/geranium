@@ -13,7 +13,7 @@
     
     export function urlFromCtor(ctor: any): string;
     export function urlFromCtor(ctor: any, params: string[]): string;
-    export function urlFromCtor(ctor: any, params ?: string[]): string {
+    export function urlFromCtor(ctor: any, params?: string[]): string {
         var instance = new ctor();
         let chain = chainOfCtorNames(instance, null);
         var routeUrl = chain
@@ -29,31 +29,39 @@
      * route your application
      * @param context
      */
-    export function routed(context: contracts.RouteContext) {
+    export function routed(context?: contracts.RouteContext | string | { new (...args: any[]): any }) {
         return (constructor: any) => {
             var route = new contracts.Route();
             route.url = urlFromCtor(constructor);
             route.ctor = constructor;
-            route.executable = context.executable;
-            if (context.prepath)
-                route.url = context.prepath + route.url;
+            debugger;
+            if (context) {
+                route.executable = context.executable;
+                if (context.prepath)
+                    route.url = "/" + context.prepath + route.url;
+            }
+            constructor.prototype["@routed"] = route;
 
             _routes.push(route);
         }
-    }
+    
     export function routeignore(constructor: any) {
         var instance = new constructor();
         _ignoredRoutes.push(instance.constructor.name);
     }
-    export function routeroot(context: contracts.RouteContext) {
+    export function routeroot(context?: contracts.RouteContext) {
         return (constructor: any) => {
-            var root = new contracts.Route();            
-            if (context.prepath)
+            var root = new contracts.Route();
+            if (context && context.prepath) {
                 root.url = context.prepath;
+                root.executable = context.executable;
+            }
             else
                 root.url = "/";
             root.ctor = constructor;
-            root.executable = context.executable;
+
+            constructor.prototype["@routed"] = root;
+
             _routes.push(root);
         }
     }

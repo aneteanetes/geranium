@@ -1,4 +1,4 @@
-﻿@Routeroot({ executable: "show" })
+﻿@Routeroot()
 class trip extends ViewState {
     view() {
         return $('._trip').html();

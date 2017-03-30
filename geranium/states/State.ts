@@ -1,4 +1,5 @@
 ﻿namespace geranium.states {
+    @routing.routeignore
     export abstract class State extends models.abstract.Model {
         constructor() {
             super();
@@ -16,9 +17,13 @@
             return runtime.appSettings.states.remove((<any>this).constructor);
         }
         private async statefill() {
-            var state = runtime.appSettings.states.get(this.constructor as any);
-            if (!state)
-                runtime.appSettings.states.add(this);
+            if (this.constructor.name != "ViewState") {                
+                if (runtime.appSettings) {
+                    var state = runtime.appSettings.states.get(this.constructor as any);
+                    if (!state)
+                        runtime.appSettings.states.add(this);
+                }
+            }
         }
     }
 }
