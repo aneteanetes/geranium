@@ -26,16 +26,28 @@ declare namespace geranium.routing.contracts {
         params: any[];
     }
 }
+declare namespace geranium.routing.contracts {
+    class RouteContext {
+        prepath?: string;
+        parent?: {
+            new (...args: any[]): any;
+        };
+        executable?: string;
+    }
+}
 declare namespace geranium.routing {
     var settings: {
-        clearUrl: boolean;
+        parameterFullUrl: boolean;
     };
     function routes(): contracts.Route[];
     function urlFromCtor(ctor: any): string;
     function urlFromCtor(ctor: any, params: string[]): string;
-    function routed(context?: contracts.RouteContext): (constructor: any) => void;
+    function routed(constructor: any): any;
+    function routed(context: contracts.RouteContext): any;
+    function routed(cleanroute: string): any;
+    function routed(parent: any, absorb: boolean): any;
     function routeignore(constructor: any): void;
-    function routeroot(context?: contracts.RouteContext): (constructor: any) => void;
+    function routeroot(constructor: any): void;
 }
 declare namespace geranium.routing.abstract {
     abstract class Router {
@@ -653,12 +665,6 @@ declare class trainschedule extends ViewModel {
     trains: Array<train>;
 }
 declare function entry(): Promise<void>;
-declare namespace geranium.routing.contracts {
-    class RouteContext {
-        prepath?: string;
-        executable?: string;
-    }
-}
 interface JQuery {
     findAndfilter(query: string): JQuery;
     jhtml(element: JQuery): JQuery;

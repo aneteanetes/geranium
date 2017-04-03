@@ -5,6 +5,7 @@
 
 /// <reference path="routing/constracts/route.ts" />
 /// <reference path="routing/constracts/routematch.ts" />
+/// <reference path="routing/constracts/routecontext.ts" />
 /// <reference path="routing/concrete/decorators.ts" />
 /// <reference path="routing/abstract/router.ts" />
 /// <reference path="routing/concrete/basicrouter.ts" />

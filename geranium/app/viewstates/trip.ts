@@ -1,4 +1,5 @@
-﻿@Routeroot()
+﻿@Routed(app, true)
+@Routeroot
 class trip extends ViewState {
     view() {
         return $('._trip').html();
