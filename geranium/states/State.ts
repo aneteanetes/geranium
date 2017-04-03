@@ -17,7 +17,6 @@
 		}
 
         static async get<T extends State>(type: { new (...args: any[]): T }): Promise<T> {
-            debugger;
             var state = runtime.appSettings.states.get(type);
             if (!state)
                 state = new type();

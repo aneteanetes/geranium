@@ -6,7 +6,7 @@
          */
         ctor: { new (...args: any[]): any };
         /**
-         * Executable function of this routes
+         * Executable function of this routes, if empty: toString()
          */
         executable: string;
         /**

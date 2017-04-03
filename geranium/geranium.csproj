@@ -20,7 +20,6 @@
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="index.html" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -46,24 +45,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="backend.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="backend.ashx.cs">
-      <DependentUpon>backend.ashx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\app.ts" />
-    <TypeScriptCompile Include="app\viewstates\time.ts" />
-    <TypeScriptCompile Include="app\states\trains.ts" />
-    <TypeScriptCompile Include="app\validators\MaterializeValidationReporter.ts" />
     <TypeScriptCompile Include="routing\constracts\RouteContext.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ClonerAssign.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ExtendCloner.ts" />
@@ -72,9 +59,6 @@
     <TypeScriptCompile Include="validating\validator\concrete\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\RangeValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\TypeValidator.ts" />
-    <TypeScriptCompile Include="app\viewmodels\application.ts" />
-    <TypeScriptCompile Include="app\viewmodels\trainschedule.ts" />
-    <TypeScriptCompile Include="app\viewstates\trip.ts" />
     <TypeScriptCompile Include="backend\abstract\EventRequest.ts" />
     <TypeScriptCompile Include="backend\abstract\Request.ts" />
     <TypeScriptCompile Include="backend\abstract\StatefullRequest.ts" />
@@ -151,7 +135,7 @@
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\d.ts\" />
+    <Folder Include="src\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -185,7 +169,7 @@
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
     <TypeScriptEmitDecoratorMetadata>true</TypeScriptEmitDecoratorMetadata>
     <TypeScriptTarget>ES6</TypeScriptTarget>
-    <TypeScriptOutFile>src/geranium.js</TypeScriptOutFile>
+    <TypeScriptOutFile>obj/geranium.js</TypeScriptOutFile>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>

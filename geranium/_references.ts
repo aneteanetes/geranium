@@ -96,11 +96,3 @@
 /// <reference path="runtime/settings/settings.ts" />
 
 /// <reference path="geranium.ts" />
-
-/// <reference path="app/validators/materializevalidationreporter.ts" />
-/// <reference path="app/states/trains.ts" />
-/// <reference path="app/viewstates/time.ts" />
-/// <reference path="app/viewmodels/application.ts" />
-/// <reference path="app/viewstates/trip.ts" />
-/// <reference path="app/viewmodels/trainschedule.ts" />
-/// <reference path="app/app.ts" />
