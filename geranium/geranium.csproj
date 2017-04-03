@@ -20,6 +20,7 @@
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="src\geranium.js" />
     <Content Include="web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -56,6 +57,7 @@
     <TypeScriptCompile Include="runtime\reflection\cloning\concrete\ExtendCloner.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\decorators\ICloneable.ts" />
     <TypeScriptCompile Include="runtime\reflection\cloning\interfaces\ICloner.ts" />
+    <TypeScriptCompile Include="src\geranium.d.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\NotLessThenZeroValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\RangeValidator.ts" />
     <TypeScriptCompile Include="validating\validator\concrete\TypeValidator.ts" />
@@ -134,9 +136,7 @@
     <TypeScriptCompile Include="view\interfaces\IViewed.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
