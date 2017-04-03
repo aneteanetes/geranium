@@ -205,7 +205,7 @@ declare namespace geranium.backend.abstract {
 }
 declare namespace geranium.backend.abstract {
     abstract class EventRequest extends Request {
-        send<TResponse>(data: any): PromiseLike<TResponse>;
+        send<TResponse>(data: any, stateless?: boolean): PromiseLike<TResponse>;
         raise(): void;
     }
 }
@@ -339,11 +339,12 @@ declare namespace geranium.binding.JQueryBindings {
 declare namespace geranium.states {
     abstract class State extends models.abstract.Model {
         constructor();
+        private statefill();
         static get<T extends State>(type: {
             new (...args: any[]): T;
         }): Promise<T>;
         remove(): boolean;
-        private statefill();
+        sync(): Promise<void>;
     }
 }
 declare namespace geranium.templating.contracts {

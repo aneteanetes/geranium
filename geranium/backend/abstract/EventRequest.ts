@@ -1,6 +1,11 @@
 ﻿namespace geranium.backend.abstract {
-    export abstract class EventRequest extends Request {
-        send<TResponse>(data: any): PromiseLike<TResponse> {
+	export abstract class EventRequest extends Request {
+		/**
+		 * send request to server
+		 * @param data
+		 * @param stateless your request not raise state-sync event
+		 */
+		send<TResponse>(data: any, stateless: boolean = false): PromiseLike<TResponse> {
             return new Promise((resolve, reject) => {
                 try {
                     resolve(this.communicator.send<any>(data));
@@ -11,8 +16,12 @@
             })
                 .then<TResponse>(x => {
                     return this.communicator.recive<TResponse>();
-                })
-                .then(x => { this.raise(); return x; })
+				})
+				.then(x => {
+					if (!stateless)
+						this.raise();
+					return x;
+				})
                 .catch(this.catchPromise);
         }
         raise() {

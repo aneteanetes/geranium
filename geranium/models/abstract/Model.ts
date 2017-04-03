@@ -13,7 +13,7 @@
          */
         async sync(): Promise<void> {
             if (this.synchronizer) {
-                let request = runtime.appSettings.request;
+				let request = runtime.appSettings.request;				
                 let data = await request.send<any>(this.synchronizer);
                 this.obtain(data);
             }
