@@ -3,8 +3,8 @@
         validreport: new MaterializeValidationRepoter()
     });
 
-    //var timest = await State.get(time);
-    //await timest.show('.time');
+    var timest = await State.get(time);
+    await timest.show('.time');
 
     setInterval(time.incrementTripState, 1100);
 
