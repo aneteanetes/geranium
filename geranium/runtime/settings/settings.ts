@@ -13,7 +13,8 @@
 			viewengine?: viewengine.interfaces.IViewEngine,
             router?: routing.abstract.Router,
             history?: history.interfaces.IHistory,
-            cloner?: reflection.cloning.interfaces.ICloner,
+			cloner?: reflection.cloning.interfaces.ICloner,
+			inheritanceimpartor?: runtime.reflection.inheritance.interfaces.IInheritanceImpartor,
             bidnings?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]
         }) {
             if (AppSettings.initialized)
@@ -35,7 +36,8 @@
 		readonly viewengine: viewengine.abstract.ViewEngine = new viewengine.JQueryViewEngine();
 		readonly router: routing.abstract.Router = new routing.BasicRouter();
         readonly history: history.interfaces.IHistory = new history.Html5HistoryAPI();
-        readonly cloner: runtime.reflection.cloning.interfaces.ICloner = new runtime.reflection.cloning.ClonerAssign();
+		readonly cloner: runtime.reflection.cloning.interfaces.ICloner = new runtime.reflection.cloning.ClonerAssign();
+		readonly inheritanceimpartor: runtime.reflection.inheritance.interfaces.IInheritanceImpartor = new runtime.reflection.inheritance.AssignInheritanceImpartor();
         readonly bidnings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[] = [
             binding.JQueryBindings.JQueryCollectionBinding,
             binding.JQueryBindings.JQueryFieldBinding,
