@@ -52,7 +52,6 @@
         window.addEventListener('load', () => {
             var router = runtime.appSettings.router;
             var route = router.routeByUrl(window.location.pathname);
-            debugger;
             router.route(route);
         });
     }

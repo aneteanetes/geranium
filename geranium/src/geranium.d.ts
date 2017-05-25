@@ -1,4 +1,3 @@
-/// <reference path="../declare/jquery.d.ts" />
 interface Array<T> {
     remove(item: T): Array<T>;
     removeSame(): Array<T>;
@@ -9,580 +8,646 @@ interface String {
     random(length: number): string;
     randomize(): string;
 }
+interface JQuery {
+    findAndfilter(query: string): JQuery;
+    jhtml(element: JQuery): JQuery;
+    outerHtml(): string;
+    collapsible(): any;
+}
 declare var Mustache: any;
-declare namespace geranium.routing.contracts {
-    class Route {
-        url: string;
-        ctor: {
-            new (...args: any[]): any;
+
+declare namespace geranium {
+    namespace routing {
+        var settings: {
+            parameterFullUrl: boolean;
         };
-        executable: string;
-        selector: string;
-        restore: boolean;
-    }
-}
-declare namespace geranium.routing.contracts {
-    class RouteMatch extends Route {
-        params: any[];
-    }
-}
-declare namespace geranium.routing.contracts {
-    class RouteContext {
-        prepath?: string;
-        parent?: {
-            new (...args: any[]): any;
-        };
-        executable?: string;
-    }
-}
-declare namespace geranium.routing {
-    var settings: {
-        parameterFullUrl: boolean;
-    };
-    function routes(): contracts.Route[];
-    function urlFromCtor(ctor: any): string;
-    function urlFromCtor(ctor: any, params: string[]): string;
-    function routed(constructor: any): any;
-    function routed(context: contracts.RouteContext): any;
-    function routed(cleanroute: string): any;
-    function routed(parent: any, absorb: boolean): any;
-    function routeignore(constructor: any): void;
-    function routeroot(constructor: any): void;
-}
-declare namespace geranium.routing.abstract {
-    abstract class Router {
-        abstract Current<T>(): T;
-        readonly routes: contracts.Route[];
-        routeByUrl(url: string): contracts.RouteMatch;
-        protected match(url: string, params?: string[]): contracts.RouteMatch;
-        abstract route(current: contracts.RouteMatch): any;
-        abstract routearea(): string;
-    }
-}
-declare namespace geranium.routing {
-    class BasicRouter extends abstract.Router {
-        Current<T>(): T;
-        _current: any;
-        routearea(): string;
-        route(current: contracts.RouteMatch): void;
-    }
-}
-declare namespace geranium.history.contracts {
-    class HistoryItem {
-        title: string;
-        url: string;
-        state: any;
-    }
-}
-declare namespace geranium.history.interfaces {
-    interface IHistory {
-        extend(hitem: contracts.HistoryItem): any;
-        restore(state: any): any;
-    }
-}
-declare namespace geranium.history {
-    class Html5HistoryAPI implements interfaces.IHistory {
-        extend(hitem: contracts.HistoryItem): void;
-        restore(state: any): void;
-    }
-}
-declare namespace geranium.history {
-    function is(constructor: any): boolean;
-}
-declare namespace geranium.behaviors.events {
-    abstract class Event<T> {
-        raise(args: T): void;
-        private _requestEvents;
-        bind: ((args: T) => void);
-        unbind: ((args: T) => void);
-    }
-}
-declare namespace geranium.runtime.storage.interfaces {
-    interface IStorage {
-        add(model: any): boolean;
-        remove<T>(type: {
-            new (...args: any[]): T;
-        }): boolean;
-        get<T>(type: {
-            new (...args: any[]): T;
-        }): T;
-    }
-}
-declare namespace geranium.runtime.storage.interfaces {
-    interface IGenericStorage<T> extends IStorage {
-        all(): T[];
-    }
-}
-declare namespace geranium.runtime.abstract {
-    abstract class LoggedStorage implements storage.interfaces.IStorage {
-        abstract add(model: any): boolean;
-        abstract remove<T>(type: {
-            new (...args: any[]): T;
-            name: string;
-        }): boolean;
-        abstract get<T>(type: {
-            new (...args: any[]): T;
-            name: string;
-        }): T;
-        log(ex: exceptions.Exception): void;
-    }
-}
-declare namespace geranium.runtime {
-    class LocalStorage extends abstract.LoggedStorage {
-        add(model: any): boolean;
-        remove<T>(type: {
-            new (...args: any[]): T;
-            name: string;
-        }): boolean;
-        get<T>(type: {
-            new (...args: any[]): T;
-            name: string;
-        }): T;
-    }
-}
-declare namespace geranium.runtime {
-    class WindowStorage extends abstract.LoggedStorage {
-        protected variable: string;
-        constructor(storageName: string);
-        private readonly collection;
-        add(model: any): boolean;
-        remove<T>(type: {
-            new (...args: any[]): T;
-        }): boolean;
-        get<T>(type: {
-            new (...args: any[]): T;
-        }): T;
-        private searchFor<T>(ctor);
-    }
-}
-declare namespace geranium.runtime {
-    class StatesStorage extends WindowStorage implements storage.interfaces.IGenericStorage<states.State> {
-        all(): states.State[];
-    }
-}
-declare namespace geranium.runtime.reflection {
-    class Property {
-        static redefine(target: any, name: string, get: (val: any) => any, set: (val: any) => any): void;
-    }
-    class PropertyEvent extends behaviors.events.Event<PropertyAccessor> {
-    }
-    class PropertyAccessor {
-        val: any;
-        _val: any;
-    }
-}
-declare namespace geranium.runtime.reflection.cloning.interfaces {
-    interface ICloner {
-        clone<T>(sample: T): T;
-    }
-}
-declare namespace geranium.runtime.reflection.cloning {
-    class ClonerAssign<T> implements interfaces.ICloner {
-        clone<T>(sample: T): T;
-    }
-}
-declare namespace geranium.runtime.reflection.cloning {
-    class ExtendCloner<T> implements interfaces.ICloner {
-        clone<T>(sample: T): T;
-    }
-}
-declare namespace geranium.runtime.reflection.cloning.decorators {
-    function ICloneable(constructor: any): void;
-}
-declare namespace geranium.backend.interfaces {
-    interface ICommunicator {
-        send<TRequest>(data: TRequest): any;
-        recive<TResponse>(): TResponse;
-    }
-}
-declare namespace geranium.backend.abstract {
-    abstract class Request extends behaviors.events.Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> {
-        protected communicator: interfaces.ICommunicator;
-        constructor(communicator: interfaces.ICommunicator);
-        send<TResponse>(data: any): PromiseLike<TResponse>;
-        protected abstract catchPromise(err: any): any;
-    }
-}
-declare namespace geranium.backend.abstract {
-    abstract class EventRequest extends Request {
-        send<TResponse>(data: any, stateless?: boolean): PromiseLike<TResponse>;
-        raise(): void;
-    }
-}
-declare namespace geranium.backend.abstract {
-    abstract class StatefullRequest extends backend.abstract.EventRequest {
-        constructor(communicator: interfaces.ICommunicator);
-    }
-}
-declare class JQueryPromise<T> {
-    constructor(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void);
-}
-declare namespace geranium.backend.ajax {
-    class AjaxCommunicator implements interfaces.ICommunicator {
-        private innerPromise;
-        send<TRequest extends JQueryAjaxSettings>(data: TRequest): void;
-        recive<TResponse>(): Promise<TResponse>;
-    }
-}
-declare namespace geranium.backend {
-    class AjaxRequest extends abstract.StatefullRequest {
-        constructor(error: {
-            (err: exceptions.Exception);
-        });
-        catchPromise(err: any): void;
-    }
-}
-declare namespace geranium.backend.websocket {
-    class MozWebSocket extends WebSocket {
-    }
-}
-declare namespace geranium.backend.websocket {
-    class WebSocketCommunicator implements interfaces.ICommunicator {
-        protected socket: WebSocket;
-        constructor(endpoint: string);
-        send<TRequest>(data: TRequest): Promise<void>;
-        recive<TResponse>(): PromiseLike<TResponse>;
-        catchSocketError(ex: Error): void;
-        private data;
-        socketRecived(): Promise<void>;
-        socketOpened(): Promise<void>;
-    }
-}
-declare namespace geranium.backend {
-    class WebSocketRequest extends abstract.StatefullRequest {
-        constructor(endpoint: string, error: {
-            (err: exceptions.Exception);
-        });
-        catchPromise(err: any): void;
-    }
-}
-declare namespace geranium.exceptions {
-    class Exception extends Error {
-        private msg;
-        constructor(msg: string);
-        readonly pure: string;
-    }
-}
-declare namespace geranium.exceptions.logging {
-    interface ILogger {
-        log(err: Error): any;
-        get(): string;
-    }
-}
-declare namespace geranium.exceptions {
-    class ConsoleLogger implements logging.ILogger {
-        private logOflog;
-        log(err: Error): void;
-        get(): string;
-    }
-}
-declare namespace geranium.models.abstract {
-    abstract class Model extends behaviors.events.Event<Model> {
-        obtain(data: any): void;
-        sync(): Promise<void>;
-        readonly synchronizer: {};
-        validators: validating.validator.interfaces.IValidator[];
-    }
-}
-declare namespace geranium.binding.interfaces {
-    interface IBinding<TDOM> {
-        bind(objectDOM: TDOM, model: any): any;
-    }
-}
-declare namespace geranium.binding.abstract {
-    abstract class Binding<T> implements interfaces.IBinding<T> {
-        bind(DOM: T, model: any): Promise<void>;
-        abstract detection(DOMObject: T): T[];
-        abstract binding(DOMObject: T, model: any): any;
-        abstract clear(DOMObject: T): any;
-    }
-}
-declare namespace geranium.binding.JQueryBindings.base {
-    abstract class JQueryBinding extends abstract.Binding<JQuery> {
-        readonly abstract attribute: string;
-        detection(DOM: JQuery): JQuery[];
-    }
-}
-declare namespace geranium.binding.JQueryBindings.base {
-    abstract class JQueryByAttributeBinding extends JQueryBinding {
-        clear(DOMObject: JQuery): void;
-        detection(DOM: JQuery): JQuery[];
-    }
-}
-declare namespace geranium.binding.JQueryBindings {
-    class JQueryCollectionBinding extends JQueryBindings.base.JQueryByAttributeBinding {
-        readonly attribute: string;
-        binding(DOMObject: JQuery, model: any): Promise<void>;
-    }
-}
-declare namespace geranium.binding.JQueryBindings {
-    class JQueryClickBinding extends base.JQueryByAttributeBinding {
-        readonly attribute: string;
-        binding(DOMObject: JQuery, model: any): void;
-        private splitMethodAndParams(value);
-        private parseParams(params);
-    }
-}
-declare namespace geranium.binding.JQueryBindings {
-    class JQueryFieldBinding extends base.JQueryByAttributeBinding {
-        readonly attribute: string;
-        binding(DOMObject: JQuery, model: models.abstract.Model): void;
-    }
-}
-declare namespace geranium.binding.JQueryBindings {
-    class JQueryInputBinding extends base.JQueryBinding {
-        readonly attribute: string;
-        binding(DOMObject: JQuery, model: any): void;
-        clear(): void;
-    }
-}
-declare namespace geranium.states {
-    abstract class State extends models.abstract.Model {
-        constructor();
-        private statefill();
-        static get<T extends State>(type: {
-            new (...args: any[]): T;
-        }): Promise<T>;
-        remove(): boolean;
-        sync(): Promise<void>;
-    }
-}
-declare namespace geranium.templating.contracts {
-    class Template {
-        html: string;
-        data: any;
-    }
-}
-declare namespace geranium.templating.interfaces {
-    interface ITemplating {
-        parse<TTemplate extends contracts.Template>(template: TTemplate): PromiseLike<string>;
-    }
-}
-declare namespace geranium.templating {
-    class BackendTemplating implements interfaces.ITemplating {
-        parse<TTemplate extends contracts.Template>(template: contracts.Template): PromiseLike<string>;
-    }
-}
-declare namespace geranium.templating {
-    class MustacheTemplating implements interfaces.ITemplating {
-        parse<TTemplate extends contracts.Template>(template: contracts.Template): PromiseLike<string>;
-    }
-}
-declare namespace geranium.view.abstract {
-    abstract class View extends templating.contracts.Template {
-        private _selector;
-        private _rendered;
-        constructor(selector: string);
-        readonly selector: string;
-        protected abstract declare(): string;
-        private protectRender(html);
-        render(): Promise<View>;
-    }
-}
-declare namespace geranium.viewDOM.interfaces {
-    interface IViewDOM {
-        getViewDOM<T>(): T;
-    }
-}
-declare namespace geranium.viewDOM.abstract {
-    abstract class ViewDOM implements viewDOM.interfaces.IViewDOM {
-        private _view;
-        readonly view: view.abstract.View;
-        constructor(view: view.abstract.View);
-        abstract getViewDOM<T>(): T;
-    }
-}
-declare namespace geranium.viewDOM {
-    class JQueryViewDOM extends abstract.ViewDOM {
-        private _$html;
-        getViewDOM(): JQuery;
-    }
-}
-declare namespace geranium.viewbinding.contracts {
-    class BindContext {
-        viewDOM: geranium.viewDOM.abstract.ViewDOM;
-        bindingFlags: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }[];
-        constructor(viewDOM: geranium.viewDOM.abstract.ViewDOM, bindingFlags?: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }[]);
-    }
-}
-declare namespace geranium.viewbinding.interfaces {
-    interface IViewBinder {
-        bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
-    }
-}
-declare namespace geranium.viewbinding.abstract {
-    abstract class ViewBinder implements interfaces.IViewBinder {
-        private viewDOM;
-        bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
-        private valid(ViewDOM);
-        private exec(ViewDOM, bindings);
-        protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }): Promise<void>;
-    }
-}
-declare namespace geranium.viewbinding {
-    class JQueryViewBinder extends abstract.ViewBinder {
-        protected binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }): Promise<void>;
-    }
-}
-declare namespace geranium.viewengine.contracts {
-    class ViewExecutingContext {
-        iViewed: view.interfaces.IViewed;
-        selector: string;
-    }
-}
-declare namespace geranium.viewengine.contracts {
-    class ExecuteContext {
-        view: view.interfaces.IViewed;
-        selector: string;
-        bindingFlags: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }[];
-        constructor(viewCtx: ViewExecutingContext, bindingFlags?: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }[]);
-    }
-}
-declare namespace geranium.viewengine.interfaces {
-    interface IViewEngine {
-        execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
-    }
-}
-declare namespace geranium.viewengine.abstract {
-    abstract class ViewEngine implements interfaces.IViewEngine {
-        execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
-        protected abstract publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
-        protected abstract viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
-        static ViewEngineView(iviewed: view.interfaces.IViewed, selector: string): Promise<view.abstract.View>;
-    }
-}
-declare namespace geranium.viewengine {
-    class JQueryViewEngine extends abstract.ViewEngine {
-        protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
-        protected viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
-    }
-}
-declare namespace geranium.validating.contracts {
-    class ValidationResult {
-        success: boolean;
-        errors: exceptions.Exception[];
-    }
-}
-declare namespace geranium.validating.validator.interfaces {
-    interface IValidator {
-        readonly validatedPropertyName: string;
-        validate<T>(value: T, shallowcopy: any): contracts.ValidationResult;
-    }
-}
-declare namespace geranium.validating.validator {
-    class TypeValidator implements interfaces.IValidator {
-        _type: string;
-        constructor(prop: string, type: string);
-        validatedPropertyName: string;
-        validate(value: any): ValidationResult;
-    }
-}
-declare namespace geranium.validating.validator {
-    class RangeValidator implements interfaces.IValidator {
-        constructor(prop: string, min: number | string, max: number | string, strict: boolean);
-        private strict;
-        private min;
-        private minField;
-        private max;
-        private maxField;
-        validatedPropertyName: string;
-        validate(value: number, shallowopy: any): ValidationResult;
-    }
-}
-declare namespace geranium.validating.validator {
-    class NotLessThenZeroValidator implements interfaces.IValidator {
-        constructor(prop: string);
-        validatedPropertyName: string;
-        validate(value: number): ValidationResult;
-    }
-}
-declare namespace geranium.validating.reporter.interfaces {
-    interface IValidatingReporter {
-        report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): any;
-    }
-}
-declare namespace geranium.validating.reporter {
-    class NotifyValidatingReporter implements reporter.interfaces.IValidatingReporter {
-        report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): void;
-    }
-}
-declare namespace geranium.validating.reporter {
-    class JQueryViewValidatingReporter implements reporter.interfaces.IValidatingReporter {
-        report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): void;
-    }
-}
-declare namespace geranium.viewstate {
-    abstract class ViewState extends states.State implements view.interfaces.IViewed {
-        show(selector: string): Promise<void>;
-        toString(selector: string): Promise<void>;
-        abstract view(): {
-            new (selector: string): view.abstract.View;
-        } | string;
-    }
-}
-declare namespace geranium.viewmodels.abstract {
-    abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
-        private publishedViewDom;
-        protected readonly markup: viewDOM.abstract.ViewDOM;
-        display(selector: string): Promise<void>;
-        documentTitle(): string;
-        abstract view(): {
-            new (selector: string): view.abstract.View;
-        } | string;
-        toString(selector: any): Promise<void>;
-    }
-}
-declare namespace geranium.runtime {
-    abstract class AppSettings {
-        private static initialized;
-        init(settings: {
-            logger?: exceptions.logging.ILogger;
-            request?: backend.abstract.Request;
-            communicator?: backend.interfaces.ICommunicator;
-            templating?: templating.interfaces.ITemplating;
-            storage?: storage.interfaces.IStorage;
-            states?: storage.interfaces.IGenericStorage<states.State>;
-            viewbinder?: viewbinding.abstract.ViewBinder;
-            validreport?: validating.reporter.interfaces.IValidatingReporter;
-            viewengine?: viewengine.interfaces.IViewEngine;
-            router?: routing.abstract.Router;
-            history?: history.interfaces.IHistory;
-            cloner?: reflection.cloning.interfaces.ICloner;
-            bidnings?: {
+        function routes(): contracts.Route[];
+        function urlFromCtor(ctor: any): string;
+        function urlFromCtor(ctor: any, params: string[]): string;
+		/**
+		 * route object by hierarhy
+		 * @param constructor
+		 */
+        function routed(constructor: any): any;
+		/**
+         * route object by routeContext
+         * @param context
+         */
+        function routed(context: contracts.RouteContext): any;
+		/**
+         * route object to exacly route
+         * @param cleanroute
+         */
+        function routed(cleanroute: string): any;
+		/**
+		 * route object with parent, if u can't inherit
+		 * @param parent
+		 * @param absorb
+		 */
+        function routed(parent: any, absorb: boolean): any;
+        function routeignore(constructor: any): void;
+        function routeroot(constructor: any): void;
+
+        class BasicRouter extends abstract.Router {
+            Current<T>(): T;
+            _current: any;
+            routearea(): string;
+            route(current: contracts.RouteMatch): void;
+        }
+
+        namespace abstract {
+            abstract class Router {
+                abstract Current<T>(): T;
+                readonly routes: contracts.Route[];
+                routeByUrl(url: string): contracts.RouteMatch;
+                protected match(url: string, params?: string[]): contracts.RouteMatch;
+                abstract route(current: contracts.RouteMatch): any;
+                abstract routearea(): string;
+            }
+        }
+
+        namespace contracts {
+            class Route {
+                url: string;
+				/**
+				 * constructor of this object
+				 */
+                ctor: {
+                    new (...args: any[]): any;
+                };
+				/**
+				 * Executable function of this routes, if empty: toString()
+				 */
+                executable: string;
+				/**
+				 * selector for executable function
+				 */
+                selector: string;
+                restore: boolean;
+            }
+            class RouteMatch extends Route {
+                params: any[];
+            }
+            class RouteContext {
+                prepath?: string;
+                parent?: {
+                    new (...args: any[]): any;
+                };
+                executable?: string;
+            }
+        }
+    }
+    namespace history {
+        function is(constructor: any): boolean;
+
+        class Html5HistoryAPI implements interfaces.IHistory {
+            extend(hitem: contracts.HistoryItem): void;
+            restore(state: any): void;
+        }
+
+        namespace interfaces {
+            interface IHistory {
+                extend(hitem: contracts.HistoryItem): any;
+                restore(state: any): any;
+            }
+        }
+
+        namespace contracts {
+            class HistoryItem {
+                title: string;
+                url: string;
+                state: any;
+            }
+        }
+    }
+    namespace behaviors {
+        namespace events {
+            abstract class Event<T> {
+                raise(args: T): void;
+                private _requestEvents;
+                bind: ((args: T) => void);
+                unbind: ((args: T) => void);
+            }
+        }
+    }
+    namespace runtime {
+        abstract class AppSettings {
+            private static initialized;
+            init(settings: {
+                logger?: exceptions.logging.ILogger;
+                request?: backend.abstract.Request;
+                communicator?: backend.interfaces.ICommunicator;
+                templating?: templating.interfaces.ITemplating;
+                storage?: storage.interfaces.IStorage;
+                states?: storage.interfaces.IGenericStorage<states.State>;
+                viewbinder?: viewbinding.abstract.ViewBinder;
+                validreport?: validating.reporter.interfaces.IValidatingReporter;
+                viewengine?: viewengine.interfaces.IViewEngine;
+                router?: routing.abstract.Router;
+                history?: history.interfaces.IHistory;
+                cloner?: reflection.cloning.interfaces.ICloner;
+                bidnings?: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }[];
+            }): void;
+            readonly logger: exceptions.logging.ILogger;
+            readonly request: backend.abstract.EventRequest;
+            readonly communicator: backend.interfaces.ICommunicator;
+            readonly templating: templating.interfaces.ITemplating;
+            readonly storage: storage.interfaces.IStorage;
+            readonly states: storage.interfaces.IGenericStorage<states.State>;
+            readonly validreport: validating.reporter.interfaces.IValidatingReporter;
+            readonly viewbinder: viewbinding.abstract.ViewBinder;
+            readonly viewengine: viewengine.abstract.ViewEngine;
+            readonly router: routing.abstract.Router;
+            readonly history: history.interfaces.IHistory;
+            readonly cloner: runtime.reflection.cloning.interfaces.ICloner;
+            readonly bidnings: {
                 new <T>(...args: any[]): binding.abstract.Binding<T>;
             }[];
-        }): void;
-        readonly logger: exceptions.logging.ILogger;
-        readonly request: backend.abstract.EventRequest;
-        readonly communicator: backend.interfaces.ICommunicator;
-        readonly templating: templating.interfaces.ITemplating;
-        readonly storage: storage.interfaces.IStorage;
-        readonly states: storage.interfaces.IGenericStorage<states.State>;
-        readonly validreport: validating.reporter.interfaces.IValidatingReporter;
-        readonly viewbinder: viewbinding.abstract.ViewBinder;
-        readonly viewengine: viewengine.abstract.ViewEngine;
-        readonly router: routing.abstract.Router;
-        readonly history: history.interfaces.IHistory;
-        readonly cloner: runtime.reflection.cloning.interfaces.ICloner;
-        readonly bidnings: {
-            new <T>(...args: any[]): binding.abstract.Binding<T>;
-        }[];
+        }
+        var appSettings: AppSettings;
+
+        namespace storage {
+
+            namespace interfaces {
+
+                interface IStorage {
+                    add(model: any): boolean;
+                    remove<T>(type: {
+                        new (...args: any[]): T;
+                    }): boolean;
+                    get<T>(type: {
+                        new (...args: any[]): T;
+                    }): T;
+                }
+
+                interface IGenericStorage<T> extends IStorage {
+                    all(): T[];
+                }
+            }
+        }
+
+        class LocalStorage extends abstract.LoggedStorage {
+            add(model: any): boolean;
+            remove<T>(type: {
+                new (...args: any[]): T;
+                name: string;
+            }): boolean;
+            get<T>(type: {
+                new (...args: any[]): T;
+                name: string;
+            }): T;
+        }
+        class WindowStorage extends abstract.LoggedStorage {
+            protected variable: string;
+            constructor(storageName: string);
+            private readonly collection;
+            add(model: any): boolean;
+            remove<T>(type: {
+                new (...args: any[]): T;
+            }): boolean;
+            get<T>(type: {
+                new (...args: any[]): T;
+            }): T;
+            private searchFor<T>(ctor);
+        }
+        class StatesStorage extends WindowStorage implements storage.interfaces.IGenericStorage<states.State> {
+            all(): states.State[];
+        }
+
+        namespace abstract {
+            abstract class LoggedStorage implements storage.interfaces.IStorage {
+                abstract add(model: any): boolean;
+                abstract remove<T>(type: {
+                    new (...args: any[]): T;
+                    name: string;
+                }): boolean;
+                abstract get<T>(type: {
+                    new (...args: any[]): T;
+                    name: string;
+                }): T;
+                log(ex: exceptions.Exception): void;
+            }
+        }
+
+        namespace reflection {
+
+            class Property {
+				/**
+				 * Redefines property with new public accessors, safe
+				 * Also creates property Event for detection end of chain:
+				 * setter obj[#event:set[name]]
+				 * getter obj[#event:get[name]]
+				 * @param target
+				 * @param name of property
+				 * @param get new public setter
+				 * @param set new public getter
+				 */
+                static redefine(target: any, name: string, get: (val: any) => any, set: (val: any) => any): void;
+            }
+            class PropertyEvent extends behaviors.events.Event<PropertyAccessor> {
+            }
+            class PropertyAccessor {
+                val: any;
+                _val: any;
+            }
+
+            namespace cloning {
+
+                class ClonerAssign<T> implements interfaces.ICloner {
+                    clone<T>(sample: T): T;
+                }
+                class ExtendCloner<T> implements interfaces.ICloner {
+                    clone<T>(sample: T): T;
+                }
+
+                namespace interfaces {
+                    interface ICloner {
+                        clone<T>(sample: T): T;
+                    }
+                }
+
+                namespace decorators {
+                    function ICloneable(constructor: any): void;
+                }
+
+            }
+        }
     }
-    var appSettings: AppSettings;
-}
-declare namespace geranium {
+    namespace backend {
+
+        class AjaxRequest extends abstract.StatefullRequest {
+            constructor(error: {
+                (err: exceptions.Exception);
+            });
+            catchPromise(err: any): void;
+        }
+        class WebSocketRequest extends abstract.StatefullRequest {
+            constructor(endpoint: string, error: {
+                (err: exceptions.Exception);
+            });
+            catchPromise(err: any): void;
+        }
+
+        namespace interfaces {
+            interface ICommunicator {
+                send<TRequest>(data: TRequest): any;
+                recive<TResponse>(): TResponse;
+            }
+        }
+
+        namespace abstract {
+            abstract class Request extends behaviors.events.Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> {
+                protected communicator: interfaces.ICommunicator;
+                constructor(communicator: interfaces.ICommunicator);
+                send<TResponse>(data: any): PromiseLike<TResponse>;
+                protected abstract catchPromise(err: any): any;
+            }
+
+            abstract class EventRequest extends Request {
+                send<TResponse>(data: any, stateless?: boolean): PromiseLike<TResponse>;
+                raise(): void;
+            }
+
+            abstract class StatefullRequest extends backend.abstract.EventRequest {
+                constructor(communicator: interfaces.ICommunicator);
+            }
+        }
+
+        namespace ajax {
+            class AjaxCommunicator implements interfaces.ICommunicator {
+                private innerPromise;
+                send<TRequest extends JQueryAjaxSettings>(data: TRequest): void;
+                recive<TResponse>(): Promise<TResponse>;
+            }
+        }
+        namespace websocket {
+            class MozWebSocket extends WebSocket {
+            }
+
+            class WebSocketCommunicator implements interfaces.ICommunicator {
+                protected socket: WebSocket;
+                constructor(endpoint: string);
+                send<TRequest>(data: TRequest): Promise<void>;
+                recive<TResponse>(): PromiseLike<TResponse>;
+                catchSocketError(ex: Error): void;
+                private data;
+                socketRecived(): Promise<void>;
+                socketOpened(): Promise<void>;
+            }
+        }
+    }
+    namespace exceptions {
+
+        class Exception extends Error {
+            private msg;
+            constructor(msg: string);
+            readonly pure: string;
+        }
+        class ConsoleLogger implements logging.ILogger {
+            private logOflog;
+            log(err: Error): void;
+            get(): string;
+        }
+
+        namespace logging {
+            interface ILogger {
+                log(err: Error): any;
+                get(): string;
+            }
+        }
+    }
+    namespace models {
+        namespace abstract {
+            abstract class Model extends behaviors.events.Event<Model> {
+                obtain(data: any): void;
+                sync(): Promise<void>;
+                readonly synchronizer: {};
+                validators: validating.validator.interfaces.IValidator[];
+            }
+        }
+    }
+    namespace binding {
+        namespace interfaces {
+            interface IBinding<TDOM> {
+                bind(objectDOM: TDOM, model: any): any;
+            }
+        }
+
+        namespace abstract {
+            abstract class Binding<T> implements interfaces.IBinding<T> {
+                bind(DOM: T, model: any): Promise<void>;
+                abstract detection(DOMObject: T): T[];
+                abstract binding(DOMObject: T, model: any): any;
+                abstract clear(DOMObject: T): any;
+            }
+        }
+
+        namespace JQueryBindings {
+            namespace base {
+                abstract class JQueryBinding extends abstract.Binding<JQuery> {
+                    readonly abstract attribute: string;
+                    detection(DOM: JQuery): JQuery[];
+                }
+                abstract class JQueryByAttributeBinding extends JQueryBinding {
+                    clear(DOMObject: JQuery): void;
+                    detection(DOM: JQuery): JQuery[];
+                }
+            }
+
+            class JQueryCollectionBinding extends JQueryBindings.base.JQueryByAttributeBinding {
+                readonly attribute: string;
+                binding(DOMObject: JQuery, model: any): Promise<void>;
+            }
+            class JQueryClickBinding extends base.JQueryByAttributeBinding {
+                readonly attribute: string;
+                binding(DOMObject: JQuery, model: any): void;
+                private splitMethodAndParams(value);
+                private parseParams(params);
+            }
+            class JQueryFieldBinding extends base.JQueryByAttributeBinding {
+                readonly attribute: string;
+                binding(DOMObject: JQuery, model: models.abstract.Model): void;
+            }
+            class JQueryInputBinding extends base.JQueryBinding {
+                readonly attribute: string;
+                binding(DOMObject: JQuery, model: any): void;
+                clear(): void;
+            }
+        }
+    }
+    namespace states {
+        abstract class State extends models.abstract.Model {
+            constructor();
+            private statefill();
+            static get<T extends State>(type: {
+                new (...args: any[]): T;
+            }): Promise<T>;
+            remove(): boolean;
+            sync(): Promise<void>;
+        }
+    }
+    namespace templating {
+        class BackendTemplating implements interfaces.ITemplating {
+            parse<TTemplate extends contracts.Template>(template: contracts.Template): PromiseLike<string>;
+        }
+        class MustacheTemplating implements interfaces.ITemplating {
+            parse<TTemplate extends contracts.Template>(template: contracts.Template): PromiseLike<string>;
+        }
+        namespace contracts {
+            class Template {
+                html: string;
+                data: any;
+            }
+        }
+        namespace interfaces {
+            interface ITemplating {
+                parse<TTemplate extends contracts.Template>(template: TTemplate): PromiseLike<string>;
+            }
+        }
+    }
+    namespace view {
+        namespace abstract {
+            abstract class View extends templating.contracts.Template {
+                private _selector;
+                private _rendered;
+                constructor(selector: string);
+                readonly selector: string;
+                protected abstract declare(): string;
+                private protectRender(html);
+                render(): Promise<View>;
+            }
+        }
+        namespace interfaces {
+            interface IViewed {
+                view(): {
+                    new (selector: string): view.abstract.View;
+                } | string;
+            }
+        }
+    }
+    namespace viewDOM {
+
+        class JQueryViewDOM extends abstract.ViewDOM {
+            private _$html;
+            getViewDOM(): JQuery;
+        }
+
+        namespace interfaces {
+            interface IViewDOM {
+                getViewDOM<T>(): T;
+            }
+        }
+        namespace abstract {
+
+            abstract class ViewDOM implements viewDOM.interfaces.IViewDOM {
+                private _view;
+                readonly view: view.abstract.View;
+                constructor(view: view.abstract.View);
+                abstract getViewDOM<T>(): T;
+            }
+        }
+    }
+    namespace viewbinding {
+        class JQueryViewBinder extends abstract.ViewBinder {
+            protected binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: {
+                new <T>(...args: any[]): binding.abstract.Binding<T>;
+            }): Promise<void>;
+        }
+        namespace interfaces {
+            interface IViewBinder {
+                bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
+            }
+        }
+        namespace abstract {
+            abstract class ViewBinder implements interfaces.IViewBinder {
+                private viewDOM;
+                bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM>;
+                private valid(ViewDOM);
+                private exec(ViewDOM, bindings);
+                protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }): Promise<void>;
+            }
+        }
+        namespace contracts {
+            class BindContext {
+                viewDOM: geranium.viewDOM.abstract.ViewDOM;
+                bindingFlags: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }[];
+                constructor(viewDOM: geranium.viewDOM.abstract.ViewDOM, bindingFlags?: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }[]);
+            }
+        }
+    }
+    namespace viewengine {
+        class JQueryViewEngine extends abstract.ViewEngine {
+            protected publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
+            protected viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
+        }
+        namespace contracts {
+            class ViewExecutingContext {
+                iViewed: view.interfaces.IViewed;
+                selector: string;
+            }
+
+            class ExecuteContext {
+                view: view.interfaces.IViewed;
+                selector: string;
+                bindingFlags: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }[];
+                constructor(viewCtx: ViewExecutingContext, bindingFlags?: {
+                    new <T>(...args: any[]): binding.abstract.Binding<T>;
+                }[]);
+            }
+        }
+        namespace interfaces {
+            interface IViewEngine {
+                execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
+            }
+        }
+        namespace abstract {
+            abstract class ViewEngine implements interfaces.IViewEngine {
+                execute(context: contracts.ViewExecutingContext): Promise<viewDOM.abstract.ViewDOM>;
+                protected abstract publish(viewDOM: viewDOM.abstract.ViewDOM): Promise<viewDOM.abstract.ViewDOM>;
+                protected abstract viewDOM(view: view.abstract.View): geranium.viewDOM.abstract.ViewDOM;
+                static ViewEngineView(iviewed: view.interfaces.IViewed, selector: string): Promise<view.abstract.View>;
+            }
+        }
+    }
+    namespace validating {
+        namespace contracts {
+            class ValidationResult {
+                success: boolean;
+                errors: exceptions.Exception[];
+            }
+        }
+        namespace validator {
+            class TypeValidator implements interfaces.IValidator {
+                _type: string;
+                constructor(prop: string, type: string);
+                validatedPropertyName: string;
+                validate(value: any): ValidationResult;
+            }
+
+            class RangeValidator implements interfaces.IValidator {
+                constructor(prop: string, min: number | string, max: number | string, strict: boolean);
+                private strict;
+                private min;
+                private minField;
+                private max;
+                private maxField;
+                validatedPropertyName: string;
+                validate(value: number, shallowopy: any): ValidationResult;
+            }
+
+            class NotLessThenZeroValidator implements interfaces.IValidator {
+                constructor(prop: string);
+                validatedPropertyName: string;
+                validate(value: number): ValidationResult;
+            }
+
+            namespace interfaces {
+
+                interface IValidator {
+                    readonly validatedPropertyName: string;
+                    validate<T>(value: T, shallowcopy: any): contracts.ValidationResult;
+                }
+            }
+        }
+
+        namespace reporter {
+            class NotifyValidatingReporter implements reporter.interfaces.IValidatingReporter {
+                report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): void;
+            }
+            class JQueryViewValidatingReporter implements reporter.interfaces.IValidatingReporter {
+                report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): void;
+            }
+            namespace interfaces {
+                interface IValidatingReporter {
+                    report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult): any;
+                }
+            }
+        }
+    }
+    namespace viewstate {
+        abstract class ViewState extends states.State implements view.interfaces.IViewed {
+            show(selector: string): Promise<void>;
+            toString(selector: string): Promise<void>;
+            abstract view(): {
+                new (selector: string): view.abstract.View;
+            } | string;
+        }
+    }
+    namespace viewmodels {
+        namespace abstract {
+            abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
+                private publishedViewDom;
+                protected readonly markup: viewDOM.abstract.ViewDOM;
+                display(selector: string): Promise<void>;
+                documentTitle(): string;
+                abstract view(): {
+                    new (selector: string): view.abstract.View;
+                } | string;
+                toString(selector: any): Promise<void>;
+            }
+        }
+        namespace contracts {
+            class ViewModelHistoryState {
+                ctor: any;
+                selector: string;
+                constructor(fields?: {
+                    ctor?: any;
+                    selector?: string;
+                });
+            }
+        }
+    }
+
     enum color {
         purple = 0,
         darkgreen = 1,
@@ -590,6 +655,7 @@ declare namespace geranium {
     }
     function blossom(colorull?: color): void;
 }
+
 import appSettings = geranium.runtime.appSettings;
 import Model = geranium.models.abstract.Model;
 import State = geranium.states.State;
@@ -607,85 +673,3 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
 import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
 import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
-declare var Materialize: any;
-declare class MaterializeValidationRepoter implements IValidatingReporter {
-    report(viewDOM: geranium.viewDOM.abstract.ViewDOM, validatingResult: geranium.validating.contracts.ValidationResult): void;
-}
-declare class trains extends State {
-    readonly synchronizer: {
-        url: string;
-        method: string;
-        data: {
-            command: string;
-        };
-    };
-    data: train[];
-}
-declare class train {
-    name: string;
-    stations: number;
-    now: number;
-}
-declare class time extends ViewState {
-    view(): string;
-    readonly synchronizer: {
-        url: string;
-        method: string;
-    };
-    time: string;
-    static incrementTripState(): Promise<void>;
-}
-declare class app extends ViewModel {
-    view(): string;
-    btn_trip: string;
-    btn_schedule: string;
-    show_trip(): Promise<void>;
-    show_schedule(): void;
-    documentTitle(): string;
-}
-declare class trip extends ViewState {
-    view(): string;
-    show(selector: string): Promise<void>;
-    name: string;
-    stations: number;
-    private _now;
-    now: number;
-    availableForChanges(): boolean;
-    jumpto: number;
-    increment(): void;
-    decrement(): void;
-    jump(): void;
-    progressBar(): void;
-    documentTitle(): string;
-    validators: IValidator[];
-}
-declare class trainschedule extends ViewModel {
-    view(): string;
-    display(selector: string): Promise<void>;
-    change_train(name: string): Promise<void>;
-    trains: Array<train>;
-}
-declare function entry(): Promise<void>;
-interface JQuery {
-    findAndfilter(query: string): JQuery;
-    jhtml(element: JQuery): JQuery;
-    outerHtml(): string;
-    collapsible(): any;
-}
-declare namespace geranium.viewmodels.contracts {
-    class ViewModelHistoryState {
-        ctor: any;
-        selector: string;
-        constructor(fields?: {
-            ctor?: any;
-            selector?: string;
-        });
-    }
-}
-declare namespace geranium.view.interfaces {
-    interface IViewed {
-        view(): {
-            new (selector: string): view.abstract.View;
-        } | string;
-    }
-}
