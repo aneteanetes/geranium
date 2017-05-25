@@ -1,10 +1,13 @@
 ﻿namespace geranium.viewmodels.abstract {
 	@routing.routeignore
-	export abstract class ViewModel extends models.abstract.Model implements view.interfaces.IViewed {
+	export abstract class ViewModel extends ViewState {
+
 		private publishedViewDom: viewDOM.abstract.ViewDOM;
 		protected get markup(): viewDOM.abstract.ViewDOM { return this.publishedViewDom; }
 
-		async display(selector: string) {
+		async show(selector: string) {
+
+			this.setDocumentTitle();
 
 			if (history.is(this.constructor) && !this['#routed']) {
 				var _routed = this["@routed"] as routing.contracts.RouteMatch;
@@ -20,20 +23,25 @@
 			}
 			delete this['#routed'];
 
+			if (this.statefull)
+				super.show(selector);
+			else
+				this.publishedViewDom = await runtime.appSettings.viewengine.execute({
+					iViewed: this,
+					selector: selector
+				});
+		}
+
+		private setDocumentTitle() {
 			var title = this.documentTitle();
 			if (title != null)
 				document.title = title;
-			this.publishedViewDom = await runtime.appSettings.viewengine.execute({
-				iViewed: this,
-				selector: selector
-			});
 		}
 
 		documentTitle(): string { return null; }
-		abstract view(): { new (selector: string): view.abstract.View } | string;
-
-		async toString(selector) {
-			this.display(selector);
+		
+		async toString(selector: string) {
+			return this.show(selector);
 		}
 	}
 }

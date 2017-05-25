@@ -25,6 +25,8 @@
 /// <reference path="runtime/storage/concrete/statesstorage.ts" />
 
 /// <reference path="runtime/reflection/property.ts" />
+/// <reference path="runtime/reflection/inheritance/interfaces/iinheritanceimpartor.ts" />
+/// <reference path="runtime/reflection/inheritance/concrete/assigninheritanceimpartor.ts" />
 /// <reference path="runtime/reflection/cloning/interfaces/icloner.ts" />
 /// <reference path="runtime/reflection/cloning/concrete/clonerassign.ts" />
 /// <reference path="runtime/reflection/cloning/concrete/extendcloner.ts" />
@@ -89,18 +91,11 @@
 /// <reference path="validating/reporter/concrete/notifyvalidatingreporter.ts" />
 /// <reference path="validating/reporter/concrete/jqueryviewvalidatingreporter.ts" />
 
-/// <reference path="viewstate/abstract/viewstate.ts" />
-
+/// <reference path="viewmodels/abstract/viewstate.ts" />
 /// <reference path="viewmodels/abstract/viewmodel.ts" />
+
+/// <reference path="compatibility/viewstatemodel/viewstate.ts" />
 
 /// <reference path="runtime/settings/settings.ts" />
 
 /// <reference path="geranium.ts" />
-
-/// <reference path="app/validators/materializevalidationreporter.ts" />
-/// <reference path="app/states/trains.ts" />
-/// <reference path="app/viewstates/time.ts" />
-/// <reference path="app/viewmodels/application.ts" />
-/// <reference path="app/viewstates/trip.ts" />
-/// <reference path="app/viewmodels/trainschedule.ts" />
-/// <reference path="app/app.ts" />

@@ -32,3 +32,4 @@ import ValidationResult = geranium.validating.contracts.ValidationResult;
 import Exception = geranium.exceptions.Exception;
 import ICloner = geranium.runtime.reflection.cloning.interfaces.ICloner;
 import ICloneable = geranium.runtime.reflection.cloning.decorators.ICloneable;
+import Inherit = geranium.runtime.reflection.inheritance.decorators.Inherit;
