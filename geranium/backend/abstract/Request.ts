@@ -1,40 +1,35 @@
-﻿namespace geranium.backend.abstract {
-    export abstract class Request extends behaviors.events.Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> {
-        protected communicator: interfaces.ICommunicator;
+﻿import { ICommunicator } from "../interfaces/ICommunicator";
+import { Event } from "../../behaviors/events/abstract/Event";
+import { Exception } from "../../exceptions/Exception";
+import { IInjected } from "../../coherence/abstract/IInjected";
+import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { IRequest } from "../interfaces/IRequest";
+import { ILogger } from "../../exceptions/logging/interfaces/ILogger";
+import { CommunicationException } from "../../exceptions/backend/CommunicationException";
 
-        constructor(communicator: interfaces.ICommunicator) {
-            super();
-            this.communicator = communicator;
+export abstract class Request extends Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> implements IRequest, IInjected {
+    ["`container"]: ICoherenceContainer;
+
+    async send<TResponse>(data: any): Promise<TResponse> {
+        const communicator = this["`container"].resolve(ICommunicator);
+        try {
+            await communicator.send(data);
+            return communicator.recive<TResponse>();
+        } catch (ex) {
+            this.catch(new CommunicationException(ex));
         }
-
-        send<TResponse>(data: any): PromiseLike<TResponse> {
-
-            //possible lost context
-            var communicator: interfaces.ICommunicator;
-            var catchPromise: (err: any) => void;
-            if (this == null) {
-                communicator = runtime.appSettings.communicator;
-                catchPromise = (err) => {
-                    runtime.appSettings.logger.log(err);
-                }
-            }
-            else {
-                communicator = this.communicator;
-                catchPromise = this.catchPromise;
-            }
-
-            return new Promise((resolve, reject) => {
-                try {
-                    resolve(communicator.send<any>(data));
-                }
-                catch (ex) {
-                    reject(new exceptions.Exception('Communication error!'));
-                }
-            })
-                .then<TResponse>(x => communicator.recive<TResponse>())
-                .catch(catchPromise);
-        }
-
-        protected abstract catchPromise(err: any);
     }
+
+    protected catch(err: any) {
+        if (this.catchPromise) {
+            this.catchPromise(err);
+        }
+
+        const logger = this["`container"].resolve(ILogger);
+        if (logger) {
+            logger.log(err);
+        }
+    }
+
+    protected abstract catchPromise(err: any);
 }

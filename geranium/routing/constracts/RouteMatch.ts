@@ -1,5 +1,5 @@
-﻿namespace geranium.routing.contracts {
-    export class RouteMatch extends Route {
-        params: any[]
-    }
+﻿import { Route } from "./Route";
+
+export class RouteMatch extends Route {
+    params: any[]
 }

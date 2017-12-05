@@ -1,6 +1,6 @@
-﻿namespace geranium.exceptions.logging {
-    export interface ILogger {
-        log(err: Error);
-        get(): string;
-    }
+﻿import { InterfaceUsingException } from "../../coherence/InterfaceUsingException";
+
+export class ILogger {
+    log(err: Error) { throw new InterfaceUsingException("ILogger.log"); }
+    get(): string { throw new InterfaceUsingException("ILogger.get"); }
 }

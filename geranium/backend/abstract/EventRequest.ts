@@ -1,31 +1,34 @@
-﻿namespace geranium.backend.abstract {
-	export abstract class EventRequest extends Request {
-		/**
-		 * send request to server
-		 * @param data
-		 * @param stateless your request not raise state-sync event
-		 */
-		send<TResponse>(data: any, stateless: boolean = false): PromiseLike<TResponse> {
-            return new Promise((resolve, reject) => {
-                try {
-                    resolve(this.communicator.send<any>(data));
-                }
-                catch (ex) {
-                    reject(new exceptions.Exception('Communication error!'));
-                }
-            })
-                .then<TResponse>(x => {
-                    return this.communicator.recive<TResponse>();
-				})
-				.then(x => {
-					if (!stateless)
-						this.raise();
-					return x;
-				})
-                .catch(this.catchPromise);
+﻿import { Request } from "./Request";
+import { Exception } from "../../exceptions/Exception";
+import { ICommunicator } from "../interfaces/ICommunicator";
+import { CommunicationException } from "../../exceptions/backend/CommunicationException";
+
+export abstract class EventRequest extends Request {
+    /**
+     * send request to server
+     * @param data
+     * @param stateless your request not raise state-sync event
+     */
+    async send<TResponse>(data: any, stateless: boolean = false): Promise<TResponse> {
+        try {
+            const communicator = this["`container"].resolve(ICommunicator);
+
+            await communicator.send<any>(data);
+
+            const response = communicator.recive<TResponse>();
+
+            if (!stateless) {
+                this.raise();
+            }
+
+            return response;
+
+        } catch (ex) {
+            this.catch(new CommunicationException(ex));
         }
-        raise() {
-            super.raise(super.send);
-        }
+    }
+
+    raise() {
+        super.raise(super.send);
     }
 }

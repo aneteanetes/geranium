@@ -1,12 +1,12 @@
-﻿namespace geranium.exceptions {
-    export class ConsoleLogger implements logging.ILogger {
-        private logOflog: string = "";
-        log(err: Error) {
-            this.logOflog += err.message;
-            console.log("Application error: " + err.message);
-        }
-        get(): string {
-            return this.logOflog;
-        }
+﻿import { ILogger } from "../interfaces/ILogger";
+
+export class ConsoleLogger implements ILogger {
+    private logOflog: string = "";
+    log(err: Error) {
+        this.logOflog += err.message;
+        console.log("Application error: " + err.message);
+    }
+    get(): string {
+        return this.logOflog;
     }
 }
