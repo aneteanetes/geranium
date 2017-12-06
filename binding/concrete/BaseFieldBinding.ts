@@ -1,5 +1,6 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
 import { Property } from "../../reflection/Property";
+import { Model } from "../../models/Model";
 
 export class BaseFieldBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'data-field'; }

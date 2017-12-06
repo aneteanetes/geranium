@@ -1,12 +1,13 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
 import { IBinding } from "../interfaces/ibinding";
+import { BaseViewDOM } from "../../viewDOM/concrete/BaseViewDOM";
 
-export class JQueryCollectionBinding extends BaseByAttributeBinding {
+export class BaseCollectionBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'data-multiple'; }
 
-    async binding(DOMObject: JQuery, model: any) {
-        var collection = model[DOMObject.attr(this.attribute)] as Array<any>;
-        DOMObject.removeAttr(this.attribute);
+    async binding(DOMObject: HTMLElement, model: any) {
+        var collection = model[DOMObject.getAttribute(this.attribute)] as Array<any>;
+        DOMObject.removeAttribute(this.attribute);
         var DOMCollection = $();
 
         if (collection == undefined || collection.length == 0) {
@@ -14,7 +15,7 @@ export class JQueryCollectionBinding extends BaseByAttributeBinding {
             return;
         }
 
-        var tpl: string = DOMObject.outerHtml()
+        var tpl: string = DOMObject.outerHTML
             .replaceAll('\\[\\[', '{{')
             .replaceAll('\\]\\]', '}}');
 
@@ -25,15 +26,15 @@ export class JQueryCollectionBinding extends BaseByAttributeBinding {
             model.view = function () {
                 return tpl;
             };
-            let _view = await this["`container"].resolve(IViewEngine) viewengine.abstract.ViewEngine.ViewEngineView(model, '');
-            let viewDom = new viewDOM.JQueryViewDOM(_view);
-            let ctx = new viewbinding.contracts.BindContext(viewDom, bindings);
+            let _view = await this["`container"].resolve(viewengine) viewengine.abstract.ViewEngine.ViewEngineView(model, '');
+            let viewDom = new BaseViewDOM(_view);
+            let ctx = new BindContext(viewDom, bindings);
             await runtime.appSettings.viewbinder.bind(ctx);
 
             DOMCollection = DOMCollection.add(viewDom.getViewDOM());
         }
 
-        DOMObject.replaceWith(DOMCollection);
+        DOMObject.(DOMCollection);
         DOMObject = DOMCollection;
     }
 }

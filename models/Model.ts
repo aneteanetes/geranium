@@ -3,6 +3,7 @@ import { ICloneable } from "../reflection/cloning/decorators/ICloneable";
 import { Event } from "../behaviors/events/abstract/event";
 import { ICoherenceContainer } from "../coherence/interfaces/ICoherenceContainer";
 import { IRequest } from "../backend/interfaces/IRequest";
+import { IValidator } from "../validating/validator/interfaces/ivalidator";
 
 @routeignore
 @ICloneable
