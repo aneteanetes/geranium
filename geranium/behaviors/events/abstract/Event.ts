@@ -1,7 +1,9 @@
 ﻿import { routeignore } from "../../../routing/concrete/decorators";
+import { IInjected } from "../../../coherence/interfaces/IInjected";
+import { ICoherenceContainer } from "../../../coherence/interfaces/ICoherenceContainer";
 
 @routeignore
-export abstract class Event<T> {
+export abstract class Event<T> implements IInjected {
     raise(args: T) {
         this._requestEvents.forEach(subscriber => {
             subscriber(args);
@@ -16,4 +18,6 @@ export abstract class Event<T> {
     set unbind(callback: ((args: T) => void)) {
         this._requestEvents.remove(callback);
     }
+
+    abstract ["`container"]: ICoherenceContainer;
 }

@@ -1,6 +1,6 @@
-﻿namespace geranium.validating.contracts {
-    export class ValidationResult {
-        success: boolean;
-        errors: exceptions.Exception[];
-    }
+﻿import { Exception } from "../../exceptions/Exception";
+
+export class ValidationResult {
+    success: boolean;
+    errors: Exception[];
 }

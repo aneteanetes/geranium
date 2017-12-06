@@ -1,5 +1,5 @@
-﻿namespace geranium.validating.reporter.interfaces {
-    export interface IValidatingReporter {
-        report(viewDOM: viewDOM.abstract.ViewDOM, validatingResult: validating.contracts.ValidationResult);
-    }
+﻿import { ValidationResult } from "../../contracts/ValidationResult";
+
+export interface IValidatingReporter {
+    report(viewDOM: ViewDOM, validatingResult: ValidationResult);
 }
