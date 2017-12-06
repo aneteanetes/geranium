@@ -1,12 +1,12 @@
 ﻿import { routeignore } from "../../routing/concrete/decorators";
 import { ViewState } from "./ViewState";
 import { ViewDOM } from "../../viewDOM/abstract/viewdom";
-import GeraniumApp from "../../runtime/concrete/App";
 import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 import { RouteMatch } from "../../routing/contracts/RouteMatch";
 import { is } from "../../history/decorators/history";
 import { HistoryItem } from "../../history/contracts/HistoryItem";
 import { IHistory } from "../../history/interfaces/IHistory";
+import GeraniumApp from "../../runtime/concrete/App";
 
 @routeignore
 export abstract class ViewModel extends ViewState {
