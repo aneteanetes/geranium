@@ -1,27 +1,32 @@
-﻿namespace geranium.history {
-    export class Html5HistoryAPI implements interfaces.IHistory {
-        extend(hitem: contracts.HistoryItem) {
-            if (window.history.state == null)
-                window.history.replaceState(hitem.state, hitem.title, hitem.url);
-            else
-                window.history.pushState(hitem.state, hitem.title, hitem.url);
-        }
-        restore(state: any) {
-            var router = runtime.appSettings.router;
-            var route = router.routes.filter(x => {
-                var instance = new x.ctor();
-                return instance.constructor.name == state.ctor;
-            })[0];
-            route.selector = state.selector;
-            route.restore = true;
+﻿import { IHistory } from "../interfaces/IHistory";
+import { HistoryItem } from "../contracts/HistoryItem";
+import { IRouter } from "../../routing/interfaces/IRouter";
+import GeraniumApp from "../../runtime/concrete/App";
 
-            router.route(route as routing.contracts.RouteMatch);
-        }
+export class Html5HistoryAPI extends IHistory {
+
+    extend(hitem: HistoryItem) {
+        if (window.history.state == null)
+            window.history.replaceState(hitem.state, hitem.title, hitem.url);
+        else
+            window.history.pushState(hitem.state, hitem.title, hitem.url);
     }
 
-    if (window) {
-        window.addEventListener('popstate', (eventState) => {
-            runtime.appSettings.history.restore(eventState.state);
-        });
+    restore(state: any) {
+        var router = this["`container"].resolve(IRouter);
+        var route = router.routes.filter(x => {
+            var instance = new x.ctor();
+            return instance.constructor.name == state.ctor;
+        })[0];
+        route.selector = state.selector;
+        route.restore = true;
+
+        router.route(route);
     }
+}
+
+if (window) {
+    window.addEventListener('popstate', (eventState) => {
+        GeraniumApp.container.resolve(IHistory).restore(eventState.state);
+    });
 }

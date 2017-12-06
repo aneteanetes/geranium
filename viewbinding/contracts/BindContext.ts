@@ -1,13 +1,17 @@
-﻿namespace geranium.viewbinding.contracts {
-    export class BindContext {
-        viewDOM: geranium.viewDOM.abstract.ViewDOM;
-        bindingFlags: { new <T>(...args: any[]): binding.abstract.Binding<T> }[];
+﻿import { ViewDOM } from "../../viewDOM/abstract/viewdom";
+import { Binding } from "../../binding/abstract/Binding";
+import GeraniumApp from "../../runtime/concrete/App";
+import { IBinding } from "../../binding/interfaces/ibinding";
 
-        constructor(viewDOM: geranium.viewDOM.abstract.ViewDOM, bindingFlags?: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
-            this.viewDOM = viewDOM;
-            if (!bindingFlags)
-                bindingFlags = runtime.appSettings.bidnings;
-            this.bindingFlags = bindingFlags;
+export class BindContext {
+    viewDOM: ViewDOM;
+    bindingFlags: IBinding<any>[];
+
+    constructor(viewDOM: ViewDOM, bindingFlags?: IBinding<any>[]) {
+        this.viewDOM = viewDOM;
+        if (!bindingFlags) {
+            bindingFlags = GeraniumApp.container.resolveAll(IBinding);
         }
+        this.bindingFlags = bindingFlags;
     }
 }

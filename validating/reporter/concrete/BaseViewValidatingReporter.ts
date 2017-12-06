@@ -1,17 +1,22 @@
 ﻿import { IValidatingReporter } from "../interfaces/ivalidatatingreporter";
 import { ValidationResult } from "../../contracts/validationresult";
+import { ViewDOM } from "../../../viewDOM/abstract/viewdom";
+import { findAndFilter } from "../../../extensions/HtmlElementExtensions";
 
-export class JQueryViewValidatingReporter implements IValidatingReporter {
+export class BaseViewValidatingReporter implements IValidatingReporter {
     report(viewDOM: ViewDOM, validatingResult: ValidationResult) {
-        var errContainer = viewDOM.getViewDOM<JQuery>().findAndfilter('div.validating.error.container');
+        var errContainer = findAndFilter(viewDOM.getViewDOM<HTMLElement>(), 'div.validating.error.container');
         if (errContainer.length > 0) {
-            errContainer.remove();
+            errContainer.forEach(el => el.remove());
         }
-        errContainer = $('<div>', { class: 'validating error container' });
-        viewDOM.getViewDOM<JQuery>().findAndfilter('.errors').append(errContainer);
+        let newErrContainer = new HTMLDivElement();
+        newErrContainer.classList.add("validating error container");
+        findAndFilter(viewDOM.getViewDOM<HTMLElement>(), ".errors").forEach(element => element.appendChild(newErrContainer));
 
         validatingResult.errors.forEach(x => {
-            errContainer.append($('<p>').html(x.pure));
+            let p = new HTMLParagraphElement();
+            p.innerHTML = x.pure;
+            newErrContainer.appendChild(p);
         });
     }
 }

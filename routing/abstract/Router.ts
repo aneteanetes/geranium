@@ -1,11 +1,14 @@
-﻿import { Route } from "../constracts/Route";
-import { RouteMatch } from "../constracts/RouteMatch";
+﻿import { IRouter } from "../interfaces/IRouter";
+import { Route } from "../contracts/Route";
+import { RouteMatch } from "../contracts/RouteMatch";
+import GeraniumApp from "../../runtime/concrete/App";
+import { routes } from "../concrete/decorators";
 
-export abstract class Router {
+export abstract class Router extends IRouter {
     abstract Current<T>(): T;
 
     get routes(): Route[] {
-        return routing.routes();
+        return routes();
     }
 
     routeByUrl(url: string) {
@@ -52,7 +55,7 @@ export abstract class Router {
 
 if (window) {
     window.addEventListener('load', () => {
-        var router = runtime.appSettings.router;
+        var router = GeraniumApp.container.resolve(IRouter);
         var route = router.routeByUrl(window.location.pathname);
         router.route(route);
     });

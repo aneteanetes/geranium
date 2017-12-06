@@ -1,5 +1,6 @@
 ﻿import { IValidatingReporter } from "../interfaces/IValidatatingReporter";
 import { ValidationResult } from "../../contracts/ValidationResult";
+import { ViewDOM } from "../../../viewDOM/abstract/viewdom";
 
 export class NotifyValidatingReporter implements IValidatingReporter {
     report(viewDOM: ViewDOM, validatingResult: ValidationResult) {

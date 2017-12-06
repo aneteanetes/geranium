@@ -1,17 +1,14 @@
-﻿import { Route } from "../constracts/Route";
-import { RouteContext } from "../constracts/RouteContext";
+﻿import { Route } from "../contracts/Route";
+import { RouteContext } from "../contracts/RouteContext";
 
-export var settings: {
-	parameterFullUrl: boolean;
-} = {
-		parameterFullUrl: false
-	};
-
+var _ignoredRoutes: string[] = [];
 var _routes: Route[] = [];
+
+export var settings: { parameterFullUrl: boolean; } = { parameterFullUrl: false };
+
 export function routes(): Route[] {
 	return _routes.slice();
 }
-var _ignoredRoutes: string[] = [];
 
 export function urlFromCtor(ctor: any): string;
 export function urlFromCtor(ctor: any, params: string[]): string;

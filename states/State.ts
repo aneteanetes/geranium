@@ -1,4 +1,9 @@
 ﻿import { routeignore } from "../routing/concrete/decorators";
+import { Model } from "../models/Model";
+import { IStateManager } from "./interfaces/IStateManager";
+import { Constructor } from "../structures/Constructor";
+import GeraniumApp from "../runtime/concrete/App";
+import { IRequest } from "../backend/interfaces/IRequest";
 
 @routeignore
 export abstract class State extends Model {
@@ -10,16 +15,16 @@ export abstract class State extends Model {
 
 	protected async fillState() {
 		if (this.constructor.name != "ViewState") {
-			if (runtime.appSettings) {
-				var state = runtime.appSettings.states.get(this.constructor as any);
-				if (!state)
-					runtime.appSettings.states.add(this);
+			const stateManager = this["`container"].resolve(IStateManager)
+			const state = stateManager.get(this.constructor as any);
+			if (!state) {
+				stateManager.add(this);
 			}
 		}
 	}
 
-	static async get<T extends State>(type: { new(...args: any[]): T }): Promise<T> {
-		var state = runtime.appSettings.states.get(type);
+	static async get<T extends State>(type: Constructor<T>): Promise<T> {
+		var state = GeraniumApp.container.resolve(IStateManager).get(type);
 		if (!state)
 			state = new type();
 		await state.sync();
@@ -27,13 +32,13 @@ export abstract class State extends Model {
 	}
 
 	remove(): boolean {
-		return runtime.appSettings.states.remove((<any>this).constructor);
+		return this["`container"].resolve(IStateManager).remove(this.constructor);
 	}
 
 	async sync(): Promise<void> {
 		if (this.synchronizer) {
-			let request = runtime.appSettings.request;
-			let data = await request.send<any>(this.synchronizer, true);
+			let request = this["`container"].resolve(IRequest);
+			let data = await request.send<any, State>(this.synchronizer);
 			this.obtain(data);
 		}
 	}

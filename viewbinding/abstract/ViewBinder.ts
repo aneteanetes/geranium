@@ -1,45 +1,53 @@
-﻿namespace geranium.viewbinding.abstract {
-    export abstract class ViewBinder implements interfaces.IViewBinder {
-        private viewDOM: geranium.viewDOM.abstract.ViewDOM;
-        async bind(context: viewbinding.contracts.BindContext): Promise<viewDOM.abstract.ViewDOM> {
-            this.viewDOM = context.viewDOM;
-            await this.exec(this.viewDOM, context.bindingFlags);
-            this.valid(this.viewDOM);
-            return this.viewDOM;
-        }
+﻿import { BindContext } from "../contracts/BindContext";
+import { ViewDOM } from "../../viewDOM/abstract/viewdom";
+import { IViewBinder } from "../interfaces/IViewBinder";
+import { IBinding } from "../../binding/interfaces/ibinding";
+import { Property } from "../../reflection/Property";
+import { Model } from "../../models/Model";
+import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
+import { ViewModel } from "../../viewmodels/abstract/ViewModel";
+import GeraniumApp from "../../runtime/concrete/App";
 
-        private valid(ViewDOM: viewDOM.abstract.ViewDOM) {
-            var vm = (ViewDOM.view.data as viewmodels.abstract.ViewModel);
-            if (vm.validators) {
-                var validatedProperties = vm.validators.groupBy('validatedPropertyName');
-                validatedProperties.forEach(validators => {
-
-                    var validProp = validators[0].validatedPropertyName;
-                    runtime.reflection.Property.redefine(ViewDOM.view.data, validProp,
-                        (val) => { return val; },
-                        function (val) {
-
-                            let validationFault: boolean = false;
-                            (this as models.abstract.Model).validators.filter(x => x.validatedPropertyName === validProp).forEach(validator => {
-                                var validation = validator.validate(val, this.clone());
-                                if (!validation.success) {
-                                    validationFault = true;
-                                    runtime.appSettings.validreport.report(ViewDOM, validation);
-                                }
-                            });
-
-                            return validationFault ? undefined : val;
-                        });
-                });
-            }
-        }
-
-        private async exec(ViewDOM: viewDOM.abstract.ViewDOM, bindings: { new <T>(...args: any[]): binding.abstract.Binding<T> }[]) {
-            for (var i = 0; i < bindings.length; i++) {
-                await this.binding(ViewDOM, bindings[i]);
-            }
-        }
-
-        protected abstract binding(ViewDOM: viewDOM.abstract.ViewDOM, binding: { new <T>(...args: any[]): binding.abstract.Binding<T> }): Promise<void>;
+export abstract class ViewBinder extends IViewBinder {
+    private viewDOM: ViewDOM;
+    async bind(context: BindContext): Promise<ViewDOM> {
+        this.viewDOM = context.viewDOM;
+        await this.exec(this.viewDOM, context.bindingFlags);
+        this.valid(this.viewDOM);
+        return this.viewDOM;
     }
+
+    private valid(ViewDOM: ViewDOM) {
+        var vm = (ViewDOM.view.data as ViewModel);
+        if (vm.validators) {
+            var validatedProperties = vm.validators.groupBy('validatedPropertyName');
+            validatedProperties.forEach(validators => {
+
+                var validProp = validators[0].validatedPropertyName;
+                Property.redefine(ViewDOM.view.data, validProp,
+                    (val) => { return val; },
+                    function (val) {
+
+                        let validationFault: boolean = false;
+                        (this as Model).validators.filter(x => x.validatedPropertyName === validProp).forEach(validator => {
+                            var validation = validator.validate(val, this.clone());
+                            if (!validation.success) {
+                                validationFault = true;
+                                GeraniumApp.container.resolve(IValidatingReporter).report(ViewDOM, validation);
+                            }
+                        });
+
+                        return validationFault ? undefined : val;
+                    });
+            });
+        }
+    }
+
+    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]) {
+        for (var i = 0; i < bindings.length; i++) {
+            await this.binding(ViewDOM, bindings[i]);
+        }
+    }
+
+    protected abstract binding(ViewDOM: ViewDOM, binding: IBinding<any>): Promise<void>;
 }
