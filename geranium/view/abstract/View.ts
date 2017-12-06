@@ -1,38 +1,46 @@
-namespace geranium.view.abstract {
-    export abstract class View extends templating.contracts.Template {
+import { Template } from "../../templating/contracts/template";
+import { Exception } from "../../exceptions/Exception";
+import { IInjected } from "../../coherence/interfaces/IInjected";
+import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 
-        private _selector: string;
-        private _rendered: boolean;
+export abstract class View extends Template implements IInjected {
 
-        constructor(selector: string) {
-            super();
-            this.protectRender(arguments[1]);
-            this._selector = selector;
+    ["`container"]: ICoherenceContainer;
+    private _selector: string;
+    private _rendered: boolean;
+
+    constructor(selector: string) {
+        super();
+        this.protectRender(arguments[1]);
+        this._selector = selector;
+    }
+
+    get selector(): string {
+        return this._selector;
+    }
+
+    protected abstract declare(): string;
+    private protectRender(html: string) {
+        this.html = this.declare();
+        if (!this.html)
+            this.html = html;
+        if (!this.html)
+            throw new Exception('view template is empty!');
+    }
+
+    async render(): Promise<View> {
+
+        if (this.data == null) {
+            throw new Exception('view data is not assigned!');
+        }
+        if (this._rendered) {
+            throw new Exception('view already rendered!');
         }
 
-        get selector(): string {
-            return this._selector;
-        }
-
-        protected abstract declare(): string;
-        private protectRender(html: string) {
-            this.html = this.declare();
-            if (!this.html)
-                this.html = html;
-            if (!this.html)
-                throw new exceptions.Exception('view template is empty!');
-        }
-
-        async render(): Promise<View> {
-            var templating = runtime.appSettings.templating;
-            if (this.data == null)
-                throw new exceptions.Exception('view data is not assigned!');
-            if (this._rendered)
-                throw new exceptions.Exception('view already rendered!');
-            
-            this.html = await templating.parse(this);
-            this._rendered = true;
-            return new Promise<View>(resolve => resolve(this));
-        }
+        var engine = this["`container"].resolve(ITemplateEngine);
+        this.html = await engine.parse(this);
+        this._rendered = true;
+        return new Promise<View>(resolve => resolve(this));
     }
 }
