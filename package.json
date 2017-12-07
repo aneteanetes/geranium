@@ -1,0 +1,24 @@
+{
+  "name": "geranium",
+  "version": "0.0.6",
+  "description": "mvvm typescript framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anetegithub/geranium.git"
+  },
+  "keywords": [
+    "mvvm",
+    "framework",
+    "typescript"
+  ],
+  "author": "anete.anetes",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/anetegithub/geranium/issues"
+  },
+  "homepage": "https://github.com/anetegithub/geranium#readme"
+}
