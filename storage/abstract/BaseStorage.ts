@@ -1,7 +1,10 @@
 import { LoggedStorage } from "./LoggedStorage";
 import { Constructor } from "../../structures/Constructor";
+import { IStorage } from "../interfaces/IStorage";
+import { IEntity } from "../interfaces/IEntity";
 
-export class BaseStorage extends LoggedStorage {
+export abstract class BaseStorage extends IStorage {
+    private data: Array<any>;
     protected storageName: string;
 
     constructor(name: string) {
@@ -9,48 +12,45 @@ export class BaseStorage extends LoggedStorage {
         this.storageName = name;
     }
 
-    add(model: any): boolean {
-        try {
-            this.collection.push(model);
-            return true;
-        } catch (ex) {
-            this.log(ex);
-            return false;
+    add<T extends IEntity>(model: T): boolean {
+        this.collection.push(model);
+        return true;
+    }
+
+    remove<T extends IEntity>(id: number): boolean {
+        var model = this.searchFor(id);
+        if (model != null) {
+            this.write(this.collection.remove(model), this.storageName);
         }
+        return true;
     }
 
-    remove<T>(type: Constructor<T>): boolean {
-        try {
-            var model = this.searchFor(type);
-            if (model != null)
-                window[this.storageName] = this.collection.remove(model);
-            return true;
-        } catch (ex) {
-            this.log(ex);
-            return false;
+    get<T extends IEntity>(id: number): T {
+        return this.searchFor(id);
+    }
+
+    all<T extends IEntity>(): T[] {
+        return this.read(this.storageName) as T[];
+    }
+
+    private get collection(): IEntity[] {
+        if (!this.read(this.storageName)) {
+            this.write(new Array<IEntity>(), this.storageName);
         }
+        return this.read(this.storageName);
     }
 
-    get<T>(type: Constructor<T>): T {
-        return this.searchFor(type);
-    }
-
-    all<T>(): T[] {
-        throw new Error("Method not implemented.");
-    }
-
-    private get collection(): any[] {
-        if (window[this.variable] == null) {
-            window[this.variable] = new Array();
-        }
-        return window[this.variable] as any[];
-    }
-
-    private searchFor<T>(ctor: { new(...args: any[]): T }): any {
+    private searchFor<T>(id: number): any {
         var enumerable = this.collection
-            .filter(x => x instanceof ctor);
-        if (enumerable.length > 0)
+            .filter(x => x.id == id);
+
+        if (enumerable.length > 0) {
             return enumerable[0];
+
+        }
         return null;
     }
+
+    protected abstract write(data: Array<IEntity>, storageName: string);
+    protected abstract read(storageName: string): Array<IEntity>;
 }

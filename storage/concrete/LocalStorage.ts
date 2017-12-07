@@ -1,29 +1,12 @@
-﻿import { LoggedStorage } from "../abstract/LoggedStorage";
+﻿import { BaseStorage } from "../abstract/BaseStorage";
+import { IEntity } from "../interfaces/IEntity";
 
-export class LocalStorage extends LoggedStorage {
-
-    add(model: any): boolean {
-        try {
-            localStorage.setItem(model.constructor.name, model.toString());
-            return true;
-        } catch (ex) {
-            this.log(ex);
-            return false;
-        }
+export class LocalStorage extends BaseStorage {
+    protected write(data: IEntity[], storageName: string) {
+        localStorage.setItem(storageName, JSON.stringify(data));
     }
 
-    remove<T>(type: { new(...args: any[]): T, name: string }): boolean {
-        try {
-            localStorage.removeItem(type.name);
-            return true;
-        } catch (ex) {
-            this.log(ex);
-            return false;
-        }
-    }
-
-    get<T>(type: { new(...args: any[]): T, name: string }): T {
-        var strValue = localStorage.getItem(type.name);
-        return JSON.parse(strValue);
+    protected read(storageName: string): IEntity[] {
+        return JSON.parse(localStorage.getItem(storageName));
     }
 }

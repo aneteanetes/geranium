@@ -4,22 +4,30 @@ import { Constructor } from "../../structures/Constructor";
 export class InMemoryContainer implements ICoherenceContainer {
     private container: RegisterToken[] = [];
 
-    register<T>(type: Constructor<T>, value: T): void {
+    register<T>(type: Constructor<T> | Function, value: T): void {
         this.container.push({
             type: type.name,
             value: value
         });
     }
 
-    resolve<T>(type: Constructor<T>): T {
+    resolve<T>(type: Constructor<T> | Function): T {
         return this.execute('find', type) as T;
     }
 
-    resolveAll<T>(type: Constructor<T>): T[] {
+    resolveAll<T>(type: Constructor<T> | Function): T[] {
         return this.execute('filter', type) as T[];
     }
 
-    private execute(methodName: string, type: Constructor<{}>) {
+    release<T>(type: Function | Constructor<T>) {
+        const pattern = (token: RegisterToken) => { return token.type == type.name };
+        const component = this.container.find(pattern);
+        if (component) {
+            this.container.remove(component);
+        }
+    }
+
+    private execute(methodName: string, type: Constructor<{}> | Function) {
         const pattern = function (token: RegisterToken) {
             return token.type === type.name;
         };

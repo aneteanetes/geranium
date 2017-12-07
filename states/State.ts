@@ -16,23 +16,25 @@ export abstract class State extends Model {
 	protected async fillState() {
 		if (this.constructor.name != "ViewState") {
 			const stateManager = this["`container"].resolve(IStateManager)
-			const state = stateManager.get(this.constructor as any);
+			const state = stateManager.resolve(this.constructor);
 			if (!state) {
-				stateManager.add(this);
+				stateManager.register(this.constructor, this);
 			}
 		}
 	}
 
 	static async get<T extends State>(type: Constructor<T>): Promise<T> {
-		var state = GeraniumApp.container.resolve(IStateManager).get(type);
+		var state = GeraniumApp.container.resolve(IStateManager).resolve(type);
 		if (!state)
 			state = new type();
 		await state.sync();
 		return state;
 	}
 
-	remove(): boolean {
-		return this["`container"].resolve(IStateManager).remove(this.constructor);
+	remove() {
+		const container = this["`container"];
+		const stateManager = container.resolve(IStateManager);
+		stateManager.release(this.constructor);
 	}
 
 	async sync(): Promise<void> {
