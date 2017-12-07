@@ -1,4 +1,3 @@
-import { LoggedStorage } from "./LoggedStorage";
 import { Constructor } from "../../structures/Constructor";
 import { IStorage } from "../interfaces/IStorage";
 import { IEntity } from "../interfaces/IEntity";

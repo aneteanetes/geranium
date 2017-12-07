@@ -5,4 +5,5 @@ export interface ICoherenceContainer {
     resolve<T>(type: Constructor<T> | Function): T;
     resolveAll<T>(type: Constructor<T> | Function): T[];
     release<T>(type: Constructor<T> | Function);
+    all(): any[];
 }

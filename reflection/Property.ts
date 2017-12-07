@@ -1,4 +1,5 @@
 ﻿import { Event } from "../behaviors/events/abstract/event";
+import { ICoherenceContainer } from "../coherence/interfaces/ICoherenceContainer";
 
 export class Property {
     /**
@@ -85,6 +86,7 @@ export class Property {
 }
 
 export class PropertyEvent extends Event<PropertyAccessor>  {
+    ["`container"]: ICoherenceContainer;
 }
 
 export class PropertyAccessor {

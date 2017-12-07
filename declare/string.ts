@@ -19,6 +19,6 @@ if (!String.prototype.random) {
 }
 if (!String.prototype.randomize) {
     String.prototype.randomize = function () {
-        return this+this.random(6);
+        return this + this.random(6);
     }
 }

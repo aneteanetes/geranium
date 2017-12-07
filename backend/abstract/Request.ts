@@ -1,11 +1,11 @@
 ﻿import { ICommunicator } from "../interfaces/ICommunicator";
 import { Event } from "../../behaviors/events/abstract/Event";
 import { Exception } from "../../exceptions/Exception";
-import { IInjected } from "../../coherence/abstract/IInjected";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { IRequest } from "../interfaces/IRequest";
 import { ILogger } from "../../exceptions/logging/interfaces/ILogger";
 import { CommunicationException } from "../../exceptions/backend/CommunicationException";
+import { IInjected } from "../../coherence/interfaces/IInjected";
 
 export abstract class Request extends Event<(<TResponse>(data: any) => PromiseLike<TResponse>)> implements IRequest, IInjected {
     ["`container"]: ICoherenceContainer;

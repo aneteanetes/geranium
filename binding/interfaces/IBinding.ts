@@ -3,5 +3,5 @@ import { IInjected } from "../../coherence/interfaces/IInjected";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 export class IBinding<TDOM> implements IInjected {
     ["`container"]: ICoherenceContainer;
-    bind(objectDOM: TDOM, model: any): void { throw new InterfaceUsingException("IBinding.bind"); }
+    bind(objectDOM: TDOM, model: any): Promise<void> { throw new InterfaceUsingException("IBinding.bind"); }
 }

@@ -1,7 +1,7 @@
 ﻿import { IBinding } from "../interfaces/ibinding";
 
 export abstract class Binding<T> extends IBinding<T> {
-    async bind(DOM: T, model: any) {
+    async bind(DOM: T, model: any): Promise<void> {
         var DOMObjects = this.detection(DOM);
         DOMObjects.forEach(v => {
             this.binding(v, model);

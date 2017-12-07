@@ -27,6 +27,13 @@ export class InMemoryContainer implements ICoherenceContainer {
         }
     }
 
+    all(): any[] {
+        const tokenExtract = function (token: RegisterToken) {
+            return token.value;
+        };
+        return this.container.map(tokenExtract);
+    }
+
     private execute(methodName: string, type: Constructor<{}> | Function) {
         const pattern = function (token: RegisterToken) {
             return token.type === type.name;
