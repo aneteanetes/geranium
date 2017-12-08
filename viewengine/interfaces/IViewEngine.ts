@@ -5,6 +5,7 @@ import { ViewExecutingContext } from "../contracts/viewexecutingcontext";
 import { InterfaceUsingException } from "../../exceptions/coherence/InterfaceUsingException";
 import { IViewable } from "../../view/interfaces/IViewable";
 import { View } from "../../view/abstract/view";
+import GeraniumApp from "../../runtime/concrete/App";
 
 export class IViewEngine implements IInjected {
     ["`container"]: ICoherenceContainer;
@@ -20,10 +21,11 @@ export class IViewEngine implements IInjected {
         var viewctr = iviewed.view();
         if (typeof viewctr === "string") {
             let vmctr = EmptyView;
-            view = new (vmctr as any)(selector, viewctr);
+            view = GeraniumApp.container.instantiate(vmctr, [selector, viewctr]);
         }
-        else
-            view = new (viewctr as any)(selector);
+        else {
+            view = GeraniumApp.container.instantiate(viewctr, [selector]);
+        }
         view.data = iviewed;
         return view.render();
 

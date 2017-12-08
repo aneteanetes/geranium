@@ -15,11 +15,16 @@ export class InMemoryContainer implements ICoherenceContainer {
     }
 
     resolve<T extends IInjected>(type: Constructor<T> | Function): T {
-        return this.bindContainer(this.execute('find', type) as T);
+        const finded = this.execute(type);
+        if (finded.length == 0) {
+            throw new Error("component is not registered: " + type);
+        }
+
+        return this.bindContainer(finded[0]);
     }
 
     resolveAll<T extends IInjected>(type: Constructor<T> | Function): T[] {
-        return (this.execute('filter', type) as T[]).map(component => this.bindContainer(component));
+        return this.execute(type).map(component => this.bindContainer(component));
     }
 
     release<T extends IInjected>(type: Function | Constructor<T>) {
@@ -37,12 +42,17 @@ export class InMemoryContainer implements ICoherenceContainer {
         return this.container.map(tokenExtract);
     }
 
+    instantiate<T extends IInjected>(type: Function | Constructor<T> | any, params: any[]): T {
+        var instance = new type(...(params || []));
+        return this.bindContainer(instance);
+    }
+
     private bindContainer<T extends IInjected>(component: T): T {
         component["`container"] = this;
         return component;
     }
 
-    private execute(methodName: string, type: Constructor<{}> | Function) {
+    private execute(type: Constructor<{}> | Function): any[] {
         const pattern = function (token: RegisterToken) {
             return token.type === type.name;
         };
@@ -51,9 +61,7 @@ export class InMemoryContainer implements ICoherenceContainer {
         };
         const map = 'map';
 
-        return this.container
-        [methodName](pattern)
-        [map](tokenExtract);
+        return this.container.filter(pattern).map(tokenExtract);
     }
 }
 

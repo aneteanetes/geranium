@@ -8,6 +8,6 @@ export class IRouter implements IInjected {
     ["`container"]: ICoherenceContainer;
     get routes(): Route[] { throw new InterfaceUsingException("IRouter.routes"); }
     routeByUrl(url: string): RouteMatch { throw new InterfaceUsingException("IRouter.routeByUrl"); }
-    route(current: RouteMatch): RouteMatch { throw new InterfaceUsingException("IRouter.route"); }
+    route(current: RouteMatch) { throw new InterfaceUsingException("IRouter.route"); }
     routearea(): string { throw new InterfaceUsingException("IRouter.routearea"); }
 }

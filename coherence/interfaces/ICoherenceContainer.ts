@@ -6,5 +6,6 @@ export interface ICoherenceContainer extends IInjected {
     resolve<T extends IInjected>(type: Constructor<T> | Function): T;
     resolveAll<T extends IInjected>(type: Constructor<T> | Function): T[];
     release<T extends IInjected>(type: Constructor<T> | Function);
+    instantiate<T extends IInjected>(type: Constructor<T> | Function | any, params?: any[]): T;
     all(): any[];
 }

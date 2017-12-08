@@ -2,8 +2,8 @@
 import { Model } from "../models/Model";
 import { IStateManager } from "./interfaces/IStateManager";
 import { Constructor } from "../structures/Constructor";
-import GeraniumApp from "../runtime/concrete/App";
 import { IRequest } from "../backend/interfaces/IRequest";
+import GeraniumApp from "../runtime/concrete/App";
 
 @routeignore
 export abstract class State extends Model {
@@ -15,7 +15,7 @@ export abstract class State extends Model {
 
 	protected async fillState() {
 		if (this.constructor.name != "ViewState") {
-			const stateManager = this["`container"].resolve(IStateManager)
+			const stateManager = GeraniumApp.container.resolve(IStateManager);
 			const state = stateManager.resolve(this.constructor);
 			if (!state) {
 				stateManager.register(this.constructor, this);

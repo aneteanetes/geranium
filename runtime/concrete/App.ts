@@ -1,6 +1,7 @@
 import { IApp } from "../interfaces/IApp";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { ContainerNotInitializedException } from "../../exceptions/coherence/ContainerNotInitializedException";
+import { InMemoryContainer } from "../../coherence/concrete/InMemoryContainer";
 
 class App extends IApp {
 
@@ -9,7 +10,7 @@ class App extends IApp {
     get container(): ICoherenceContainer {
         let global = window[App.containerNameConst]
         if (!global) {
-            throw new ContainerNotInitializedException("App.container.get");
+            global = window[App.containerNameConst] = new InMemoryContainer();
         }
         return global;
     }

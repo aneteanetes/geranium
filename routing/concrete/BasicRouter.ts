@@ -2,6 +2,7 @@
 import { RouteMatch } from "../contracts/RouteMatch";
 import { HistoryItem } from "../../history/contracts/HistoryItem";
 import { IHistory } from "../../history/interfaces/IHistory";
+import GeraniumApp from "../../runtime/concrete/App";
 
 export class BasicRouter extends Router {
     _current: any;
@@ -19,7 +20,7 @@ export class BasicRouter extends Router {
 
         let selector = current.restore ? current.selector : this.routearea();
 
-        var routed = new current.ctor(current.params) as any;
+        var routed = GeraniumApp.container.instantiate(current.ctor, current.params);
         var executing: string = current.executable ? current.executable : 'toString';
 
         if (!current.restore) {

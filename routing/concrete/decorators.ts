@@ -1,6 +1,7 @@
 ﻿import { Route } from "../contracts/Route";
 import { RouteContext } from "../contracts/RouteContext";
 import { ArrayHelper } from "../../declare/array";
+import GeraniumApp from "../../runtime/concrete/App";
 
 var _ignoredRoutes: string[] = [];
 var _routes: Route[] = [];
@@ -14,7 +15,7 @@ export function routes(): Route[] {
 export function urlFromCtor(ctor: any): string;
 export function urlFromCtor(ctor: any, params: string[]): string;
 export function urlFromCtor(ctor: any, params?: string[]): string {
-	var instance = new ctor();
+	var instance = GeraniumApp.container.instantiate(ctor);
 	let chain = chainOfCtorNames(instance, null);
 	var routeUrl = ArrayHelper.removeSame(chain)
 		.reverse();
@@ -80,11 +81,11 @@ export function routed(param?: any, absorb?: boolean) {
 }
 
 export function routeignore(constructor: any) {
-	var instance = new constructor();
-	_ignoredRoutes.push(instance.constructor.name);
+	//var instance = GeraniumApp.container.instantiate(constructor);
+	_ignoredRoutes.push(constructor.name);
 }
 export function routeroot(constructor: any) {
-	_routed(constructor, '/');
+	_routed(constructor, './');
 }
 
 function _routed(ctor: any, url: string, executable?: string) {

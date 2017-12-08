@@ -6,10 +6,12 @@ import GeraniumApp from "../../runtime/concrete/App";
 export class Html5HistoryAPI extends IHistory {
 
     extend(hitem: HistoryItem) {
-        if (window.history.state == null)
+        if (window.history.state == null) {
             window.history.replaceState(hitem.state, hitem.title, hitem.url);
-        else
+        }
+        else {
             window.history.pushState(hitem.state, hitem.title, hitem.url);
+        }
     }
 
     restore(state: any) {

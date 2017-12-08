@@ -5,7 +5,7 @@ export class BaseViewDOM extends ViewDOM {
 
     getViewDOM() {
         if (this._html == null) {
-            let div = new HTMLDivElement();
+            let div = document.createElement("div");
             div.innerHTML = this.view.html;
             this._html = div;
         }
