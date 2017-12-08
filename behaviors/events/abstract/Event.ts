@@ -1,6 +1,7 @@
 ﻿import { routeignore } from "../../../routing/concrete/decorators";
 import { IInjected } from "../../../coherence/interfaces/IInjected";
 import { ICoherenceContainer } from "../../../coherence/interfaces/ICoherenceContainer";
+import { ArrayHelper } from "../../../declare/array";
 
 @routeignore
 export abstract class Event<T> implements IInjected {
@@ -16,7 +17,7 @@ export abstract class Event<T> implements IInjected {
         this._requestEvents.push(callback);
     }
     set unbind(callback: ((args: T) => void)) {
-        this._requestEvents.remove(callback);
+        this._requestEvents = ArrayHelper.remove(this._requestEvents, callback);
     }
 
     abstract ["`container"]: ICoherenceContainer;

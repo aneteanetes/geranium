@@ -1,32 +1,24 @@
-﻿interface Array<T> {
-    remove(item: T): Array<T>;
-    removeSame(): Array<T>;
-    groupBy(key: string): Array<Array<T>>;
-}
-if (!Array.prototype.remove) {
-    Array.prototype.remove = function <T>(item: T): T[] {
-        return this.filter(e => e !== item);
+﻿export class ArrayHelper {
+    static remove<T>(array: T[], item: T): T[] {
+        return array.filter(e => e !== item);
     }
-}
-if (!Array.prototype.removeSame) {
-    Array.prototype.removeSame = function <T>(): T[] {
-        return this.filter(function (elem, index, self) {
+
+    static removeSame<T>(array: T[]): T[] {
+        return array.filter(function (elem, index, self) {
             return index == self.indexOf(elem);
-        })
+        });
     }
-}
-if (!Array.prototype.groupBy) {
-    Array.prototype.groupBy = function<T>(key: string): Array<Array<T>>{
-        var arr = this as Array<T>;
+
+    static groupBy<T>(array: T[], key: string): Array<Array<T>> {
         var groups = [];
 
-        var targetKeys = arr.map(x => x[key]);
+        var targetKeys = array.map(x => x[key]);
 
         var unique = targetKeys.filter((value, index, array) => array.indexOf(value) === index);
 
         unique.forEach(z => {
-            groups.push(arr.filter(x => x[key] == z));
-        });
+            groups.push(array.filter(x => x[key] == z));
+        })
 
         return groups;
     }

@@ -1,5 +1,6 @@
 ﻿import { Route } from "../contracts/Route";
 import { RouteContext } from "../contracts/RouteContext";
+import { ArrayHelper } from "../../declare/array";
 
 var _ignoredRoutes: string[] = [];
 var _routes: Route[] = [];
@@ -15,8 +16,7 @@ export function urlFromCtor(ctor: any, params: string[]): string;
 export function urlFromCtor(ctor: any, params?: string[]): string {
 	var instance = new ctor();
 	let chain = chainOfCtorNames(instance, null);
-	var routeUrl = chain
-		.removeSame()
+	var routeUrl = ArrayHelper.removeSame(chain)
 		.reverse();
 
 	if (params && settings.parameterFullUrl)

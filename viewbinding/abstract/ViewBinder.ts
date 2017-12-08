@@ -7,6 +7,7 @@ import { Model } from "../../models/Model";
 import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
 import { ViewModel } from "../../viewmodels/abstract/ViewModel";
 import GeraniumApp from "../../runtime/concrete/App";
+import { ArrayHelper } from "../../declare/array";
 
 export abstract class ViewBinder extends IViewBinder {
     private viewDOM: ViewDOM;
@@ -20,7 +21,7 @@ export abstract class ViewBinder extends IViewBinder {
     private valid(ViewDOM: ViewDOM) {
         var vm = (ViewDOM.view.data as ViewModel);
         if (vm.validators) {
-            var validatedProperties = vm.validators.groupBy('validatedPropertyName');
+            var validatedProperties = ArrayHelper.groupBy(vm.validators, 'validatedPropertyName');
             validatedProperties.forEach(validators => {
 
                 var validProp = validators[0].validatedPropertyName;

@@ -1,4 +1,5 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
+import { StringHelper } from "../../declare/string";
 
 export class BaseClickBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'onclick'; }
@@ -15,7 +16,7 @@ export class BaseClickBinding extends BaseByAttributeBinding {
     }
 
     private splitMethodAndParams(value: string): { method: string, params: any[] } {
-        value = value.replaceAll(';', '');
+        value = StringHelper.replaceAll(value, ';', '');
         var indexOfBracket = value.indexOf('(');
         if (indexOfBracket == -1)
             return {
@@ -34,8 +35,9 @@ export class BaseClickBinding extends BaseByAttributeBinding {
         if (params == "()")
             return null;
 
-        var withoutBrackets = params.replaceAll('\\(', '')
-            .replaceAll('\\)', '');
+        var withoutBrackets = StringHelper.replaceAll(
+            StringHelper.replaceAll(params, '\\(', ''),
+            '\\)', '');
 
         var _arguments: Array<any> = [];
 

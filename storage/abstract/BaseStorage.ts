@@ -1,6 +1,7 @@
 import { Constructor } from "../../structures/Constructor";
 import { IStorage } from "../interfaces/IStorage";
 import { IEntity } from "../interfaces/IEntity";
+import { ArrayHelper } from "../../declare/array";
 
 export abstract class BaseStorage extends IStorage {
     private data: Array<any>;
@@ -19,7 +20,7 @@ export abstract class BaseStorage extends IStorage {
     remove<T extends IEntity>(id: number): boolean {
         var model = this.searchFor(id);
         if (model != null) {
-            this.write(this.collection.remove(model), this.storageName);
+            this.write(ArrayHelper.remove(this.collection, model), this.storageName);
         }
         return true;
     }

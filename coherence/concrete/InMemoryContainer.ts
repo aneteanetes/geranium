@@ -1,5 +1,6 @@
 import { ICoherenceContainer } from "../interfaces/ICoherenceContainer";
 import { Constructor } from "../../structures/Constructor";
+import { ArrayHelper } from "../../declare/array";
 
 export class InMemoryContainer implements ICoherenceContainer {
     private container: RegisterToken[] = [];
@@ -23,7 +24,7 @@ export class InMemoryContainer implements ICoherenceContainer {
         const pattern = (token: RegisterToken) => { return token.type == type.name };
         const component = this.container.find(pattern);
         if (component) {
-            this.container.remove(component);
+            this.container = ArrayHelper.remove(this.container, component);
         }
     }
 

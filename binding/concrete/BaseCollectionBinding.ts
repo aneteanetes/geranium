@@ -4,6 +4,7 @@ import { BaseViewDOM } from "../../viewDOM/concrete/BaseViewDOM";
 import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 import { BindContext } from "../../viewbinding/contracts/BindContext";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
+import { StringHelper } from "../../declare/string";
 
 export class BaseCollectionBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'data-multiple'; }
@@ -18,9 +19,9 @@ export class BaseCollectionBinding extends BaseByAttributeBinding {
             return;
         }
 
-        var tpl: string = DOMObject.outerHTML
-            .replaceAll('\\[\\[', '{{')
-            .replaceAll('\\]\\]', '}}');
+        var tpl: string = StringHelper.replaceAll(
+            StringHelper.replaceAll(DOMObject.outerHTML, '\\[\\[', '{{'),
+            '\\]\\]', '}}');
 
         let bindings = this["`container"].resolveAll(IBinding).filter(x => x.constructor.name != this.constructor.name);
 

@@ -3,6 +3,7 @@ import { Route } from "../contracts/Route";
 import { RouteMatch } from "../contracts/RouteMatch";
 import GeraniumApp from "../../runtime/concrete/App";
 import { routes } from "../concrete/decorators";
+import { ArrayHelper } from "../../declare/array";
 
 export abstract class Router extends IRouter {
     abstract Current<T>(): T;
@@ -27,8 +28,7 @@ export abstract class Router extends IRouter {
         }
 
         if (ctorCollection.length == 0) {
-
-            var segments = url.split('/').remove('');
+            var segments = ArrayHelper.remove(url.split('/'), (''));
             var cutSegments = segments.filter((v, i) => {
                 return i != segments.length - 1;
             });
