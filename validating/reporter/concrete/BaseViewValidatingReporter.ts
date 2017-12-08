@@ -3,7 +3,7 @@ import { ValidationResult } from "../../contracts/validationresult";
 import { ViewDOM } from "../../../viewDOM/abstract/viewdom";
 import { findAndFilter } from "../../../extensions/HtmlElementExtensions";
 
-export class BaseViewValidatingReporter implements IValidatingReporter {
+export class BaseViewValidatingReporter extends IValidatingReporter {
     report(viewDOM: ViewDOM, validatingResult: ValidationResult) {
         var errContainer = findAndFilter(viewDOM.getViewDOM<HTMLElement>(), 'div.validating.error.container');
         if (errContainer.length > 0) {

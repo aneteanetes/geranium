@@ -1,6 +1,10 @@
 ﻿import { IInheritanceImpartor } from "../interfaces/IInheritanceImpartor";
+import { IInjected } from "../../../coherence/interfaces/IInjected";
+import { ICoherenceContainer } from "../../../coherence/interfaces/ICoherenceContainer";
 
-export class AssignInheritanceImpartor implements IInheritanceImpartor {
+export class AssignInheritanceImpartor implements IInheritanceImpartor, IInjected {
+	["`container"]: ICoherenceContainer;
+
 	inherit(derived: any, base: any) {
 
 		if (!derived)
