@@ -29,20 +29,35 @@ import { IValidatingReporter } from "../../validating/reporter/interfaces/IValid
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { IInjected } from "../../coherence/interfaces/IInjected";
+import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
 
 class App implements IApp {
     ["`container"]: ICoherenceContainer;
     public static containerProperty: string = "`GeraniumApp";
     private instantiated: boolean = false;
 
-    register = this["`container"].register;
-    resolve = this["`container"].resolve;
-    resolveAll = this["`container"].resolveAll;
-    release = this["`container"].release;
-    all = this["`container"].all;
-    instantiate = this["`container"].instantiate;
 
-    start(geranium: IGeranium) {
+    register<T extends IInjected>(type: Function | (new (...args: any[]) => T), value: T): void {
+        return this["`container"].register(type, value);
+    }
+    resolve<T extends IInjected>(type: Function | (new (...args: any[]) => T)): T {
+        return this["`container"].resolve(type);
+    }
+    resolveAll<T extends IInjected>(type: Function | (new (...args: any[]) => T)): T[] {
+        return this["`container"].resolveAll(type);
+    }
+    release<T extends IInjected>(type: Function | (new (...args: any[]) => T)) {
+        return this["`container"].release(type);
+    }
+    instantiate<T extends IInjected>(type: any, params?: any[]): T {
+        return this["`container"].instantiate(type, params);
+    }
+    all(): any[] {
+        return this["`container"].all();
+    }
+
+    start(geranium?: IGeranium) {
         if (this.instantiated) {
             throw new InstantiatedException("GeraniumApp.instantiate");
         }
@@ -70,6 +85,7 @@ class App implements IApp {
         this["`container"].register(ITemplateEngine, new geranium.templating());
         this["`container"].register(IValidatingReporter, new geranium.validationreporter());
         this["`container"].register(IViewBinder, new geranium.viewbinder());
+        this["`container"].register(IViewEngine, new geranium.viewengine());
         geranium.bindings.forEach(binding => {
             this["`container"].register(IBinding, new binding());
         });
@@ -87,6 +103,7 @@ const geraniumDefault: IGeranium = {
     templating: ClientTemplateEngine,
     validationreporter: NotifyValidatingReporter,
     viewbinder: BaseViewBinder,
+    viewengine: BaseViewEngine,
     bindings: [
         BaseFieldBinding as any,
         BaseInputBinding,

@@ -81,7 +81,6 @@ export function routed(param?: any, absorb?: boolean) {
 }
 
 export function routeignore(constructor: any) {
-	//var instance = GeraniumApp.container.instantiate(constructor);
 	_ignoredRoutes.push(constructor.name);
 }
 export function routeroot(constructor: any) {

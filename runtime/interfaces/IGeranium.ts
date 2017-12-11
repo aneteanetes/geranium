@@ -11,6 +11,7 @@ import { IHistory } from "../../history/interfaces/IHistory";
 import { Constructor } from "../../structures/Constructor";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 
 export class IGeranium {
     container?: Constructor<ICoherenceContainer>;
@@ -21,6 +22,7 @@ export class IGeranium {
     storage?: Constructor<IStorage>;
     statemanager?: Constructor<IStateManager>;
     viewbinder?: Constructor<IViewBinder>;
+    viewengine?: Constructor<IViewEngine>;
     validationreporter?: Constructor<IValidatingReporter>;
     router?: Constructor<IRouter>;
     historyprovider?: Constructor<IHistory>;
