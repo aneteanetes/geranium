@@ -5,7 +5,7 @@ import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 import { IStorage } from "../../storage/interfaces/IStorage";
 import { IStateManager } from "../../states/interfaces/IStateManager";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
-import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
+import { IValidatingReporter } from "../../validating/reporter/interfaces/IValidatatingReporter";
 import { IRouter } from "../../routing/interfaces/IRouter";
 import { IHistory } from "../../history/interfaces/IHistory";
 import { Constructor } from "../../structures/Constructor";

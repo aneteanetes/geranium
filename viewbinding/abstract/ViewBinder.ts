@@ -4,7 +4,7 @@ import { IViewBinder } from "../interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { Property } from "../../reflection/Property";
 import { Model } from "../../models/Model";
-import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
+import { IValidatingReporter } from "../../validating/reporter/interfaces/IValidatatingReporter";
 import { ViewModel } from "../../viewmodels/abstract/ViewModel";
 import GeraniumApp from "../../runtime/concrete/App";
 import { ArrayHelper } from "../../declare/array";

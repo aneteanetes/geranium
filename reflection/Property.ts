@@ -1,4 +1,4 @@
-﻿import { Event } from "../behaviors/events/abstract/event";
+﻿import { Event } from "../behaviors/events/abstract/Event";
 import { ICoherenceContainer } from "../coherence/interfaces/ICoherenceContainer";
 
 export class Property {

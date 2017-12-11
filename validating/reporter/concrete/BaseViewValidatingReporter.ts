@@ -1,4 +1,4 @@
-﻿import { IValidatingReporter } from "../interfaces/ivalidatatingreporter";
+﻿import { IValidatingReporter } from "../interfaces/IValidatatingReporter";
 import { ValidationResult } from "../../contracts/validationresult";
 import { ViewDOM } from "../../../viewDOM/abstract/viewdom";
 import { findAndFilter } from "../../../extensions/HtmlElementExtensions";

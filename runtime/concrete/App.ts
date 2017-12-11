@@ -25,7 +25,7 @@ import { IRequest } from "../../backend/interfaces/IRequest";
 import { IRouter } from "../../routing/interfaces/IRouter";
 import { IStorage } from "../../storage/interfaces/IStorage";
 import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
-import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
+import { IValidatingReporter } from "../../validating/reporter/interfaces/IValidatatingReporter";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { IInjected } from "../../coherence/interfaces/IInjected";
