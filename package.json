@@ -1,6 +1,6 @@
 {
   "name": "geranium",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "mvvm typescript framework",
   "main": "index.js",
   "scripts": {
