@@ -1,11 +1,11 @@
 ﻿import { State } from "../../states/State";
 import { IViewable } from "../../view/interfaces/IViewable";
-import { routeignore, routed } from "../../routing/concrete/decorators";
+import { routeignore } from "../../routing/concrete/decorators";
 import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 import { View } from "../../view/abstract/view";
 import GeraniumApp from "../../runtime/concrete/App";
 
-@routed("/hi/wtf")
+@routeignore
 export abstract class ViewState extends State implements IViewable {
 
 	constructor() {

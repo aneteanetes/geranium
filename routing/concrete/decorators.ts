@@ -81,6 +81,9 @@ export function routed(param?: any, absorb?: boolean) {
 }
 
 export function routeignore(constructor: any) {
+	if (!_ignoredRoutes) {
+		_ignoredRoutes = [];
+	}
 	_ignoredRoutes.push(constructor.name);
 }
 export function routeroot(constructor: any) {

@@ -12,7 +12,6 @@ export class BaseViewEngine extends ViewEngine {
                 const view = viewDOM.getViewDOM<HTMLElement>();
                 const domLoaded = document.readyState === 'complete';
                 let element = document.querySelector(selector);
-                debugger;
                 if (!element && !domLoaded) {
                     await this.domLoaded(selector, view);
                 } else if (domLoaded && !element) {
