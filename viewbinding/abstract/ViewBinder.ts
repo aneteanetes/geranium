@@ -34,7 +34,7 @@ export abstract class ViewBinder extends IViewBinder {
                             var validation = validator.validate(val, this.clone());
                             if (!validation.success) {
                                 validationFault = true;
-                                GeraniumApp.container.resolve(IValidatingReporter).report(ViewDOM, validation);
+                                GeraniumApp.resolve(IValidatingReporter).report(ViewDOM, validation);
                             }
                         });
 

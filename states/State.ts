@@ -15,7 +15,7 @@ export abstract class State extends Model {
 
 	protected async fillState() {
 		if (this.constructor.name != "ViewState") {
-			const stateManager = GeraniumApp.container.resolve(IStateManager);
+			const stateManager = GeraniumApp.resolve(IStateManager);
 			const state = stateManager.resolve(this.constructor);
 			if (!state) {
 				stateManager.register(this.constructor, this);
@@ -24,7 +24,7 @@ export abstract class State extends Model {
 	}
 
 	static async get<T extends State>(type: Constructor<T>): Promise<T> {
-		var state = GeraniumApp.container.resolve(IStateManager).resolve(type);
+		var state = GeraniumApp.resolve(IStateManager).resolve(type);
 		if (!state)
 			state = new type();
 		await state.sync();

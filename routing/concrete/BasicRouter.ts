@@ -20,7 +20,7 @@ export class BasicRouter extends Router {
 
         let selector = current.restore ? current.selector : this.routearea();
 
-        var routed = GeraniumApp.container.instantiate(current.ctor, current.params);
+        var routed = GeraniumApp.instantiate(current.ctor, current.params);
         var executing: string = current.executable ? current.executable : 'toString';
 
         if (!current.restore) {

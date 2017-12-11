@@ -6,7 +6,7 @@ export class DeepCloner extends ICloner {
     clone<T>(sample: T): T {
         let clone = Object.assign({}, sample);
 
-        const inheritanceImpartor = GeraniumApp.container.resolve(AssignInheritanceImpartor);
+        const inheritanceImpartor = GeraniumApp.resolve(AssignInheritanceImpartor);
         inheritanceImpartor.inherit(clone, sample);
 
         return clone;

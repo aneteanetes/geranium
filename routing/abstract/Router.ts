@@ -55,7 +55,7 @@ export abstract class Router extends IRouter {
 
 if (window) {
     window.addEventListener('load', () => {
-        var router = GeraniumApp.container.resolve(IRouter);
+        var router = GeraniumApp.resolve(IRouter);
         var route = router.routeByUrl(window.location.pathname);
         router.route(route);
     });

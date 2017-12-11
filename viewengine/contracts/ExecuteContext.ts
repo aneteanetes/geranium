@@ -13,7 +13,7 @@ export class ExecuteContext {
         this.view = viewCtx.iViewed;
         this.selector = viewCtx.selector;
         if (!bindingFlags) {
-            bindingFlags = GeraniumApp.container.resolveAll(IBinding);
+            bindingFlags = GeraniumApp.resolveAll(IBinding);
         }
         this.bindingFlags = bindingFlags;
     }

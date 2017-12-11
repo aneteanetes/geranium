@@ -28,51 +28,51 @@ import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 import { IValidatingReporter } from "../../validating/reporter/interfaces/ivalidatatingreporter";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
+import { IInjected } from "../../coherence/interfaces/IInjected";
 
-class App extends IApp {
-
-    private static containerNameConst: string = "`geranium-container";
-
-    get container(): ICoherenceContainer {
-        this.checkInstance();
-
-        let global = window[App.containerNameConst]
-        if (!global) {
-            global = window[App.containerNameConst] = new InMemoryContainer();
-        }
-        return global;
-    }
-
+class App implements IApp {
+    ["`container"]: ICoherenceContainer;
+    public static containerProperty: string = "`GeraniumApp";
     private instantiated: boolean = false;
-    instantiate(geranium: IGeranium) {
+
+    register = this["`container"].register;
+    resolve = this["`container"].resolve;
+    resolveAll = this["`container"].resolveAll;
+    release = this["`container"].release;
+    all = this["`container"].all;
+    instantiate = this["`container"].instantiate;
+
+    start(geranium: IGeranium) {
         if (this.instantiated) {
             throw new InstantiatedException("GeraniumApp.instantiate");
         }
 
+        /** apply settings */
         Object.assign(geranium, geraniumDefault);
 
-        window[App.containerNameConst] = geranium.container ? new geranium.container() : new InMemoryContainer();
-        this.container.register(ICommunicator, new geranium.communicator());
-        this.container.register(IHistory, new geranium.historyprovider());
-        this.container.register(ILogger, new geranium.logger());
-        this.container.register(IRequest, new geranium.request());
-        this.container.register(IRouter, new geranium.router());
-        this.container.register(IStateManager, new geranium.statemanager());
-        this.container.register(IStorage, new geranium.storage());
-        this.container.register(ITemplateEngine, new geranium.templating());
-        this.container.register(IValidatingReporter, new geranium.validationreporter());
-        this.container.register(IViewBinder, new geranium.viewbinder());
-        geranium.bindings.forEach(binding => {
-            this.container.register(IBinding, new binding());
-        })
+        /** apply container */
+        this["`container"] = geranium.container ? new geranium.container() : new InMemoryContainer();
+
+        /** register all settings */
+        this.internalRegister(geranium);
 
         this.instantiated = true;
     }
 
-    private checkInstance() {
-        if (!this.instantiated) {
-            this.instantiate({});
-        }
+    private internalRegister(geranium: IGeranium) {
+        this["`container"].register(ICommunicator, new geranium.communicator());
+        this["`container"].register(IHistory, new geranium.historyprovider());
+        this["`container"].register(ILogger, new geranium.logger());
+        this["`container"].register(IRequest, new geranium.request());
+        this["`container"].register(IRouter, new geranium.router());
+        this["`container"].register(IStateManager, new geranium.statemanager());
+        this["`container"].register(IStorage, new geranium.storage());
+        this["`container"].register(ITemplateEngine, new geranium.templating());
+        this["`container"].register(IValidatingReporter, new geranium.validationreporter());
+        this["`container"].register(IViewBinder, new geranium.viewbinder());
+        geranium.bindings.forEach(binding => {
+            this["`container"].register(IBinding, new binding());
+        });
     }
 }
 
@@ -95,13 +95,15 @@ const geraniumDefault: IGeranium = {
     ]
 }
 
-function getApp(): ICoherenceContainer {
-    if (!window["`GeraniumApp"]) {
-        window["`GeraniumApp"] = new App();
+function getApp(): IApp {
+    if (!window[App.containerProperty]) {
+        window[App.containerProperty] = new App();
     }
-    return window["`GeraniumApp"].container;
+    return window[App.containerProperty];
 }
 
+/** Application intance with in-build container */
 var GeraniumApp = getApp();
 
+/** Application intance with in-build container */
 export default GeraniumApp;

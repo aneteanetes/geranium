@@ -24,7 +24,7 @@ export abstract class ViewState extends State implements IViewable {
 		}
 		else {
 			delete this["#ViewState"];
-			GeraniumApp.container.resolve(IViewEngine).execute({
+			GeraniumApp.resolve(IViewEngine).execute({
 				iViewed: this,
 				selector: selector
 			});

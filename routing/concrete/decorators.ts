@@ -15,7 +15,7 @@ export function routes(): Route[] {
 export function urlFromCtor(ctor: any): string;
 export function urlFromCtor(ctor: any, params: string[]): string;
 export function urlFromCtor(ctor: any, params?: string[]): string {
-	var instance = GeraniumApp.container.instantiate(ctor);
+	var instance = GeraniumApp.instantiate(ctor);
 	let chain = chainOfCtorNames(instance, null);
 	var routeUrl = ArrayHelper.removeSame(chain)
 		.reverse();

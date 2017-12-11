@@ -3,6 +3,6 @@ import { IInheritanceImpartor } from "../interfaces/IInheritanceImpartor";
 
 export function Inherit(baseClassConstructor: (new (...args: any[]) => {})) {
 	return (constructor: any) => {
-		GeraniumApp.container.resolve(IInheritanceImpartor).inherit(constructor, baseClassConstructor);
+		GeraniumApp.resolve(IInheritanceImpartor).inherit(constructor, baseClassConstructor);
 	}
 }

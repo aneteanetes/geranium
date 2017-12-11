@@ -4,7 +4,7 @@ import { ViewModel } from "../abstract/ViewModel";
 import { View } from "../../view/abstract/view";
 
 export function VM(constructor: any) {
-	GeraniumApp.container.resolve(IInheritanceImpartor).inherit(constructor.prototype, new DecoratedViewModel());
+	GeraniumApp.resolve(IInheritanceImpartor).inherit(constructor.prototype, new DecoratedViewModel());
 }
 
 class DecoratedViewModel extends ViewModel {

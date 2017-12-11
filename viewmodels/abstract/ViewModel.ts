@@ -28,7 +28,7 @@ export abstract class ViewModel extends ViewState {
 				ctor: this.constructor.name,
 				selector: selector
 			};
-			GeraniumApp.container.resolve(IHistory).extend(_history);
+			GeraniumApp.resolve(IHistory).extend(_history);
 		}
 		delete this['#routed'];
 
@@ -36,7 +36,7 @@ export abstract class ViewModel extends ViewState {
 			super.show(selector);
 		}
 		else
-			this.publishedViewDom = await GeraniumApp.container.resolve(IViewEngine).execute({
+			this.publishedViewDom = await GeraniumApp.resolve(IViewEngine).execute({
 				iViewed: this,
 				selector: selector
 			});

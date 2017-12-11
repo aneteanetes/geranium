@@ -3,6 +3,6 @@ import { ICloner } from "../interfaces/ICloner";
 
 export function ICloneable(constructor: any) {
     constructor.prototype.clone = function () {
-        return GeraniumApp.container.resolve(ICloner).clone(this);
+        return GeraniumApp.resolve(ICloner).clone(this);
     };
 }

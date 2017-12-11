@@ -29,6 +29,6 @@ export class Html5HistoryAPI extends IHistory {
 
 if (window) {
     window.addEventListener('popstate', (eventState) => {
-        GeraniumApp.container.resolve(IHistory).restore(eventState.state);
+        GeraniumApp.resolve(IHistory).restore(eventState.state);
     });
 }

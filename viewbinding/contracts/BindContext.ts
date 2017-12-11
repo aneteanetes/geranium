@@ -10,7 +10,7 @@ export class BindContext {
     constructor(viewDOM: ViewDOM, bindingFlags?: IBinding<any>[]) {
         this.viewDOM = viewDOM;
         if (!bindingFlags) {
-            bindingFlags = GeraniumApp.container.resolveAll(IBinding);
+            bindingFlags = GeraniumApp.resolveAll(IBinding);
         }
         this.bindingFlags = bindingFlags;
     }
