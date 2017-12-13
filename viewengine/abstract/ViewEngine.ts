@@ -2,11 +2,11 @@
 import { ViewExecutingContext } from "../contracts/viewexecutingcontext";
 import { ViewDOM } from "../../viewdom/abstract/viewdom";
 import { ExecuteContext } from "../contracts/executecontext";
-import { View } from "../../view/abstract/view";
 import { IViewable } from "../../view/interfaces/IViewable";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { BindContext } from "../../viewbinding/contracts/BindContext";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
+import { ViewPublishContext } from "../contracts/ViewPublishContext";
 
 export abstract class ViewEngine implements IViewEngine {
     ["`container"]: ICoherenceContainer;
@@ -19,7 +19,10 @@ export abstract class ViewEngine implements IViewEngine {
         var viewbinder = this["`container"].resolve(IViewBinder);
         await viewbinder.bind(bindingContext);
 
-        return this.publish(view);
+        return this.publish({
+            dom: await view.DOM(),
+            selector: context.selector
+        });
     }
-    protected abstract publish(viewDOM: ViewDOM): Promise<void>;
+    protected abstract publish(viewDOM: ViewPublishContext): Promise<void>;
 }

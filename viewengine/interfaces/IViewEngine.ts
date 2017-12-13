@@ -15,27 +15,25 @@ export class IViewEngine implements IInjected {
      * return complete rendered view
      * @param selector
      */
-    static ViewEngineView(iviewed: IViewable, selector: string): Promise<View> {
-        var view: View;
+    static async ViewEngineView(iviewed: IViewable, selector: string): Promise<ViewDOM> {
+        var view: View | ViewDOM;
 
         var viewctr = iviewed.view();
-        if (typeof viewctr === "string") {
-            view = GeraniumApp.instantiate(EmptyView, [selector, viewctr]);
-        } else if (!!viewctr["%selector"]) {
-            view = GeraniumApp.instantiate(viewctr, [selector]);
+        const isString = typeof viewctr === "string";
+        if (isString || !!viewctr["%selector"]) {
+            const args: Array<any> = [selector];
+            if (isString) {
+                args.push(viewctr);
+            }
+            let instView = GeraniumApp.instantiate<View>(EmptyView, args);
+            await instView.render();
+            view = instView;
         } else {
             view = GeraniumApp.instantiate(viewctr);
         }
         view.data = iviewed;
-        return view.render();
-
+        return view;
     }
-}
-
-enum ViewMode {
-    HtmlTemplate,
-    View,
-    DOM
 }
 
 class EmptyView extends View {

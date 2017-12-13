@@ -1,22 +1,22 @@
 ﻿import { ViewEngine } from "../abstract/ViewEngine";
 import { ViewDOM } from "../../viewDOM/abstract/viewdom";
 import { ILogger } from "../../exceptions/logging/interfaces/ILogger";
-import { View } from "../../view/abstract/view";
+import { ViewPublishContext } from "../contracts/ViewPublishContext";
 
 export class BaseViewEngine extends ViewEngine {
-    protected async publish(view: View): Promise<void> {
+    protected async publish(view: ViewPublishContext): Promise<void> {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 const selector = view.selector;
-                const DOM = await view.DOM();
                 const domLoaded = document.readyState === 'complete';
+
                 let element = document.querySelector(selector);
                 if (!element && !domLoaded) {
-                    await this.domLoaded(selector, DOM);
+                    await this.domLoaded(selector, view.dom);
                 } else if (domLoaded && !element) {
                     throw new Error("Selector does not exists: " + selector);
                 } else {
-                    element.parentElement.replaceChild(DOM, element);
+                    element.parentElement.replaceChild(view.dom, element);
                 }
 
                 resolve();

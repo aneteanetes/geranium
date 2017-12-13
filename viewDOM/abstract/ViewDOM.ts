@@ -1,6 +1,6 @@
 ﻿import { IViewDOM } from "../interfaces/IViewDOM";
-import { View } from "../../view/abstract/view";
 
 export abstract class ViewDOM extends IViewDOM {
+    data: any;
     abstract DOM(): Promise<HTMLElement>;
 }

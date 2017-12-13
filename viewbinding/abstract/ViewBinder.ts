@@ -1,24 +1,22 @@
 ﻿import { BindContext } from "../contracts/BindContext";
 import { IViewBinder } from "../interfaces/IViewBinder";
-import { IBinding } from "../../binding/interfaces/ibinding";
+import { IBinding } from "../../binding/interfaces/IBinding";
 import { Property } from "../../reflection/Property";
 import { Model } from "../../models/Model";
 import { IValidatingReporter } from "../../validating/reporter/interfaces/IValidatatingReporter";
 import { ViewModel } from "../../viewmodels/abstract/ViewModel";
-import GeraniumApp from "../../runtime/concrete/App";
 import { ArrayHelper } from "../../declare/array";
-import { View } from "../../view/abstract/view";
+import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
+import GeraniumApp from "../../runtime/concrete/App";
 
 export abstract class ViewBinder extends IViewBinder {
-    private view: View;
-    async bind(context: BindContext): Promise<View> {
-        this.view = context.view;
-        await this.exec(this.view, context.bindingFlags);
-        this.valid(this.view);
-        return this.view;
+    async bind(context: BindContext): Promise<ViewDOM> {
+        await this.exec(context.viewDOM, context.bindingFlags);
+        this.valid(context.viewDOM);
+        return context.viewDOM;
     }
 
-    private valid(view: View) {
+    private valid(view: ViewDOM) {
         var vm = (view.data as ViewModel);
         if (vm.validators) {
             var validatedProperties = ArrayHelper.groupBy(vm.validators, 'validatedPropertyName');
@@ -44,11 +42,11 @@ export abstract class ViewBinder extends IViewBinder {
         }
     }
 
-    private async exec(ViewDOM: View, bindings: IBinding<any>[]) {
+    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]) {
         for (var i = 0; i < bindings.length; i++) {
             await this.binding(ViewDOM, bindings[i]);
         }
     }
 
-    protected abstract binding(ViewDOM: View, binding: IBinding<any>): Promise<void>;
+    protected abstract binding(ViewDOM: ViewDOM, binding: IBinding<any>): Promise<void>;
 }

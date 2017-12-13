@@ -1,14 +1,14 @@
 ﻿import { Binding } from "../../binding/abstract/Binding";
 import GeraniumApp from "../../runtime/concrete/App";
 import { IBinding } from "../../binding/interfaces/ibinding";
-import { View } from "../../view/abstract/view";
+import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export class BindContext {
-    view: View;
+    viewDOM: ViewDOM;
     bindingFlags: IBinding<any>[];
 
-    constructor(view: View, bindingFlags?: IBinding<any>[]) {
-        this.view = view;
+    constructor(viewDOM: ViewDOM, bindingFlags?: IBinding<any>[]) {
+        this.viewDOM = viewDOM;
         if (!bindingFlags) {
             bindingFlags = GeraniumApp.resolveAll(IBinding);
         }
