@@ -10,10 +10,10 @@ export abstract class View extends Template implements ViewDOM, IInjected {
     private _selector: string;
     private _rendered: boolean;
 
-    constructor(selector: string) {
+    constructor() {
         super();
         this.protectRender(arguments[1]);
-        this._selector = selector;
+        this._selector = arguments[0];
     }
 
     async DOM(): Promise<HTMLElement> {

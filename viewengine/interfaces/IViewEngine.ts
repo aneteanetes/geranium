@@ -20,10 +20,8 @@ export class IViewEngine implements IInjected {
 
         var viewctr = iviewed.view();
         if (typeof viewctr === "string") {
-            let vmctr = EmptyView;
-            view = GeraniumApp.instantiate(vmctr, [selector, viewctr]);
-        }
-        else {
+            view = GeraniumApp.instantiate(EmptyView, [selector, viewctr]);
+        } else {
             view = GeraniumApp.instantiate(viewctr, [selector]);
         }
         view.data = iviewed;

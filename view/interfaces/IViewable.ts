@@ -1,7 +1,7 @@
 import { InterfaceUsingException } from "../../exceptions/coherence/InterfaceUsingException";
 import { View } from "../abstract/view";
-import { ViewDOM } from "../../viewDOM/abstract/viewdom";
+import { Constructor } from "../../structures/Constructor";
 
 export class IViewable {
-    view(): string | ViewDOM { throw new InterfaceUsingException("IViewable.view"); }
+    view(): string | Constructor<View> { throw new InterfaceUsingException("IViewable.view"); }
 }
