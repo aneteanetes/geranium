@@ -1,4 +1,4 @@
 ﻿export class Template {
-    html: string;
+    template: string;
     data: any;
 }

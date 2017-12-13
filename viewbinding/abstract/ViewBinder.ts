@@ -1,5 +1,4 @@
 ﻿import { BindContext } from "../contracts/BindContext";
-import { ViewDOM } from "../../viewDOM/abstract/viewdom";
 import { IViewBinder } from "../interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { Property } from "../../reflection/Property";
@@ -8,24 +7,25 @@ import { IValidatingReporter } from "../../validating/reporter/interfaces/IValid
 import { ViewModel } from "../../viewmodels/abstract/ViewModel";
 import GeraniumApp from "../../runtime/concrete/App";
 import { ArrayHelper } from "../../declare/array";
+import { View } from "../../view/abstract/view";
 
 export abstract class ViewBinder extends IViewBinder {
-    private viewDOM: ViewDOM;
-    async bind(context: BindContext): Promise<ViewDOM> {
-        this.viewDOM = context.viewDOM;
-        await this.exec(this.viewDOM, context.bindingFlags);
-        this.valid(this.viewDOM);
-        return this.viewDOM;
+    private view: View;
+    async bind(context: BindContext): Promise<View> {
+        this.view = context.view;
+        await this.exec(this.view, context.bindingFlags);
+        this.valid(this.view);
+        return this.view;
     }
 
-    private valid(ViewDOM: ViewDOM) {
-        var vm = (ViewDOM.view.data as ViewModel);
+    private valid(view: View) {
+        var vm = (view.data as ViewModel);
         if (vm.validators) {
             var validatedProperties = ArrayHelper.groupBy(vm.validators, 'validatedPropertyName');
             validatedProperties.forEach(validators => {
 
                 var validProp = validators[0].validatedPropertyName;
-                Property.redefine(ViewDOM.view.data, validProp,
+                Property.redefine(view.data, validProp,
                     (val) => { return val; },
                     function (val) {
 
@@ -34,7 +34,7 @@ export abstract class ViewBinder extends IViewBinder {
                             var validation = validator.validate(val, this.clone());
                             if (!validation.success) {
                                 validationFault = true;
-                                GeraniumApp.resolve(IValidatingReporter).report(ViewDOM, validation);
+                                GeraniumApp.resolve(IValidatingReporter).report(view, validation);
                             }
                         });
 
@@ -44,11 +44,11 @@ export abstract class ViewBinder extends IViewBinder {
         }
     }
 
-    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]) {
+    private async exec(ViewDOM: View, bindings: IBinding<any>[]) {
         for (var i = 0; i < bindings.length; i++) {
             await this.binding(ViewDOM, bindings[i]);
         }
     }
 
-    protected abstract binding(ViewDOM: ViewDOM, binding: IBinding<any>): Promise<void>;
+    protected abstract binding(ViewDOM: View, binding: IBinding<any>): Promise<void>;
 }

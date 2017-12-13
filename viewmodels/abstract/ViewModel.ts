@@ -7,15 +7,12 @@ import { is } from "../../history/decorators/history";
 import { HistoryItem } from "../../history/contracts/HistoryItem";
 import { IHistory } from "../../history/interfaces/IHistory";
 import GeraniumApp from "../../runtime/concrete/App";
+import { ViewExecutingContext } from "../../viewengine/contracts/ViewExecutingContext";
 
 @routeignore
 export abstract class ViewModel extends ViewState {
 
-	private publishedViewDom: ViewDOM;
-	protected get markup(): ViewDOM { return this.publishedViewDom; }
-
 	async show(selector: string) {
-
 		this.setDocumentTitle();
 
 		if (is(this.constructor) && !this['#routed']) {
@@ -34,12 +31,12 @@ export abstract class ViewModel extends ViewState {
 
 		if (this.statefull) {
 			super.show(selector);
-		}
-		else
-			this.publishedViewDom = await GeraniumApp.resolve(IViewEngine).execute({
+		} else {
+			await GeraniumApp.resolve(IViewEngine).execute({
 				iViewed: this,
 				selector: selector
 			});
+		}
 	}
 
 	private setDocumentTitle() {

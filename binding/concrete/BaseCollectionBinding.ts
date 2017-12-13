@@ -1,6 +1,5 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
 import { IBinding } from "../interfaces/ibinding";
-import { BaseViewDOM } from "../../viewDOM/concrete/BaseViewDOM";
 import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 import { BindContext } from "../../viewbinding/contracts/BindContext";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
@@ -31,11 +30,10 @@ export class BaseCollectionBinding extends BaseByAttributeBinding {
                 return tpl;
             };
             let _view = await IViewEngine.ViewEngineView(model, '');
-            let viewDom = new BaseViewDOM(_view);
-            let ctx = new BindContext(viewDom, bindings);
+            let ctx = new BindContext(_view, bindings);
             await this["`container"].resolve(IViewBinder).bind(ctx);
 
-            DOMCollection.appendChild(viewDom.getViewDOM());
+            DOMCollection.appendChild(await _view.DOM());
         }
 
         DOMObject.parentNode.replaceChild(DOMCollection, DOMObject);

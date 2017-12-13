@@ -1,11 +1,11 @@
-import { Template } from "../../templating/contracts/template";
+import { Template } from "../../templating/contracts/Template";
 import { Exception } from "../../exceptions/Exception";
 import { IInjected } from "../../coherence/interfaces/IInjected";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
+import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
-export abstract class View extends Template implements IInjected {
-
+export abstract class View extends Template implements ViewDOM, IInjected {
     ["`container"]: ICoherenceContainer;
     private _selector: string;
     private _rendered: boolean;
@@ -16,17 +16,28 @@ export abstract class View extends Template implements IInjected {
         this._selector = selector;
     }
 
+    async DOM(): Promise<HTMLElement> {
+        let view: View = this;
+        if (!this._rendered) {
+            view = await this.render();
+        }
+
+        const div = document.createElement("div");
+        div.innerHTML = view.template;
+        return div;
+    }
+
     get selector(): string {
         return this._selector;
     }
 
-    protected abstract declare(): string;
     private protectRender(html: string) {
-        this.html = this.declare();
-        if (!this.html)
-            this.html = html;
-        if (!this.html)
+        if (!this.template) {
+            this.template = html;
+        }
+        if (!this.template) {
             throw new Exception('view template is empty!');
+        }
     }
 
     async render(): Promise<View> {
@@ -39,7 +50,7 @@ export abstract class View extends Template implements IInjected {
         }
 
         var engine = this["`container"].resolve(ITemplateEngine);
-        this.html = await engine.parse(this);
+        this.template = await engine.parse(this);
         this._rendered = true;
         return new Promise<View>(resolve => resolve(this));
     }

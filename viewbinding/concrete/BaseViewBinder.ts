@@ -1,10 +1,10 @@
 ﻿import { ViewBinder } from "../abstract/ViewBinder";
-import { ViewDOM } from "../../viewDOM/abstract/viewdom";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { Binding } from "../../binding/abstract/Binding";
+import { View } from "../../view/abstract/view";
 
 export class BaseViewBinder extends ViewBinder {
-    protected binding(ViewDOM: ViewDOM, binding: IBinding<any>): Promise<void> {
-        return binding.bind(ViewDOM.getViewDOM<HTMLElement>(), ViewDOM.view.data);
+    protected async binding(view: View, binding: IBinding<any>): Promise<void> {
+        return binding.bind(view.DOM(), view.data);
     }
 }

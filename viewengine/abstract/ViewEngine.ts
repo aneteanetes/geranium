@@ -11,18 +11,15 @@ import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 export abstract class ViewEngine implements IViewEngine {
     ["`container"]: ICoherenceContainer;
 
-    async execute(context: ViewExecutingContext): Promise<ViewDOM> {
+    async execute(context: ViewExecutingContext): Promise<void> {
         var view = await IViewEngine.ViewEngineView(context.iViewed, context.selector);
-        var viewDOM = this.viewDOM(view);
 
         var execCtx = new ExecuteContext(context);
-        var bindingContext = new BindContext(viewDOM, execCtx.bindingFlags);
-
+        var bindingContext = new BindContext(view, execCtx.bindingFlags);
         var viewbinder = this["`container"].resolve(IViewBinder);
         await viewbinder.bind(bindingContext);
 
-        return this.publish(viewDOM);
+        return this.publish(view);
     }
-    protected abstract publish(viewDOM: ViewDOM): Promise<ViewDOM>;
-    protected abstract viewDOM(view: View): ViewDOM;
+    protected abstract publish(viewDOM: ViewDOM): Promise<void>;
 }

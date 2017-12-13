@@ -4,6 +4,7 @@ import { routeignore } from "../../routing/concrete/decorators";
 import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
 import { View } from "../../view/abstract/view";
 import GeraniumApp from "../../runtime/concrete/App";
+import { ViewDOM } from "../../viewDOM/abstract/viewdom";
 
 @routeignore
 export abstract class ViewState extends State implements IViewable {
@@ -31,5 +32,5 @@ export abstract class ViewState extends State implements IViewable {
 		}
 	}
 
-	abstract view(): { new(selector: string): View } | string;
+	abstract view(): string | ViewDOM;
 }
