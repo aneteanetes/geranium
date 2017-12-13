@@ -7,13 +7,13 @@ import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export abstract class View extends Template implements ViewDOM, IInjected {
     ["`container"]: ICoherenceContainer;
-    private _selector: string;
+    private ["`selector"]: string;
     private _rendered: boolean;
 
     constructor() {
         super();
         this.protectRender(arguments[1]);
-        this._selector = arguments[0];
+        this["%selector"] = arguments[0];
     }
 
     async DOM(): Promise<HTMLElement> {
@@ -28,7 +28,7 @@ export abstract class View extends Template implements ViewDOM, IInjected {
     }
 
     get selector(): string {
-        return this._selector;
+        return this["%selector"];
     }
 
     private protectRender(html: string) {

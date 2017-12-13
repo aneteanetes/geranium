@@ -21,13 +21,21 @@ export class IViewEngine implements IInjected {
         var viewctr = iviewed.view();
         if (typeof viewctr === "string") {
             view = GeraniumApp.instantiate(EmptyView, [selector, viewctr]);
-        } else {
+        } else if (!!viewctr["%selector"]) {
             view = GeraniumApp.instantiate(viewctr, [selector]);
+        } else {
+            view = GeraniumApp.instantiate(viewctr);
         }
         view.data = iviewed;
         return view.render();
 
     }
+}
+
+enum ViewMode {
+    HtmlTemplate,
+    View,
+    DOM
 }
 
 class EmptyView extends View {
