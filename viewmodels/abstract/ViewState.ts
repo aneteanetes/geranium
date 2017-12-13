@@ -33,5 +33,5 @@ export abstract class ViewState extends State implements IViewable {
 		}
 	}
 
-	abstract view(): string | Constructor<View>;
+	abstract view(): string | Constructor<View> | Constructor<ViewDOM>;
 }
