@@ -49,6 +49,7 @@ export abstract class View extends Template implements ViewDOM, IInjected {
     protected abstract declare(): string;
 
     private protectRender(html: string) {
+        this.template = this.declare();
         if (!this.template) {
             this.template = html;
         }

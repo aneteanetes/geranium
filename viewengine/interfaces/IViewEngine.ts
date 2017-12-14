@@ -26,6 +26,7 @@ export class IViewEngine implements IInjected {
                 args.push(viewctr);
             }
             let instView = GeraniumApp.instantiate<View>(EmptyView, args);
+            instView.data = iviewed;
             await instView.render();
             view = instView;
         } else {
