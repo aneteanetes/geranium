@@ -29,7 +29,7 @@ import { IValidatingReporter } from "../../validating/reporter/interfaces/IValid
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { IInjected } from "../../coherence/interfaces/IInjected";
-import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
 
 class App implements IApp {

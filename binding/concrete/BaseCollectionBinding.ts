@@ -1,6 +1,6 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
 import { IBinding } from "../interfaces/ibinding";
-import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BindContext } from "../../viewbinding/contracts/BindContext";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { StringHelper } from "../../declare/string";

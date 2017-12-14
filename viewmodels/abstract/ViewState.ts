@@ -1,7 +1,7 @@
 ﻿import { State } from "../../states/State";
 import { IViewable } from "../../view/interfaces/IViewable";
 import { routeignore } from "../../routing/concrete/decorators";
-import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { View } from "../../view/abstract/view";
 import GeraniumApp from "../../runtime/concrete/App";
 import { ViewDOM } from "../../viewDOM/abstract/viewdom";

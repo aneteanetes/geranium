@@ -1,7 +1,7 @@
 ﻿import { routeignore } from "../../routing/concrete/decorators";
 import { ViewState } from "./ViewState";
 import { ViewDOM } from "../../viewDOM/abstract/viewdom";
-import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { RouteMatch } from "../../routing/contracts/RouteMatch";
 import { is } from "../../history/decorators/history";
 import { HistoryItem } from "../../history/contracts/HistoryItem";
