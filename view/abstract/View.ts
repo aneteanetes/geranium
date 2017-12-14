@@ -31,15 +31,6 @@ export abstract class View extends Template implements ViewDOM, IInjected {
         return this["%selector"];
     }
 
-    private protectRender(html: string) {
-        if (!this.template) {
-            this.template = html;
-        }
-        if (!this.template) {
-            throw new Exception('view template is empty!');
-        }
-    }
-
     async render(): Promise<View> {
 
         if (this.data == null) {
@@ -53,5 +44,16 @@ export abstract class View extends Template implements ViewDOM, IInjected {
         this.template = await engine.parse(this);
         this._rendered = true;
         return new Promise<View>(resolve => resolve(this));
+    }
+
+    protected abstract declare(): string;
+
+    private protectRender(html: string) {
+        if (!this.template) {
+            this.template = html;
+        }
+        if (!this.template) {
+            throw new Exception('view template is empty!');
+        }
     }
 }

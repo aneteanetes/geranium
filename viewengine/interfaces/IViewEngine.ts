@@ -20,7 +20,7 @@ export class IViewEngine implements IInjected {
 
         var viewctr = iviewed.view();
         const isString = typeof viewctr === "string";
-        if (isString || !!viewctr["%selector"]) {
+        if (isString || !!viewctr["declare"]) {
             const args: Array<any> = [selector];
             if (isString) {
                 args.push(viewctr);
