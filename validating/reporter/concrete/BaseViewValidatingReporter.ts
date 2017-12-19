@@ -4,8 +4,7 @@ import { ViewDOM } from "../../../viewDOM/abstract/viewdom";
 import { findAndFilter } from "../../../extensions/HtmlElementExtensions";
 
 export class BaseViewValidatingReporter extends IValidatingReporter {
-    async report(viewDOM: ViewDOM, validatingResult: ValidationResult) {
-        const DOM = await viewDOM.DOM();
+    async report(DOM: HTMLElement[], validatingResult: ValidationResult) {
         var errContainer = findAndFilter(DOM, 'div.validating.error.container');
         if (errContainer.length > 0) {
             errContainer.forEach(el => el.remove());

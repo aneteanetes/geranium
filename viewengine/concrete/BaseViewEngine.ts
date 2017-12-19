@@ -17,8 +17,6 @@ export class BaseViewEngine implements IViewEngine {
         var execCtx = new ExecuteContext(context);
         var bindingContext = new BindContext(view, execCtx.bindingFlags);
         var viewbinder = this["`container"].resolve(IViewBinder);
-        await viewbinder.bind(bindingContext);
-
-        return await view.DOM();
+        return await viewbinder.bind(bindingContext);
     }
 }

@@ -10,19 +10,25 @@ import { promised } from "../../structures/Promised";
 import { StringHelper } from "../../declare/string";
 
 export class PropertyBinding extends Binding<HTMLElement> {
-    fields: string[];
+    fields: string[] = [];
 
-    async detection(DOMObject: HTMLElement): Promise<HTMLElement[]> {
-        this.fields = DOMObject.innerHTML.match(/\[.*?\]/g);
+    async detection(DOMObjects: HTMLElement[]): Promise<HTMLElement[]> {
+        DOMObjects.forEach(DOMObject => {
+            this.fields.push(...DOMObject.innerHTML.match(/\[.*?\]/g));
+        });
         if (!this.fields) {
             return new Array<HTMLElement>();
         }
-
         this.fields = ArrayHelper.removeSame(this.fields);
 
-        return promised(this.fields
-            .map(field => this.queryXPath(DOMObject, field))
-            .reduce((prev, next) => prev.concat(next)));
+        const elements: Array<HTMLElement> = [];
+        this.fields.forEach(field => {
+            DOMObjects.forEach(DOMObject => {
+                elements.push(... this.queryXPath(DOMObject, field));
+            })
+        })
+
+        return elements;
     }
 
     async binding(DOMObject: HTMLElement, model: any): Promise<void> {
@@ -33,7 +39,7 @@ export class PropertyBinding extends Binding<HTMLElement> {
             if (Class.isAssignableFrom(ViewModel, property.constructor)) {
                 await this.publish(DOMObject, property, field);
             } else {
-                this.replaceTextNode(DOMObject, field, document.createTextNode(property) as any);
+                this.replaceTextNode(DOMObject, field, [document.createTextNode(property) as any]);
             }
         })
     }

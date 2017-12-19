@@ -6,5 +6,5 @@ import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export class IViewBinder implements IInjected {
     ["`container"]: ICoherenceContainer;
-    bind(context: BindContext): Promise<ViewDOM> { throw new InterfaceUsingException("IViewBinder.bind"); }
+    bind(context: BindContext): Promise<HTMLElement[]> { throw new InterfaceUsingException("IViewBinder.bind"); }
 }

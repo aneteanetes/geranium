@@ -10,20 +10,20 @@ import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 import GeraniumApp from "../../runtime/concrete/App";
 
 export abstract class ViewBinder extends IViewBinder {
-    async bind(context: BindContext): Promise<ViewDOM> {
-        await this.exec(context.viewDOM, context.bindingFlags);
-        this.valid(context.viewDOM);
-        return context.viewDOM;
+    async bind(context: BindContext): Promise<HTMLElement[]> {
+        const bindedDOM = await this.exec(context.viewDOM, context.bindingFlags);
+        this.valid(bindedDOM, context.viewDOM.data);
+        return bindedDOM;
     }
 
-    private valid(view: ViewDOM) {
-        var vm = (view.data as ViewModel);
+    private valid(DOM: HTMLElement[], data: any) {
+        var vm = (data as ViewModel);
         if (vm.validators) {
             var validatedProperties = ArrayHelper.groupBy(vm.validators, 'validatedPropertyName');
             validatedProperties.forEach(validators => {
 
                 var validProp = validators[0].validatedPropertyName;
-                Property.redefine(view.data, validProp,
+                Property.redefine(data, validProp,
                     (val) => { return val; },
                     function (val) {
 
@@ -32,7 +32,7 @@ export abstract class ViewBinder extends IViewBinder {
                             var validation = validator.validate(val, this.clone());
                             if (!validation.success) {
                                 validationFault = true;
-                                GeraniumApp.resolve(IValidatingReporter).report(view, validation);
+                                GeraniumApp.resolve(IValidatingReporter).report(DOM, validation);
                             }
                         });
 
@@ -42,11 +42,13 @@ export abstract class ViewBinder extends IViewBinder {
         }
     }
 
-    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]) {
+    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]): Promise<HTMLElement[]> {
+        let dom = await ViewDOM.DOM();
         for (var i = 0; i < bindings.length; i++) {
-            await this.binding(ViewDOM, bindings[i]);
+            await this.binding(dom, ViewDOM.data, bindings[i]);
         }
+        return dom;
     }
 
-    protected abstract binding(ViewDOM: ViewDOM, binding: IBinding<any>): Promise<void>;
+    protected abstract binding(DOM: HTMLElement[], data: any, binding: IBinding<any>): Promise<void>;
 }

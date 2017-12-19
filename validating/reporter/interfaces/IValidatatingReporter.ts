@@ -6,5 +6,5 @@ import { ICoherenceContainer } from "../../../coherence/interfaces/ICoherenceCon
 
 export class IValidatingReporter implements IInjected {
     ["`container"]: ICoherenceContainer;
-    report(viewDOM: ViewDOM, validatingResult: ValidationResult): Promise<void> { throw new InterfaceUsingException("IValidatingReporter.report"); }
+    report(DOM: HTMLElement[], validatingResult: ValidationResult): Promise<void> { throw new InterfaceUsingException("IValidatingReporter.report"); }
 }

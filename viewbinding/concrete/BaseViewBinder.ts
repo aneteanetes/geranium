@@ -4,7 +4,7 @@ import { Binding } from "../../binding/abstract/Binding";
 import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export class BaseViewBinder extends ViewBinder {
-    protected async binding(view: ViewDOM, binding: IBinding<any>): Promise<void> {
-        return binding.bind(await view.DOM(), view.data);
+    protected async binding(DOM: HTMLElement[], data: any, binding: IBinding<any>): Promise<void> {
+        return binding.bind(DOM, data);
     }
 }
