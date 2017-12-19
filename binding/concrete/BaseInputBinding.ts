@@ -3,7 +3,7 @@ import { Property } from "../../reflection/Property";
 
 export class BaseInputBinding extends BaseBinding {
     get attribute(): string { return 'input'; }
-    binding(DOMObject: HTMLElement, model: any) {
+    async binding(DOMObject: HTMLElement, model: any): Promise<void> {
         let value = DOMObject.getAttribute('name');
         Property.redefine(model, value,
             (val) => val,
@@ -21,5 +21,5 @@ export class BaseInputBinding extends BaseBinding {
             model[value] = DOMObject.nodeValue;
         });
     }
-    clear() { }
+    async clear() { }
 }

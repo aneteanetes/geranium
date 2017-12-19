@@ -12,6 +12,7 @@ import { Constructor } from "../../structures/Constructor";
 import { IBinding } from "../../binding/interfaces/ibinding";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
+import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
 
 export class IGeranium {
     container?: Constructor<ICoherenceContainer>;
@@ -23,6 +24,7 @@ export class IGeranium {
     statemanager?: Constructor<IStateManager>;
     viewbinder?: Constructor<IViewBinder>;
     viewengine?: Constructor<IViewEngine>;
+    viewpublisher?: Constructor<IViewPublisher>;
     validationreporter?: Constructor<IValidatingReporter>;
     router?: Constructor<IRouter>;
     historyprovider?: Constructor<IHistory>;

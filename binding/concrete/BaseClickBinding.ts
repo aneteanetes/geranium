@@ -4,7 +4,7 @@ import { StringHelper } from "../../declare/string";
 export class BaseClickBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'onclick'; }
 
-    binding(DOMObject: HTMLElement, model: any) {
+    async binding(DOMObject: HTMLElement, model: any): Promise<void> {
         let value = DOMObject.getAttribute(this.attribute);
         var processed = this.splitMethodAndParams(value);
         var method = model[processed.method] as Function;

@@ -93,3 +93,8 @@ export class PropertyAccessor {
     val: any;
     _val: any;
 }
+
+export class PropertyInfo {
+    name: string;
+    property: any;
+}

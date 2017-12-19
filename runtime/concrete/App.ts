@@ -31,6 +31,8 @@ import { IBinding } from "../../binding/interfaces/ibinding";
 import { IInjected } from "../../coherence/interfaces/IInjected";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
+import { BaseViewPublisher } from "../../viewengine/concrete/BaseViewPublisher";
+import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
 
 class App implements IApp {
     ["`container"]: ICoherenceContainer;
@@ -86,6 +88,7 @@ class App implements IApp {
         this["`container"].register(IValidatingReporter, new geranium.validationreporter());
         this["`container"].register(IViewBinder, new geranium.viewbinder());
         this["`container"].register(IViewEngine, new geranium.viewengine());
+        this["`container"].register(IViewPublisher, new geranium.viewpublisher());
         geranium.bindings.forEach(binding => {
             this["`container"].register(IBinding, new binding());
         });
@@ -104,6 +107,7 @@ const geraniumDefault: IGeranium = {
     validationreporter: NotifyValidatingReporter,
     viewbinder: BaseViewBinder,
     viewengine: BaseViewEngine,
+    viewpublisher: BaseViewPublisher,
     bindings: [
         BaseFieldBinding as any,
         BaseInputBinding,

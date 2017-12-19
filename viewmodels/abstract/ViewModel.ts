@@ -8,6 +8,7 @@ import { HistoryItem } from "../../history/contracts/HistoryItem";
 import { IHistory } from "../../history/interfaces/IHistory";
 import GeraniumApp from "../../runtime/concrete/App";
 import { ViewExecutingContext } from "../../viewengine/contracts/ViewExecutingContext";
+import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
 
 @routeignore
 export abstract class ViewModel extends ViewState {
@@ -32,8 +33,12 @@ export abstract class ViewModel extends ViewState {
 		if (this.statefull) {
 			super.show(selector);
 		} else {
-			await GeraniumApp.resolve(IViewEngine).execute({
+			const dom = await GeraniumApp.resolve(IViewEngine).execute({
 				iViewed: this,
+				selector: selector
+			});
+			await GeraniumApp.resolve(IViewPublisher).publish({
+				dom: dom,
 				selector: selector
 			});
 		}

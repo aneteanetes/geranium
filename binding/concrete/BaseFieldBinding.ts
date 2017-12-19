@@ -4,7 +4,7 @@ import { Model } from "../../models/Model";
 
 export class BaseFieldBinding extends BaseByAttributeBinding {
     get attribute(): string { return 'data-field'; }
-    binding(DOMObject: HTMLElement, model: Model) {
+    async binding(DOMObject: HTMLElement, model: Model): Promise<void> {
         let value = DOMObject.getAttribute(this.attribute);
         Property.redefine(model, value,
             (val) => val,

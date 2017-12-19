@@ -6,6 +6,7 @@ import { View } from "../../view/abstract/view";
 import GeraniumApp from "../../runtime/concrete/App";
 import { ViewDOM } from "../../viewDOM/abstract/viewdom";
 import { Constructor } from "../../structures/Constructor";
+import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
 
 @routeignore
 export abstract class ViewState extends State implements IViewable {
@@ -26,8 +27,12 @@ export abstract class ViewState extends State implements IViewable {
 		}
 		else {
 			delete this["#ViewState"];
-			GeraniumApp.resolve(IViewEngine).execute({
+			const dom = await GeraniumApp.resolve(IViewEngine).execute({
 				iViewed: this,
+				selector: selector
+			});
+			await GeraniumApp.resolve(IViewPublisher).publish({
+				dom: dom,
 				selector: selector
 			});
 		}

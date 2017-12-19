@@ -1,39 +1,24 @@
-﻿import { ViewEngine } from "../abstract/ViewEngine";
-import { ViewDOM } from "../../viewDOM/abstract/viewdom";
-import { ILogger } from "../../exceptions/logging/interfaces/ILogger";
+﻿import { IViewEngine } from "../interfaces/IViewEngine";
+import { ViewExecutingContext } from "../contracts/ViewExecutingContext";
+import { ViewDOM } from "../../viewdom/abstract/ViewDOM";
+import { ExecuteContext } from "../contracts/ExecuteContext";
+import { IViewable } from "../../view/interfaces/IViewable";
+import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { BindContext } from "../../viewbinding/contracts/BindContext";
+import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
 import { ViewPublishContext } from "../contracts/ViewPublishContext";
 
-export class BaseViewEngine extends ViewEngine {
-    protected async publish(view: ViewPublishContext): Promise<void> {
-        return new Promise<void>(async (resolve, reject) => {
-            try {
-                const selector = view.selector;
-                const domLoaded = document.readyState === 'complete';
+export class BaseViewEngine implements IViewEngine {
+    ["`container"]: ICoherenceContainer;
 
-                let element = document.querySelector(selector);
-                if (!element && !domLoaded) {
-                    await this.domLoaded(selector, view.dom);
-                } else if (domLoaded && !element) {
-                    throw new Error("Selector does not exists: " + selector);
-                } else {
-                    element.parentElement.replaceChild(view.dom, element);
-                }
+    async execute(context: ViewExecutingContext): Promise<HTMLElement> {
+        var view = await IViewEngine.ViewEngineView(context.iViewed, context.selector);
 
-                resolve();
-            } catch (ex) {
-                this["`container"].resolve(ILogger).log(ex);
-                reject(ex);
-            }
-        });
-    }
+        var execCtx = new ExecuteContext(context);
+        var bindingContext = new BindContext(view, execCtx.bindingFlags);
+        var viewbinder = this["`container"].resolve(IViewBinder);
+        await viewbinder.bind(bindingContext);
 
-    private async domLoaded(selector: string, view: HTMLElement): Promise<boolean> {
-        return new Promise<boolean>((resolve, reject) => {
-            document.addEventListener("DOMContentLoaded", () => {
-                let element = document.querySelector(selector);
-                element.parentElement.replaceChild(view, element);
-                resolve(true);
-            });
-        });
+        return await view.DOM();
     }
 }
