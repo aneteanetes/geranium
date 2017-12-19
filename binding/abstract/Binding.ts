@@ -1,4 +1,4 @@
-﻿import { IBinding } from "../interfaces/ibinding";
+﻿import { IBinding } from "../interfaces/IBinding";
 
 export abstract class Binding<T> extends IBinding<T> {
     async bind(DOM: T, model: any): Promise<void> {

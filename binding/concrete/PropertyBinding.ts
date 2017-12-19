@@ -3,7 +3,7 @@ import { Class } from "../../reflection/Class";
 import { findAndFilter } from "../../extensions/HtmlElementExtensions";
 import { PropertyInfo } from "../../reflection/Property";
 import { ArrayHelper } from "../../declare/array";
-import { IViewEngine } from "../../viewengine/interfaces/iviewengine";
+import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import GeraniumApp from "../../runtime/concrete/App";
 import { IViewable } from "../../view/interfaces/IViewable";
 import { promised } from "../../structures/Promised";

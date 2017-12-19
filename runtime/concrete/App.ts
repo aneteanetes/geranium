@@ -27,7 +27,7 @@ import { IStorage } from "../../storage/interfaces/IStorage";
 import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 import { IValidatingReporter } from "../../validating/reporter/interfaces/IValidatatingReporter";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
-import { IBinding } from "../../binding/interfaces/ibinding";
+import { IBinding } from "../../binding/interfaces/IBinding";
 import { IInjected } from "../../coherence/interfaces/IInjected";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
