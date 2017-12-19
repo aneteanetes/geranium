@@ -2,5 +2,5 @@
 
 export abstract class ViewDOM extends IViewDOM {
     data: any;
-    abstract DOM(): Promise<HTMLElement>;
+    abstract DOM(): Promise<HTMLElement[]>;
 }

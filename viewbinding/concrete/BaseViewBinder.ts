@@ -1,5 +1,5 @@
 ﻿import { ViewBinder } from "../abstract/ViewBinder";
-import { IBinding } from "../../binding/interfaces/ibinding";
+import { IBinding } from "../../binding/interfaces/IBinding";
 import { Binding } from "../../binding/abstract/Binding";
 import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 

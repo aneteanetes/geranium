@@ -4,5 +4,5 @@ import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContai
 
 export class IViewDOM implements IInjected {
     ["`container"]: ICoherenceContainer;
-    DOM(): Promise<HTMLElement> { throw new InterfaceUsingException("IViewDOM.getViewDOM"); }
+    DOM(): Promise<HTMLElement[]> { throw new InterfaceUsingException("IViewDOM.getViewDOM"); }
 }

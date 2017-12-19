@@ -11,7 +11,7 @@ import { ViewPublishContext } from "../contracts/ViewPublishContext";
 export class BaseViewEngine implements IViewEngine {
     ["`container"]: ICoherenceContainer;
 
-    async execute(context: ViewExecutingContext): Promise<HTMLElement> {
+    async execute(context: ViewExecutingContext): Promise<HTMLElement[]> {
         var view = await IViewEngine.ViewEngineView(context.iViewed, context.selector);
 
         var execCtx = new ExecuteContext(context);

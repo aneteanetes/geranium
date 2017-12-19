@@ -1,6 +1,6 @@
 import { Binding } from "../abstract/Binding";
 import { Class } from "../../reflection/Class";
-import { findAndFilter } from "../../extensions/HtmlElementExtensions";
+import { findAndFilter, toHtmlArray } from "../../extensions/HtmlElementExtensions";
 import { PropertyInfo } from "../../reflection/Property";
 import { ArrayHelper } from "../../declare/array";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
@@ -12,8 +12,12 @@ import { StringHelper } from "../../declare/string";
 export class PropertyBinding extends Binding<HTMLElement> {
     fields: string[];
 
-    detection(DOMObject: HTMLElement): Promise<HTMLElement[]> {
+    async detection(DOMObject: HTMLElement): Promise<HTMLElement[]> {
         this.fields = DOMObject.innerHTML.match(/\[.*?\]/g);
+        if (!this.fields) {
+            return new Array<HTMLElement>();
+        }
+
         this.fields = ArrayHelper.removeSame(this.fields);
 
         return promised(this.fields
@@ -25,32 +29,39 @@ export class PropertyBinding extends Binding<HTMLElement> {
         var regex = /\[.*?\]/g;
         const fields = DOMObject.innerText.match(regex);
         fields.forEach(async field => {
-            const property = model[field.substring(1, field.length - 2)];
-            if (Class.isAssignableFrom(ViewModel, property)) {
-                await this.publish(DOMObject, property);
-            } else if (property != null) {
-                DOMObject.innerText = DOMObject.innerText.replace(field, property || '');
+            const property = model[field.substring(1, field.length - 1)];
+            if (Class.isAssignableFrom(ViewModel, property.constructor)) {
+                await this.publish(DOMObject, property, field);
+            } else {
+                this.replaceTextNode(DOMObject, field, document.createTextNode(property) as any);
             }
         })
     }
 
     async clear(DOMObject: HTMLElement): Promise<void> { }
 
-    private async publish(DOMObject: HTMLElement, property: ViewModel): Promise<void> {
+    private async publish(DOMObject: HTMLElement, property: ViewModel, field: string): Promise<void> {
         const dom = await GeraniumApp.resolve(IViewEngine).execute({
             iViewed: property,
             selector: ''
         });
+        this.replaceTextNode(DOMObject, field, dom);
+    }
 
-        const shieldedField = StringHelper.replaceAll(
-            StringHelper.replaceAll(DOMObject.innerHTML, "[", "\\["),
-            "]", "\\]");
-
-        const regex = new RegExp(shieldedField, "g");
-
-        const count = DOMObject.innerHTML.match(regex).length;
-        DOMObject.innerText.replace(regex, "");
-        DOMObject.appendChild(dom);
+    private replaceTextNode(root: HTMLElement, text: string, target: HTMLElement[]) {
+        const allNodes = toHtmlArray(root.childNodes);
+        const textNodes = allNodes.filter(x => {
+            return x.nodeType == 3 && (x.textContent.trim() == text || x.textContent.includes(text));
+        }) as Node[];
+        textNodes.forEach(node => {
+            target.forEach(targetNode => {
+                if (node.textContent.trim() == text) {
+                    root.replaceChild(targetNode, node);
+                } else {
+                    node.textContent = node.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
+                }
+            });
+        });
     }
 
     private queryXPath(node: Node, field: string): HTMLElement[] {

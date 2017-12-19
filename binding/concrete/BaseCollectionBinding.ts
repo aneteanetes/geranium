@@ -1,5 +1,5 @@
 ﻿import { BaseByAttributeBinding } from "./base/BaseByAttributeBinding";
-import { IBinding } from "../interfaces/ibinding";
+import { IBinding } from "../interfaces/IBinding";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BindContext } from "../../viewbinding/contracts/BindContext";
 import { IViewBinder } from "../../viewbinding/interfaces/IViewBinder";
@@ -33,7 +33,10 @@ export class BaseCollectionBinding extends BaseByAttributeBinding {
             let ctx = new BindContext(_view, bindings);
             await this["`container"].resolve(IViewBinder).bind(ctx);
 
-            DOMCollection.appendChild(await _view.DOM());
+            const dom = await _view.DOM();
+            dom.forEach(element => {
+                DOMCollection.appendChild(element);
+            })
         }
 
         DOMObject.parentNode.replaceChild(DOMCollection, DOMObject);

@@ -7,6 +7,6 @@ export abstract class BaseByAttributeBinding extends BaseBinding {
         DOMObject.removeAttribute(this.attribute);
     }
     detection(DOM: HTMLElement): Promise<HTMLElement[]> {
-        return promised(findAndFilter(DOM, '[' + this.attribute + ']'));
+        return promised(findAndFilter([DOM], '[' + this.attribute + ']'));
     }
 }

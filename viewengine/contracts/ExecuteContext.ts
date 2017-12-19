@@ -1,6 +1,6 @@
 ﻿import { IViewable } from "../../view/interfaces/IViewable";
-import { ViewExecutingContext } from "./viewexecutingcontext";
-import { IBinding } from "../../binding/interfaces/ibinding";
+import { ViewExecutingContext } from "./ViewExecutingContext";
+import { IBinding } from "../../binding/interfaces/IBinding";
 import { Constructor } from "../../structures/Constructor";
 import GeraniumApp from "../../runtime/concrete/App";
 

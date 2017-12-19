@@ -1,6 +1,6 @@
 import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export class ViewPublishContext {
-    dom: HTMLElement;
+    dom: HTMLElement[];
     selector: string;
 }

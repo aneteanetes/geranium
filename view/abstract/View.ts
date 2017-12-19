@@ -4,6 +4,7 @@ import { IInjected } from "../../coherence/interfaces/IInjected";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
+import { toHtmlArray } from "../../extensions/HtmlElementExtensions";
 
 export abstract class View extends Template implements ViewDOM, IInjected {
     ["`container"]: ICoherenceContainer;
@@ -16,7 +17,7 @@ export abstract class View extends Template implements ViewDOM, IInjected {
         this["%selector"] = arguments[0];
     }
 
-    async DOM(): Promise<HTMLElement> {
+    async DOM(): Promise<HTMLElement[]> {
         let view: View = this;
         if (!this._rendered) {
             view = await this.render();
@@ -24,7 +25,7 @@ export abstract class View extends Template implements ViewDOM, IInjected {
 
         const div = document.createElement("div");
         div.innerHTML = view.template;
-        return div;
+        return toHtmlArray(div.childNodes);
     }
 
     get selector(): string {

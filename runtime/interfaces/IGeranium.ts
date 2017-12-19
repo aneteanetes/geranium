@@ -9,7 +9,7 @@ import { IValidatingReporter } from "../../validating/reporter/interfaces/IValid
 import { IRouter } from "../../routing/interfaces/IRouter";
 import { IHistory } from "../../history/interfaces/IHistory";
 import { Constructor } from "../../structures/Constructor";
-import { IBinding } from "../../binding/interfaces/ibinding";
+import { IBinding } from "../../binding/interfaces/IBinding";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";

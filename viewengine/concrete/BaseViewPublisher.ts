@@ -15,7 +15,9 @@ export class BaseViewPublisher extends IViewPublisher {
                 } else if (domLoaded && !element) {
                     throw new Error("Selector does not exists: " + selector);
                 } else {
-                    element.parentElement.replaceChild(view.dom, element);
+                    view.dom.forEach(view => {
+                        element.parentElement.replaceChild(view, element);
+                    });
                 }
 
                 resolve();
@@ -26,11 +28,13 @@ export class BaseViewPublisher extends IViewPublisher {
         });
     }
 
-    private async domLoaded(selector: string, view: HTMLElement): Promise<boolean> {
+    private async domLoaded(selector: string, views: HTMLElement[]): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
             document.addEventListener("DOMContentLoaded", () => {
-                let element = document.querySelector(selector);
-                element.parentElement.replaceChild(view, element);
+                views.forEach(view => {
+                    let element = document.querySelector(selector);
+                    element.parentElement.replaceChild(view, element);
+                });
                 resolve(true);
             });
         });

@@ -9,7 +9,7 @@ import GeraniumApp from "../../runtime/concrete/App";
 
 export class IViewEngine implements IInjected {
     ["`container"]: ICoherenceContainer;
-    execute(context: ViewExecutingContext): Promise<HTMLElement> { throw new InterfaceUsingException("IViewEngine.execute"); }
+    execute(context: ViewExecutingContext): Promise<HTMLElement[]> { throw new InterfaceUsingException("IViewEngine.execute"); }
 
     /**
      * return complete rendered view
