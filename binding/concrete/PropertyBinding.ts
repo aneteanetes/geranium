@@ -10,15 +10,17 @@ import { promised } from "../../structures/Promised";
 import { StringHelper } from "../../declare/string";
 
 export class PropertyBinding extends Binding<HTMLElement> {
+    propertyRegex: RegExp = /\[.*?\]/g;
     fields: string[] = [];
 
     async detection(DOMObjects: HTMLElement[]): Promise<HTMLElement[]> {
         DOMObjects.forEach(DOMObject => {
             this.fields.push(...DOMObject.innerHTML.match(/\[.*?\]/g));
         });
-        if (!this.fields) {
+        if (this.fields.length == 0) {
             return new Array<HTMLElement>();
         }
+
         this.fields = ArrayHelper.removeSame(this.fields);
 
         const elements: Array<HTMLElement> = [];
@@ -32,19 +34,34 @@ export class PropertyBinding extends Binding<HTMLElement> {
     }
 
     async binding(DOMObject: HTMLElement, model: any): Promise<void> {
-        var regex = /\[.*?\]/g;
-        const fields = DOMObject.innerText.match(regex);
+        const fields = DOMObject.innerText.match(this.propertyRegex);
         fields.forEach(async field => {
             const property = model[field.substring(1, field.length - 1)];
-            if (Class.isAssignableFrom(ViewModel, property.constructor)) {
-                await this.publish(DOMObject, property, field);
-            } else {
-                this.replaceTextNode(DOMObject, field, [document.createTextNode(property) as any]);
+            if (property instanceof Array) {
+                await this.renderArray(property, DOMObject, field);
             }
+            await this.render(property, DOMObject, field)
         })
     }
 
     async clear(DOMObject: HTMLElement): Promise<void> { }
+
+    private async renderArray(property: Array<any>, DOMObject: HTMLElement, field: string) {
+        let fieldsExpanded = "";
+        for (let index = 0; index < property.length; index++) {
+            fieldsExpanded += `[${index}]`;
+        }
+        this.replaceTextNode(DOMObject, field, [document.createTextNode(fieldsExpanded) as any]);
+        property.forEach(async (prop, index) => { await this.render(prop, DOMObject, `[${index}]`); });
+    }
+
+    private async render(property: any, DOMObject: HTMLElement, field: string) {
+        if (Class.isAssignableFrom(ViewModel, property.constructor)) {
+            await this.publish(DOMObject, property, field);
+        } else {
+            await this.replaceTextNode(DOMObject, field, [document.createTextNode(property) as any]);
+        }
+    }
 
     private async publish(DOMObject: HTMLElement, property: ViewModel, field: string): Promise<void> {
         const dom = await GeraniumApp.resolve(IViewEngine).execute({
@@ -56,17 +73,21 @@ export class PropertyBinding extends Binding<HTMLElement> {
 
     private replaceTextNode(root: HTMLElement, text: string, target: HTMLElement[]) {
         const allNodes = toHtmlArray(root.childNodes);
-        const textNodes = allNodes.filter(x => {
+        const textNode = allNodes.find(x => {
             return x.nodeType == 3 && (x.textContent.trim() == text || x.textContent.includes(text));
-        }) as Node[];
-        textNodes.forEach(node => {
-            target.forEach(targetNode => {
-                if (node.textContent.trim() == text) {
-                    root.replaceChild(targetNode, node);
+        }) as Node;
+        target.forEach(targetNode => {
+            if (textNode.textContent.trim() == text) {
+                root.replaceChild(targetNode, textNode);
+            } else {
+                const propsStrings = textNode.textContent.match(this.propertyRegex);
+                if (propsStrings.length > 1) {
+                    textNode.textContent = textNode.textContent.replace(text, "");
+                    textNode.parentNode.insertBefore(targetNode, textNode);
                 } else {
-                    node.textContent = node.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
+                    textNode.textContent = textNode.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
                 }
-            });
+            }
         });
     }
 
