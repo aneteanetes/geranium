@@ -33,6 +33,7 @@ import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
 import { BaseViewPublisher } from "../../viewengine/concrete/BaseViewPublisher";
 import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
+import { PropertyBinding } from "../../binding/concrete/PropertyBinding";
 
 class App implements IApp {
     ["`container"]: ICoherenceContainer;
@@ -112,7 +113,8 @@ const geraniumDefault: IGeranium = {
         BaseFieldBinding as any,
         BaseInputBinding,
         BaseClickBinding,
-        BaseCollectionBinding
+        BaseCollectionBinding,
+        PropertyBinding
     ]
 }
 
