@@ -7,6 +7,10 @@ export class InMemoryContainer implements ICoherenceContainer {
     ["`container"]: ICoherenceContainer;
     private container: RegisterToken[] = [];
 
+    isregistered<T extends IInjected>(type: Constructor<T>): boolean {
+        return this.execute(type).length > 0;
+    }
+
     register<T extends IInjected>(type: Constructor<T> | Function, value: T): void {
         this.container.push({
             type: type.name,

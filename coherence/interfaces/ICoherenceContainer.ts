@@ -14,4 +14,6 @@ export interface ICoherenceContainer extends IInjected {
     instantiate<T extends IInjected>(type: Constructor<T> | Function | any, params?: any[]): T;
     /** Return all existed components from this (child ignored) container */
     all(): any[];
+    /** Returns whether a component is registered for this class */
+    isregistered<T extends IInjected>(type: Constructor<T>): boolean;
 }

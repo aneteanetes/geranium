@@ -15,7 +15,7 @@ export class PropertyBinding extends Binding<HTMLElement> {
 
     async detection(DOMObjects: HTMLElement[]): Promise<HTMLElement[]> {
         DOMObjects.forEach(DOMObject => {
-            this.fields.push(...DOMObject.innerHTML.match(/\[.*?\]/g));
+            this.fields.push(...(DOMObject.innerHTML.match(/\[.*?\]/g) || []));
         });
         if (this.fields.length == 0) {
             return new Array<HTMLElement>();
@@ -39,8 +39,9 @@ export class PropertyBinding extends Binding<HTMLElement> {
             const property = model[field.substring(1, field.length - 1)];
             if (property instanceof Array) {
                 await this.renderArray(property, DOMObject, field);
+            } else if (property) {
+                await this.render(property, DOMObject, field);
             }
-            await this.render(property, DOMObject, field)
         })
     }
 
@@ -93,8 +94,7 @@ export class PropertyBinding extends Binding<HTMLElement> {
 
     private queryXPath(node: Node, field: string): HTMLElement[] {
         const elements: Array<HTMLElement> = [];
-
-        const xpath = document.evaluate(`//*[contains(text(), "${field}")]`, node, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+        const xpath = document.evaluate("//*[text()[contains(.,'" + field + "')]]", node, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
         for (let index = 0; index < xpath.snapshotLength; index++) {
             elements.push(xpath.snapshotItem(index) as HTMLElement);
         };

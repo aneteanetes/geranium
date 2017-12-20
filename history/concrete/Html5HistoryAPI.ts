@@ -15,15 +15,17 @@ export class Html5HistoryAPI extends IHistory {
     }
 
     restore(state: any) {
-        var router = this["`container"].resolve(IRouter);
-        var route = router.routes.filter(x => {
-            var instance = new x.ctor();
-            return instance.constructor.name == state.ctor;
-        })[0];
-        route.selector = state.selector;
-        route.restore = true;
+        if (state) {
+            var router = this["`container"].resolve(IRouter);
+            var route = router.routes.filter(x => {
+                var instance = new x.ctor();
+                return instance.constructor.name == state.ctor;
+            })[0];
+            route.selector = state.selector;
+            route.restore = true;
 
-        router.route(route);
+            router.route(route);
+        }
     }
 }
 
