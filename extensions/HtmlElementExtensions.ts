@@ -5,5 +5,8 @@ export function findAndFilter(set: HTMLElement[], query: string): HTMLElement[] 
     }).reduce((p, n) => p.concat(n));
 }
 export function toHtmlArray(nodes: NodeList): HTMLElement[] {
-    return Array.prototype.slice.call(nodes, 0)
+    return nodeToArray<HTMLElement>(nodes);
+}
+export function nodeToArray<T>(nodes: NodeList): T[] {
+    return Array.prototype.slice.call(nodes, 0);
 }
