@@ -57,14 +57,14 @@ class FileViewDOM extends ViewDOM {
 
     private async loadTemplate() {
         const request = GeraniumApp.resolve(IRequest);
-        this.html = await request.send<XHRSettings, string>({ method: "GET", url: this.url });
+        this.html = await request.send<XHRSettings, string>({ method: "GET", url: this.url, async: true });
     }
 
     private cache() {
         const cache = GeraniumApp.resolve(TemplateCache);
         cache.items.push({
             url: this.url,
-            value: this.html
+            value: this.html,
         });
     }
 }
