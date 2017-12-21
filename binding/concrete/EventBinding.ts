@@ -5,8 +5,9 @@ import { toHtmlArray, nodeToArray } from "../../extensions/HtmlElementExtensions
 
 export class EventBinding extends Binding<HTMLElement> {
     async detection(DOMObject: HTMLElement[]): Promise<HTMLElement[]> {
-        const wrapped = this.wrap(DOMObject);
-        return toHtmlArray(wrapped.querySelectorAll(eventSelectors.join()));
+        const queryableNodes = this.queryable(DOMObject);
+        const all = queryableNodes.map(node => toHtmlArray(node.querySelectorAll(eventSelectors.join())));
+        return all.reduce((p, n) => p.concat(n));
     }
 
     async binding(DOMObject: HTMLElement, model: any): Promise<void> {
@@ -22,10 +23,16 @@ export class EventBinding extends Binding<HTMLElement> {
 
     async clear(DOMObject: HTMLElement): Promise<void> { }
 
-    private wrap(DOMObjects: HTMLElement[]): HTMLElement {
-        const wrapper = document.createElement("div");
-        DOMObjects.forEach(dom => wrapper.appendChild(dom));
-        return wrapper;
+    private queryable(DOMObjects: HTMLElement[]): HTMLElement[] {
+        if (!DOMObjects || DOMObjects.length == 0) {
+            return [];
+        }
+        const parent = DOMObjects[0].parentElement;
+        if (parent) {
+            return [parent];
+        } else {
+            return DOMObjects;
+        }
     }
 
     private funcBinded(events: Attr[], model: any): { event: string, func: any }[] {

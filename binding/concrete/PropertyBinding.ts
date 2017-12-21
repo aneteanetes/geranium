@@ -50,10 +50,10 @@ export class PropertyBinding extends Binding<HTMLElement> {
     private async renderArray(property: Array<any>, DOMObject: HTMLElement, field: string) {
         let fieldsExpanded = "";
         for (let index = 0; index < property.length; index++) {
-            fieldsExpanded += `[${index}]`;
+            fieldsExpanded += "[" + index + "]";
         }
         this.replaceTextNode(DOMObject, field, [document.createTextNode(fieldsExpanded) as any]);
-        property.forEach(async (prop, index) => { await this.render(prop, DOMObject, `[${index}]`); });
+        property.forEach(async (prop, index) => { await this.render(prop, DOMObject, "[" + index + "]"); });
     }
 
     private async render(property: any, DOMObject: HTMLElement, field: string) {

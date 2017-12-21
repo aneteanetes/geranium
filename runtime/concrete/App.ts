@@ -15,7 +15,7 @@ import { ClientTemplateEngine } from "../../templating/concrete/mustache/ClientT
 import { NotifyValidatingReporter } from "../../validating/reporter/concrete/NotifyValidatingReporter";
 import { BaseViewBinder } from "../../viewbinding/concrete/BaseViewBinder";
 import { BaseFieldBinding } from "../../binding/concrete/BaseFieldBinding";
-import { BaseClickBinding } from "../../binding/concrete/BaseClickBinding";
+import { EventBinding } from "../../binding/concrete/EventBinding";
 import { BaseInputBinding } from "../../binding/concrete/BaseInputBinding";
 import { BaseCollectionBinding } from "../../binding/concrete/BaseCollectionBinding";
 import { ICommunicator } from "../../backend/interfaces/ICommunicator";
@@ -34,12 +34,12 @@ import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
 import { BaseViewPublisher } from "../../viewengine/concrete/BaseViewPublisher";
 import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
 import { PropertyBinding } from "../../binding/concrete/PropertyBinding";
+import { Constructor } from "../../structures/Constructor";
 
 class App implements IApp {
     ["`container"]: ICoherenceContainer;
     public static containerProperty: string = "`GeraniumApp";
     private instantiated: boolean = false;
-
 
     register<T extends IInjected>(type: Function | (new (...args: any[]) => T), value: T): void {
         return this["`container"].register(type, value);
@@ -58,6 +58,9 @@ class App implements IApp {
     }
     all(): any[] {
         return this["`container"].all();
+    }
+    isregistered<T extends IInjected>(type: Constructor<T>): boolean {
+        return this["`container"].isregistered(type);
     }
 
     start(geranium?: IGeranium) {
@@ -112,7 +115,7 @@ const geraniumDefault: IGeranium = {
     bindings: [
         BaseFieldBinding as any,
         BaseInputBinding,
-        BaseClickBinding,
+        EventBinding,
         BaseCollectionBinding,
         PropertyBinding
     ]
