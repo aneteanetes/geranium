@@ -85,12 +85,21 @@ export class PropertyBinding extends Binding<HTMLElement> {
                     const propsStrings = textNode.textContent.match(this.propertyRegex);
                     if (propsStrings.length > 1) {
                         textNode.textContent = textNode.textContent.replace(text, "");
-                        textNode.parentNode.insertBefore(targetNode, textNode);
+                        if (textNode.nextSibling) {
+                            debugger;
+                            textNode.parentNode.insertBefore(targetNode, textNode.nextSibling);
+                        } else {
+                            textNode.parentNode.insertBefore(targetNode, textNode);
+                        }
                     } else {
                         textNode.textContent = textNode.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
                     }
                 }
             });
+    }
+
+    private shatterNodes(node: Node) {
+
     }
 
     private queryXPath(node: Node, field: string): HTMLElement[] {

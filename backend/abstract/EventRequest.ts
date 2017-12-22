@@ -15,7 +15,7 @@ export abstract class EventRequest extends Request {
 
             await communicator.send<any>(data);
 
-            const response = communicator.recive<TResponse>();
+            const response = await communicator.recive<TResponse>();
 
             if (!stateless) {
                 this.raise();

@@ -12,20 +12,25 @@ export class AjaxCommunicator extends ICommunicator {
     async recive<TResponse>(): Promise<TResponse> {
         return new Promise<TResponse>((resolve, reject) => {
             let xhr = new XMLHttpRequest();
+            xhr.responseType = "text";
             this.setContentType(this.data, xhr);
-            xhr.open(this.data.method, this.data.url, this.data.async, this.data.user, this.data.pasw);
 
             xhr.onload = function () {
                 if (xhr.status >= 200 && xhr.status < 400) {
-                    resolve(xhr.responseText as any);
-                } else {
+                    resolve(xhr.response as any);
+                } else if (xhr.status == 0 && xhr.response) {
+                    resolve(xhr.response as any);
+                } {
                     reject(`${xhr.status}: ${xhr.statusText}`);
                 }
             };
 
             xhr.onerror = function () {
                 reject(`${xhr.status}: ${xhr.statusText}`);
-            }
+            };
+
+            xhr.open(this.data.method, this.data.url, this.data.async, this.data.user, this.data.pasw);
+            xhr.send(this.data.data);
         });
     }
 
@@ -48,7 +53,7 @@ export interface XHRSettings {
     async?: boolean;
     user?: string;
     pasw?: string;
-    data?: any
+    data?: any;
 }
 
 type HttpMethod = keyof { GET, POST, PUT, PATCH, DELETE };
