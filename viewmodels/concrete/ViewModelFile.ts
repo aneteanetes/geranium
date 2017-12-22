@@ -9,7 +9,7 @@ import { toHtmlArray } from "../../extensions/HtmlElementExtensions";
 import { IStorage } from "../../storage/interfaces/IStorage";
 import { IEntity } from "../../storage/interfaces/IEntity";
 import { IInjected } from "../../coherence/interfaces/IInjected";
-import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { ICoherenceContainer, Life } from "../../coherence/interfaces/ICoherenceContainer";
 
 export abstract class ViewModelFile extends ViewModel {
     view(): Constructor<ViewDOM> {
@@ -18,7 +18,7 @@ export abstract class ViewModelFile extends ViewModel {
             constructor() {
                 super();
                 if (!GeraniumApp.isregistered(TemplateCache)) {
-                    GeraniumApp.register(TemplateCache, new TemplateCache());
+                    GeraniumApp.register(TemplateCache, TemplateCache, Life.Singleton);
                 }
                 const cache = GeraniumApp.resolve(TemplateCache);
                 const cacheItem = cache.items.find(c => c.url == url);

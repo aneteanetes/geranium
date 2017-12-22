@@ -4,6 +4,7 @@ import { IStateManager } from "./interfaces/IStateManager";
 import { Constructor } from "../structures/Constructor";
 import { IRequest } from "../backend/interfaces/IRequest";
 import GeraniumApp from "../runtime/concrete/App";
+import { Life } from "../coherence/interfaces/ICoherenceContainer";
 
 @routeignore
 export abstract class State extends Model {
@@ -18,7 +19,7 @@ export abstract class State extends Model {
 			const stateManager = GeraniumApp.resolve(IStateManager);
 			const state = stateManager.resolve(this.constructor);
 			if (!state) {
-				stateManager.register(this.constructor, this);
+				stateManager.register(this.constructor, this.constructor as any, Life.Singleton);
 			}
 		}
 	}

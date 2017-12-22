@@ -3,7 +3,7 @@ import { IInjected } from "./IInjected";
 
 export interface ICoherenceContainer extends IInjected {
     /** Register component in this (child ignored) container */
-    register<T extends IInjected>(type: Constructor<T> | Function, value: T): void;
+    register<T extends IInjected>(type: Constructor<T> | Function, value: Constructor<T> | Function, lifestyle?: Life): void;
     /** Resolve first component from this (child ignored) container */
     resolve<T extends IInjected>(type: Constructor<T> | Function): T;
     /** Resolve all components from this (child ignored) container */
@@ -16,4 +16,9 @@ export interface ICoherenceContainer extends IInjected {
     all(): any[];
     /** Returns whether a component is registered for this class */
     isregistered<T extends IInjected>(type: Constructor<T>): boolean;
+}
+
+export enum Life {
+    Singleton,
+    Transient,
 }

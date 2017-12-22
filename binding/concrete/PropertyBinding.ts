@@ -77,19 +77,20 @@ export class PropertyBinding extends Binding<HTMLElement> {
         const textNode = allNodes.find(x => {
             return x.nodeType == 3 && (x.textContent.trim() == text || x.textContent.includes(text));
         }) as Node;
-        target.forEach(targetNode => {
-            if (textNode.textContent.trim() == text) {
-                root.replaceChild(targetNode, textNode);
-            } else {
-                const propsStrings = textNode.textContent.match(this.propertyRegex);
-                if (propsStrings.length > 1) {
-                    textNode.textContent = textNode.textContent.replace(text, "");
-                    textNode.parentNode.insertBefore(targetNode, textNode);
+        if (textNode)
+            target.forEach(targetNode => {
+                if (textNode.textContent.trim() == text) {
+                    root.replaceChild(targetNode, textNode);
                 } else {
-                    textNode.textContent = textNode.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
+                    const propsStrings = textNode.textContent.match(this.propertyRegex);
+                    if (propsStrings.length > 1) {
+                        textNode.textContent = textNode.textContent.replace(text, "");
+                        textNode.parentNode.insertBefore(targetNode, textNode);
+                    } else {
+                        textNode.textContent = textNode.textContent.replace(text, targetNode.innerHTML || targetNode.textContent);
+                    }
                 }
-            }
-        });
+            });
     }
 
     private queryXPath(node: Node, field: string): HTMLElement[] {

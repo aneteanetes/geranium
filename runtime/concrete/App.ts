@@ -1,5 +1,5 @@
 import { IApp } from "../interfaces/IApp";
-import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
+import { ICoherenceContainer, Life } from "../../coherence/interfaces/ICoherenceContainer";
 import { ContainerNotInitializedException } from "../../exceptions/coherence/ContainerNotInitializedException";
 import { InMemoryContainer } from "../../coherence/concrete/InMemoryContainer";
 import { IGeranium } from "../interfaces/IGeranium";
@@ -41,7 +41,7 @@ class App implements IApp {
     public static containerProperty: string = "`GeraniumApp";
     private instantiated: boolean = false;
 
-    register<T extends IInjected>(type: Function | (new (...args: any[]) => T), value: T): void {
+    register<T extends IInjected>(type: Function | (new (...args: any[]) => T), value: Function | (new (...args: any[]) => T)): void {
         return this["`container"].register(type, value);
     }
     resolve<T extends IInjected>(type: Function | (new (...args: any[]) => T)): T {
@@ -81,20 +81,20 @@ class App implements IApp {
     }
 
     private internalRegister(geranium: IGeranium) {
-        this["`container"].register(ICommunicator, new geranium.communicator());
-        this["`container"].register(IHistory, new geranium.historyprovider());
-        this["`container"].register(ILogger, new geranium.logger());
-        this["`container"].register(IRequest, new geranium.request());
-        this["`container"].register(IRouter, new geranium.router());
-        this["`container"].register(IStateManager, new geranium.statemanager());
-        this["`container"].register(IStorage, new geranium.storage());
-        this["`container"].register(ITemplateEngine, new geranium.templating());
-        this["`container"].register(IValidatingReporter, new geranium.validationreporter());
-        this["`container"].register(IViewBinder, new geranium.viewbinder());
-        this["`container"].register(IViewEngine, new geranium.viewengine());
-        this["`container"].register(IViewPublisher, new geranium.viewpublisher());
+        this["`container"].register(ICommunicator, geranium.communicator, Life.Transient);
+        this["`container"].register(IHistory, geranium.historyprovider, Life.Singleton);
+        this["`container"].register(ILogger, geranium.logger, Life.Transient);
+        this["`container"].register(IRequest, geranium.request, Life.Transient);
+        this["`container"].register(IRouter, geranium.router, Life.Singleton);
+        this["`container"].register(IStateManager, geranium.statemanager, Life.Singleton);
+        this["`container"].register(IStorage, geranium.storage, Life.Singleton);
+        this["`container"].register(ITemplateEngine, geranium.templating, Life.Transient);
+        this["`container"].register(IValidatingReporter, geranium.validationreporter, Life.Transient);
+        this["`container"].register(IViewBinder, geranium.viewbinder, Life.Singleton);
+        this["`container"].register(IViewEngine, geranium.viewengine, Life.Singleton);
+        this["`container"].register(IViewPublisher, geranium.viewpublisher, Life.Singleton);
         geranium.bindings.forEach(binding => {
-            this["`container"].register(IBinding, new binding());
+            this["`container"].register(IBinding, binding, Life.Transient);
         });
     }
 }
