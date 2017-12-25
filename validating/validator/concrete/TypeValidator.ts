@@ -2,6 +2,7 @@
 import { ValidationResult } from "../../contracts/validationresult";
 import { Exception } from "../../../exceptions/Exception";
 import { ValidatingException } from "../../../exceptions/validating/ValidatingException";
+import { ViewModel } from "../../../viewmodels/abstract/ViewModel";
 
 export class TypeValidator extends IValidator {
     _type: string;
@@ -14,7 +15,7 @@ export class TypeValidator extends IValidator {
 
     validatedPropertyName: string;
 
-    validate(value: any) {
+    validate(value: ViewModel) {
         var result = new ValidationResult();
         result.success = typeof value == this._type;
 

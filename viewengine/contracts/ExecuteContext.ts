@@ -7,9 +7,9 @@ import GeraniumApp from "../../runtime/concrete/App";
 export class ExecuteContext {
     view: IViewable;
     selector: string;
-    bindingFlags: IBinding<any>[];
+    bindingFlags: IBinding[];
 
-    constructor(viewCtx: ViewExecutingContext, bindingFlags?: IBinding<any>[]) {
+    constructor(viewCtx: ViewExecutingContext, bindingFlags?: IBinding[]) {
         this.view = viewCtx.iViewed;
         this.selector = viewCtx.selector;
         if (!bindingFlags) {

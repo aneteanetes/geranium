@@ -1,4 +1,4 @@
-﻿export class Template {
+﻿export class Template<T> {
     template: string;
-    data: any;
+    data: T;
 }

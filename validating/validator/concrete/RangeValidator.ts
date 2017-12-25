@@ -1,6 +1,7 @@
 ﻿import { IValidator } from "../interfaces/IValidator";
 import { ValidationResult } from "../../contracts/ValidationResult";
 import { ValidatingException } from "../../../exceptions/validating/ValidatingException";
+import { ViewModel } from "../../../viewmodels/abstract/ViewModel";
 
 export class RangeValidator extends IValidator {
 
@@ -33,7 +34,7 @@ export class RangeValidator extends IValidator {
     private maxField: string;
     validatedPropertyName: string;
 
-    validate(value: number, shallowcopy: any): ValidationResult {
+    validate(value: number, shallowcopy: ViewModel): ValidationResult {
 
         if (this.minField) {
             this.min = shallowcopy[this.minField];

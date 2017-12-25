@@ -1,9 +1,11 @@
+import { Constructor } from "../../structures/Constructor";
+
 export class Route {
     url: string;
     /**
      * constructor of this object
      */
-    ctor: { new(...args: any[]): any };
+    ctor: Constructor<any>;
     /**
      * executable function of this routes, if empty: toString()
      */

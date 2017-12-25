@@ -16,8 +16,8 @@ export abstract class ViewBinder extends IViewBinder {
         return bindedDOM;
     }
 
-    private valid(DOM: HTMLElement[], data: any) {
-        var vm = (data as ViewModel);
+    private valid(DOM: HTMLElement[], data: Model) {
+        var vm = (data as Model);
         if (vm.validators) {
             var validatedProperties = ArrayHelper.groupBy(vm.validators, 'validatedPropertyName');
             validatedProperties.forEach(validators => {
@@ -42,7 +42,7 @@ export abstract class ViewBinder extends IViewBinder {
         }
     }
 
-    private async exec(ViewDOM: ViewDOM, bindings: IBinding<any>[]): Promise<HTMLElement[]> {
+    private async exec(ViewDOM: ViewDOM, bindings: IBinding[]): Promise<HTMLElement[]> {
         let dom = await ViewDOM.DOM();
         for (var i = 0; i < bindings.length; i++) {
             await this.binding(dom, ViewDOM.data, bindings[i]);
@@ -50,5 +50,5 @@ export abstract class ViewBinder extends IViewBinder {
         return dom;
     }
 
-    protected abstract binding(DOM: HTMLElement[], data: any, binding: IBinding<any>): Promise<void>;
+    protected abstract binding(DOM: HTMLElement[], data: Model, binding: IBinding): Promise<void>;
 }

@@ -2,19 +2,20 @@
 import { StringHelper } from "../../declare/string";
 import { Binding } from "../abstract/Binding";
 import { toHtmlArray, nodeToArray } from "../../extensions/HtmlElementExtensions";
+import { ViewModel } from "../../viewmodels/abstract/ViewModel";
 
-export class EventBinding extends Binding<HTMLElement> {
+export class EventBinding extends Binding {
     async detection(DOMObject: HTMLElement[]): Promise<HTMLElement[]> {
         const queryableNodes = this.queryable(DOMObject);
         const all = queryableNodes.map(node => toHtmlArray(node.querySelectorAll(eventSelectors.join())));
         return all.reduce((p, n) => p.concat(n));
     }
 
-    async binding(DOMObject: HTMLElement, model: any): Promise<void> {
+    async binding(DOMObject: HTMLElement, model: ViewModel): Promise<void> {
         const attributes = nodeToArray<Attr>(DOMObject.attributes);
         const events = attributes.filter(attr => eventsAttr.includes(attr.name));
         this.funcBinded(events, model).forEach(bind => {
-            DOMObject.addEventListener(bind.event, function () {
+            DOMObject.addEventListener(bind.event.replace("on", ""), function () {
                 bind.func.apply(model, arguments);
             });
         });

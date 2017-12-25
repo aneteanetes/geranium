@@ -8,7 +8,7 @@ import { IValidator } from "../validating/validator/interfaces/ivalidator";
 @routeignore
 @ICloneable
 export abstract class Model extends Event<Model> {
-    obtain(data: any) {
+    obtain<T extends Model>(data: T) {
         if (typeof data == 'string') {
             data = JSON.parse(data);
         }
@@ -22,7 +22,7 @@ export abstract class Model extends Event<Model> {
     async sync(): Promise<void> {
         if (this.synchronizer) {
             let request = this["`container"].resolve(IRequest);
-            let data = await request.send(this.synchronizer);
+            let data = await request.send<any, Model>(this.synchronizer);
             this.obtain(data);
         }
     }

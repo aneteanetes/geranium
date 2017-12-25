@@ -1,5 +1,7 @@
-﻿export class RouteContext {
+﻿import { Constructor } from "../../structures/Constructor";
+
+export class RouteContext {
     prepath?: string;
-    parent?: { new(...args: any[]): any };
+    parent?: Constructor<any>;
     executable?: string;
 }

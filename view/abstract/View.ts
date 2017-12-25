@@ -5,8 +5,9 @@ import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContai
 import { ITemplateEngine } from "../../templating/interfaces/ITemplateEngine";
 import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 import { toHtmlArray } from "../../extensions/HtmlElementExtensions";
+import { Model } from "../../models/Model";
 
-export abstract class View extends Template implements ViewDOM, IInjected {
+export abstract class View extends Template<Model> implements ViewDOM, IInjected {
     ["`container"]: ICoherenceContainer;
     private ["`selector"]: string;
     private _rendered: boolean;

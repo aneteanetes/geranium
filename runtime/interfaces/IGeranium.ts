@@ -19,7 +19,7 @@ export class IGeranium {
     logger?: Constructor<ILogger>;
     request?: Constructor<IRequest>
     communicator?: Constructor<ICommunicator>;
-    templating?: Constructor<ITemplateEngine>;
+    templating?: Constructor<ITemplateEngine<any>>;
     storage?: Constructor<IStorage>;
     statemanager?: Constructor<IStateManager>;
     viewbinder?: Constructor<IViewBinder>;
@@ -28,5 +28,5 @@ export class IGeranium {
     validationreporter?: Constructor<IValidatingReporter>;
     router?: Constructor<IRouter>;
     historyprovider?: Constructor<IHistory>;
-    bindings?: { new <T>(...args: any[]): IBinding<T> }[];
+    bindings?: { new <T>(...args: any[]): IBinding }[];
 }

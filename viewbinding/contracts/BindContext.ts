@@ -5,9 +5,9 @@ import { ViewDOM } from "../../viewDOM/abstract/ViewDOM";
 
 export class BindContext {
     viewDOM: ViewDOM;
-    bindingFlags: IBinding<any>[];
+    bindingFlags: IBinding[];
 
-    constructor(viewDOM: ViewDOM, bindingFlags?: IBinding<any>[]) {
+    constructor(viewDOM: ViewDOM, bindingFlags?: IBinding[]) {
         this.viewDOM = viewDOM;
         if (!bindingFlags) {
             bindingFlags = GeraniumApp.resolveAll(IBinding);

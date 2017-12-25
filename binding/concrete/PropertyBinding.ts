@@ -9,7 +9,10 @@ import { IViewable } from "../../view/interfaces/IViewable";
 import { promised } from "../../structures/Promised";
 import { StringHelper } from "../../declare/string";
 
-export class PropertyBinding extends Binding<HTMLElement> {
+/**
+ * Render property value
+ */
+export class PropertyBinding extends Binding {
     propertyRegex: RegExp = /\[.*?\]/g;
     fields: string[] = [];
 
@@ -27,13 +30,13 @@ export class PropertyBinding extends Binding<HTMLElement> {
         this.fields.forEach(field => {
             DOMObjects.forEach(DOMObject => {
                 elements.push(... this.queryXPath(DOMObject, field));
-            })
-        })
+            });
+        });
 
         return elements;
     }
 
-    async binding(DOMObject: HTMLElement, model: any): Promise<void> {
+    async binding(DOMObject: HTMLElement, model: ViewModel): Promise<void> {
         const fields = DOMObject.innerText.match(this.propertyRegex);
         fields.forEach(async field => {
             const property = model[field.substring(1, field.length - 1)];
@@ -96,10 +99,6 @@ export class PropertyBinding extends Binding<HTMLElement> {
                     }
                 }
             });
-    }
-
-    private shatterNodes(node: Node) {
-
     }
 
     private queryXPath(node: Node, field: string): HTMLElement[] {
