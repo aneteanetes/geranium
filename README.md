@@ -131,7 +131,7 @@ What does it look like:
 * **ViewModel** - models with user interactions, a.k.a. forms.
 
 # Extension Points
-The main extension point for your components it's `Binding`'s. Bindings can be extended from `IBinding<T>` *interface* or `Binding<T>`/`BaseBinding`/`BaseByAttributeBinding` classes. You can provide methods for searching needed elements in current DOM *zone*, bind your model for this DOM and clear template.
+The main extension point for your components it's `Binding`'s and `ViewRenderers`. Bindings can be extended from `IBinding<T>` *interface* or `Binding<T>`/`BaseBinding`/`BaseByAttributeBinding` classes, rendereres can be extended from `IViewRenderer` interfaces. You can provide methods for searching needed elements in current DOM *zone*, bind your model for this DOM and clear template.
 #### Example:
 
 ````typescript
