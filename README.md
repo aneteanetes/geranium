@@ -158,8 +158,10 @@ Any of **interchangeable modules** can be extension point of your application. F
 # Roadmap (0.5.0)
 - [x] PropertyBinding with inheritance components
 - [x] HtmlView: representation of component that can be lazy loaded from server
+- [ ] Two-way data-binding
 - [ ] Communicator/Synchronizer layer restructuring
 - [ ] Virtual DOM implementation of IViewPublisher
+- [ ] JSX IViewRenderer
 - [ ] TODO app demo
 - [ ] Perfomance demo
 - [ ] Docs

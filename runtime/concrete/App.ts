@@ -17,7 +17,6 @@ import { BaseViewBinder } from "../../viewbinding/concrete/BaseViewBinder";
 import { BaseFieldBinding } from "../../binding/concrete/BaseFieldBinding";
 import { EventBinding } from "../../binding/concrete/EventBinding";
 import { BaseInputBinding } from "../../binding/concrete/BaseInputBinding";
-import { BaseCollectionBinding } from "../../binding/concrete/BaseCollectionBinding";
 import { ICommunicator } from "../../backend/interfaces/ICommunicator";
 import { IHistory } from "../../history/interfaces/IHistory";
 import { ILogger } from "../../exceptions/logging/interfaces/ILogger";
@@ -33,8 +32,9 @@ import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { BaseViewEngine } from "../../viewengine/concrete/BaseViewEngine";
 import { BaseViewPublisher } from "../../viewengine/concrete/BaseViewPublisher";
 import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
-import { PropertyBinding } from "../../binding/concrete/PropertyBinding";
 import { Constructor } from "../../structures/Constructor";
+import { PropertyRenderer } from "../../viewengine/concrete/Renderers/PropertyRenderer";
+import { IViewRenderer } from "../../viewengine/interfaces/IViewRenderer";
 
 class App implements IApp {
     ["`container"]: ICoherenceContainer;
@@ -93,6 +93,9 @@ class App implements IApp {
         this["`container"].register(IViewBinder, geranium.viewbinder, Life.Singleton);
         this["`container"].register(IViewEngine, geranium.viewengine, Life.Singleton);
         this["`container"].register(IViewPublisher, geranium.viewpublisher, Life.Singleton);
+        geranium.renderers.forEach(renderer => {
+            this["`container"].register(IViewRenderer, renderer, Life.Singleton);
+        })
         geranium.bindings.forEach(binding => {
             this["`container"].register(IBinding, binding, Life.Transient);
         });
@@ -112,12 +115,13 @@ const geraniumDefault: IGeranium = {
     viewbinder: BaseViewBinder,
     viewengine: BaseViewEngine,
     viewpublisher: BaseViewPublisher,
+    renderers: [
+        PropertyRenderer
+    ],
     bindings: [
         BaseFieldBinding as any,
         BaseInputBinding,
-        EventBinding,
-        BaseCollectionBinding,
-        PropertyBinding
+        EventBinding
     ]
 }
 

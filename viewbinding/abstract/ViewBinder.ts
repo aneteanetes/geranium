@@ -11,8 +11,8 @@ import GeraniumApp from "../../runtime/concrete/App";
 
 export abstract class ViewBinder extends IViewBinder {
     async bind(context: BindContext): Promise<HTMLElement[]> {
-        const bindedDOM = await this.exec(context.viewDOM, context.bindingFlags);
-        this.valid(bindedDOM, context.viewDOM.data);
+        const bindedDOM = await this.exec(context.dom, context.model, context.bindingFlags);
+        this.valid(bindedDOM, context.model);
         return bindedDOM;
     }
 
@@ -42,10 +42,9 @@ export abstract class ViewBinder extends IViewBinder {
         }
     }
 
-    private async exec(ViewDOM: ViewDOM, bindings: IBinding[]): Promise<HTMLElement[]> {
-        let dom = await ViewDOM.DOM();
+    private async exec(dom: HTMLElement[], model: Model, bindings: IBinding[]): Promise<HTMLElement[]> {
         for (var i = 0; i < bindings.length; i++) {
-            await this.binding(dom, ViewDOM.data, bindings[i]);
+            await this.binding(dom, model, bindings[i]);
         }
         return dom;
     }

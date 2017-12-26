@@ -1,54 +1,49 @@
-import { Binding } from "../abstract/Binding";
-import { Class } from "../../reflection/Class";
-import { findAndFilter, toHtmlArray } from "../../extensions/HtmlElementExtensions";
-import { PropertyInfo } from "../../reflection/Property";
-import { ArrayHelper } from "../../declare/array";
-import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
-import GeraniumApp from "../../runtime/concrete/App";
-import { IViewable } from "../../view/interfaces/IViewable";
-import { promised } from "../../structures/Promised";
-import { StringHelper } from "../../declare/string";
+import { IViewRenderer } from "../../interfaces/IViewRenderer";
+import { ArrayHelper } from "../../../declare/array";
+import { Class } from "../../../reflection/Class";
+import { IViewEngine } from "../../interfaces/IViewEngine";
+import { toHtmlArray } from "../../../extensions/HtmlElementExtensions";
+import { IViewable } from "../../../view/interfaces/IViewable";
+import { Model } from "../../../models/Model";
+import GeraniumApp from "../../../runtime/concrete/App";
 
-/**
- * Render property value
- */
-export class PropertyBinding extends Binding {
+export class PropertyRenderer extends IViewRenderer {
     propertyRegex: RegExp = /\[.*?\]/g;
     fields: string[] = [];
 
-    async detection(DOMObjects: HTMLElement[]): Promise<HTMLElement[]> {
-        DOMObjects.forEach(DOMObject => {
+    render<T extends Model>(elements: HTMLElement[], model: T): HTMLElement[] {
+        elements.forEach(DOMObject => {
             this.fields.push(...(DOMObject.innerHTML.match(/\[.*?\]/g) || []));
         });
         if (this.fields.length == 0) {
-            return new Array<HTMLElement>();
+            return elements;
         }
 
         this.fields = ArrayHelper.removeSame(this.fields);
 
-        const elements: Array<HTMLElement> = [];
+        const selectedElements: Array<HTMLElement> = [];
         this.fields.forEach(field => {
-            DOMObjects.forEach(DOMObject => {
-                elements.push(... this.queryXPath(DOMObject, field));
+            elements.forEach(DOMObject => {
+                selectedElements.push(... this.queryXPath(DOMObject, field));
             });
         });
+
+        elements.forEach(async element => (await this.binding(element, model)));
 
         return elements;
     }
 
-    async binding(DOMObject: HTMLElement, model: ViewModel): Promise<void> {
+    async binding(DOMObject: HTMLElement, model: Model): Promise<void> {
         const fields = DOMObject.innerText.match(this.propertyRegex);
         fields.forEach(async field => {
             const property = model[field.substring(1, field.length - 1)];
             if (property instanceof Array) {
                 await this.renderArray(property, DOMObject, field);
             } else if (property) {
-                await this.render(property, DOMObject, field);
+                await this.internalRender(property, DOMObject, field);
             }
         })
     }
-
-    async clear(DOMObject: HTMLElement): Promise<void> { }
 
     private async renderArray(property: Array<any>, DOMObject: HTMLElement, field: string) {
         let fieldsExpanded = "";
@@ -56,10 +51,10 @@ export class PropertyBinding extends Binding {
             fieldsExpanded += "[" + index + "]";
         }
         this.replaceTextNode(DOMObject, field, [document.createTextNode(fieldsExpanded) as any]);
-        property.forEach(async (prop, index) => { await this.render(prop, DOMObject, "[" + index + "]"); });
+        property.forEach(async (prop, index) => { await this.internalRender(prop, DOMObject, "[" + index + "]"); });
     }
 
-    private async render(property: any, DOMObject: HTMLElement, field: string) {
+    private async internalRender(property: any, DOMObject: HTMLElement, field: string) {
         if (Class.isAssignableFrom(ViewModel, property.constructor)) {
             await this.publish(DOMObject, property, field);
         } else {

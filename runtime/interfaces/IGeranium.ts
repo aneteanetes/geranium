@@ -13,6 +13,7 @@ import { IBinding } from "../../binding/interfaces/IBinding";
 import { ICoherenceContainer } from "../../coherence/interfaces/ICoherenceContainer";
 import { IViewEngine } from "../../viewengine/interfaces/IViewEngine";
 import { IViewPublisher } from "../../viewengine/interfaces/IViewPublisher";
+import { IViewRenderer } from "../../viewengine/interfaces/IViewRenderer";
 
 export class IGeranium {
     container?: Constructor<ICoherenceContainer>;
@@ -28,5 +29,6 @@ export class IGeranium {
     validationreporter?: Constructor<IValidatingReporter>;
     router?: Constructor<IRouter>;
     historyprovider?: Constructor<IHistory>;
-    bindings?: { new <T>(...args: any[]): IBinding }[];
+    bindings?: Constructor<IBinding>[];
+    renderers?: Constructor<IViewRenderer>[];
 }
